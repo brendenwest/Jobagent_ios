@@ -1,0 +1,23 @@
+//
+// Prefix header for all source files of the 'jobagent' target in the 'jobagent' project
+//
+
+#ifdef __OBJC__
+ #import <UIKit/UIKit.h>
+ #import <Foundation/Foundation.h>
+#endif
+
+// Disable logs for performance
+// #define LOGGING_ENABLED
+
+// Turn logging off
+#ifndef LOGGING_ENABLED
+#define NSLog(args...)
+#endif
+
+// Analytics
+// Enable/Disable reporting to SiteCatalyst
+#define ANALYTICS_ENABLED
+
+// Ads
+#define ADS_ENABLED

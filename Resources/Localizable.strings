@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  jobagent
+
+  Created by Brenden West on 6/1/13.
+
+*/
+
+// Common
+"STR_SHARE_TWITTER_TEXT" = "Found job via Job Agent %@:";
+"URL_JOBAGENT_IOS" = "https://itunes.apple.com/ag/app/job-agent/id517622797?mt=8";

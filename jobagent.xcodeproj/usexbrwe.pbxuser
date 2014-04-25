@@ -1,0 +1,129 @@
+// !$*UTF8*$!
+{
+	041D1DE4114E0D4600BB37A2 /* OAuthConsumer.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {614, 611}}";
+			sepNavSelRange = "{1265, 0}";
+			sepNavVisRange = "{682, 867}";
+		};
+	};
+	1D6058900D05DD3D006BFB54 /* jobagent */ = {
+		activeExec = 0;
+		executables = (
+			5A51665012BB3F1C00DE0057 /* jobagent */,
+		);
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 5A51665012BB3F1C00DE0057 /* jobagent */;
+		activeSDKPreference = iphonesimulator4.2;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* jobagent */;
+		codeSenseManager = 5A51666112BB3F6400DE0057 /* Code sense */;
+		executables = (
+			5A51665012BB3F1C00DE0057 /* jobagent */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 316405583;
+			PBXWorkspaceStateSaveDate = 316405583;
+		};
+		perUserProjectItems = {
+			5A5166AD12BB41B400DE0057 = 5A5166AD12BB41B400DE0057 /* PBXTextBookmark */;
+			5A5166AE12BB41B400DE0057 = 5A5166AE12BB41B400DE0057 /* PBXTextBookmark */;
+			5A8B03AE12DBF755007BE906 /* PBXTextBookmark */ = 5A8B03AE12DBF755007BE906 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 5A51666012BB3F6400DE0057 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	5A51665012BB3F1C00DE0057 /* jobagent */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = jobagent;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	5A51666012BB3F6400DE0057 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	5A51666112BB3F6400DE0057 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	5A5166AD12BB41B400DE0057 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "/Users/mac/Documents/jobagent/oAuthConsumer/OAToken.h: No such file or directory";
+		fRef = 041D1DE4114E0D4600BB37A2 /* OAuthConsumer.h */;
+		rLen = 1;
+		rLoc = 26;
+		rType = 1;
+	};
+	5A5166AE12BB41B400DE0057 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 041D1DE4114E0D4600BB37A2 /* OAuthConsumer.h */;
+		name = "OAuthConsumer.h: 27";
+		rLen = 0;
+		rLoc = 1265;
+		rType = 0;
+		vrLen = 895;
+		vrLoc = 741;
+	};
+	5A8B03AE12DBF755007BE906 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 041D1DE4114E0D4600BB37A2 /* OAuthConsumer.h */;
+		name = "OAuthConsumer.h: 27";
+		rLen = 0;
+		rLoc = 1265;
+		rType = 0;
+		vrLen = 867;
+		vrLoc = 682;
+	};
+}
