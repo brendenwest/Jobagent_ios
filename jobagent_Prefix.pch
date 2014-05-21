@@ -8,7 +8,7 @@
 #endif
 
 // Disable logs for performance
-// #define LOGGING_ENABLED
+ #define LOGGING_ENABLED
 
 // Turn logging off
 #ifndef LOGGING_ENABLED

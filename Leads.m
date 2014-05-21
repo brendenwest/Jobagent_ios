@@ -10,6 +10,7 @@
 #import "Leads.h"
 #import "Job.h"
 #import "LeadDetail.h"
+#import "Common.h"
 
 @interface Leads()
 @property(nonatomic, assign) BOOL firstInsert;
@@ -107,7 +108,7 @@ static NSString *kTitleNewItem = @"";
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 
@@ -139,7 +140,7 @@ static NSString *kTitleNewItem = @"";
 
 - (void)configureCell:(UITableViewCell *)cell withLead:(Job *)lead {
 
-	NSString *tmpTitle = (lead.date) ? [del getShortDate:[NSString stringWithFormat:@"%@",lead.date]] : @"";
+	NSString *tmpTitle = (lead.date) ? [Common getShortDate:[NSString stringWithFormat:@"%@",lead.date]] : @"";
 	if ([lead.company length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@" - %@",lead.company]; }
 	if ([lead.type length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@"; %@",lead.type]; }
 	if ([lead.pay length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@"; %@",lead.pay]; }

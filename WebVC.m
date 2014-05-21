@@ -136,7 +136,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	// we support rotation in this view controller
-	return YES;
+	return NO;
 }
 
 // this helps dismiss the keyboard when the "Done" button is clicked

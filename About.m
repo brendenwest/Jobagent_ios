@@ -121,17 +121,12 @@
 
     scrollView.contentSize = self.view.frame.size;
     scrollView.delegate = self;
-
-    NSString* plainContent = @"<b>Search</b> job listings by company or keyword.<hr>Track your <b>favorite</b> job leads, <b>companies</b> and job-search <b>contacts</b><hr>Keep a <b>diary</b> of job-search activities for unemployment insurance reporting<hr>Track job-search <b>to do</b> tasks<hr> ";
-    NSString* htmlContentString = [NSString stringWithFormat:
-                                   @"<html><style type=\"text/css\">"
-                                   "body { font-family:verdana; font-size:16;} #header {font-size:14;color:#dddddd; }  #disclaimer {font-size:10; }"
-                                   "</style>"
-                                   "<body>"
-                                   "%@</p>"
-                                   "</body></html>", plainContent];
     
-    [webAbout loadHTMLString:htmlContentString baseURL:nil];
+    NSString *fullURL = @"http://brisksoft.us/jobagent/about.html";
+    NSURL *url = [NSURL URLWithString:fullURL];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    
+    [webAbout loadRequest:requestObj];
     
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];

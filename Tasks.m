@@ -10,6 +10,7 @@
 #import "Task.h"
 #import "Tasks.h"
 #import "TaskDetail.h"
+#import "Common.h"
 
 @interface Tasks()
 @property(nonatomic, assign) BOOL firstInsert;
@@ -122,7 +123,7 @@ static NSString *kTitleNewItem = @"";
     
     
 	cell.textLabel.text = task.title;
-	NSString *dueDate = (task.end) ? [NSString stringWithFormat:@", Due: %@",[del getShortDate:[NSString stringWithFormat:@"%@",task.end]]] : @"";
+	NSString *dueDate = (task.end) ? [NSString stringWithFormat:@", Due: %@",[Common getShortDate:[NSString stringWithFormat:@"%@",task.end]]] : @"";
 	cell.detailTextLabel.text = [NSString stringWithFormat:@"Pri: %@ %@",[priorityValues objectAtIndex:[task.priority integerValue]],dueDate];
 }
 

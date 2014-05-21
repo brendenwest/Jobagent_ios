@@ -14,7 +14,7 @@
 
 @class RootViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate> {
 	
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     NSManagedObjectModel *managedObjectModel;
@@ -45,11 +45,6 @@
 - (BOOL)connectedToNetwork;
 - (void)trackPV:(NSString*)screenName;
 - (void)trackPVFull:(NSString*)screenName :(NSString*)eventCategory :(NSString*)eventAction :(NSString*)eventLabel;
-- (void)trackEvent:(NSString*)category :(NSString*)action :(NSString*)label :(int*)value;
-
-- (NSString*)getShortDate:(NSString*)tmpDate;
-- (NSDate*)dateFromString:(NSString*)tmpDate;
-- (NSString*)shortDate:(NSDate*)tmpDate;
 
 - (void)setCompany:(NSString *)companyName;
 - (NSArray*)getCompanies:(NSString*)companyName;
@@ -59,8 +54,6 @@
 - (void)setPerson:(NSString*)personName withCo:(NSString*)companyName;
 
 - (NSArray*)getEvents:(NSString*)eventName;
-
-- (void)archiveData;
 
 
 @end

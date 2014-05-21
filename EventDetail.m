@@ -9,6 +9,7 @@
 #import "EventDetail.h"
 #import "Event.h"
 #import "AppDelegate.h"
+#import "Common.h"
 
 @implementation EventDetail
 
@@ -221,7 +222,7 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -236,7 +237,7 @@
 	description.text =  (_selectedEvent.notes != nil) ? _selectedEvent.notes : @"";
 
 	// set value for date button 
-	NSString *tmpTitle = [del getShortDate:[NSString stringWithFormat:@"%@",_selectedEvent.date]];    
+	NSString *tmpTitle = [Common getShortDate:[NSString stringWithFormat:@"%@",_selectedEvent.date]];
 	[btnDate setTitle:tmpTitle forState:UIControlStateNormal];
 	
 	aEvents = [NSMutableArray arrayWithObjects:@"Phone screen", @"Application", @"Interview", @"E-mail", @"Job fair", @"Other", nil];
@@ -412,7 +413,7 @@
 
         self.selectedEvent.jobtitle = jobtitle.text;
         self.selectedEvent.jobid = jobid.text;
-        self.selectedEvent.date = [del dateFromString:btnDate.currentTitle];
+        self.selectedEvent.date = [Common dateFromString:btnDate.currentTitle];
         
         NSError *error = nil;
         if (![self.selectedEvent.managedObjectContext save:&error]) {

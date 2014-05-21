@@ -10,6 +10,7 @@
 #import "Event.h"
 #import "Events.h"
 #import "EventDetail.h"
+#import "Common.h"
 
 @interface Events()
 @property(nonatomic, assign) BOOL firstInsert;
@@ -119,7 +120,7 @@ static NSString *kTitleNewItem = @"";
 
 - (void)configureCell:(UITableViewCell *)cell withEvent:(Event *)event {
 	
-	NSString *subtitle = (event.date) ? [del getShortDate:[NSString stringWithFormat:@"%@",event.date]] : @"";
+	NSString *subtitle = (event.date) ? [Common getShortDate:[NSString stringWithFormat:@"%@",event.date]] : @"";
 	if ([event.company length] > 0) {
 		subtitle = [NSString stringWithFormat:@"%@ - %@",subtitle, event.company];
 	}
@@ -198,7 +199,7 @@ static NSString *kTitleNewItem = @"";
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

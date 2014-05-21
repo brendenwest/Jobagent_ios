@@ -9,6 +9,7 @@
 #import "TaskDetail.h"
 #import "Task.h"
 #import "AppDelegate.h"
+#import "Common.h"
 
 @implementation TaskDetail
 
@@ -148,7 +149,7 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -159,7 +160,7 @@
 	description.text =  (_selectedTask.notes != nil) ? _selectedTask.notes : @"";
     
     // set value for date button 
-	NSString *tmpTitle = [del getShortDate:[NSString stringWithFormat:@"%@",_selectedTask.end]];    
+	NSString *tmpTitle = [Common getShortDate:[NSString stringWithFormat:@"%@",_selectedTask.end]];
 	[btnEndDate setTitle:tmpTitle forState:UIControlStateNormal];
     btnPriority.selectedSegmentIndex = [_selectedTask.priority integerValue];
 	
@@ -220,7 +221,7 @@
         self.selectedTask.notes = description.text;
         self.selectedTask.priority = [NSNumber numberWithInteger:[btnPriority selectedSegmentIndex]];
 
-        self.selectedTask.end = [del dateFromString:btnEndDate.currentTitle];
+        self.selectedTask.end = [Common dateFromString:btnEndDate.currentTitle];
         pickerView.hidden = YES;
 
         NSError *error = nil;

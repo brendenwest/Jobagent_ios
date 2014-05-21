@@ -12,6 +12,7 @@
 #import "CompanyDetail.h"
 #import "PersonDetail.h"
 #import "AppDelegate.h"
+#import "Common.h"
 
 @implementation LeadDetail
 
@@ -260,6 +261,7 @@
 
     [self registerForKeyboardNotifications];
 
+
 	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
     // allow user to dismiss keyboard by tapping background screen
@@ -303,7 +305,7 @@
 
     [self checkTextFields];
 
-	[btnDate setTitle:[del shortDate:_selectedLead.date] forState:UIControlStateNormal];
+	[btnDate setTitle:[Common shortDate:_selectedLead.date] forState:UIControlStateNormal];
 
 	NSPredicate *sPredicate = [NSPredicate predicateWithFormat:@"SELF != NULL"];
 	NSArray *aTmp = [NSArray arrayWithObjects:
@@ -497,7 +499,7 @@
         self.selectedLead.link = link.text;
         self.selectedLead.type = jobType.text;
         self.selectedLead.pay = pay.text;
-        self.selectedLead.date = [del dateFromString:btnDate.currentTitle];
+        self.selectedLead.date = [Common dateFromString:btnDate.currentTitle];
 
         NSError *error = nil;
         if (![self.selectedLead.managedObjectContext save:&error]) {

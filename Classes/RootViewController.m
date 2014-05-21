@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "SearchJobs.h"
 #import "Cities.h"
-#import "About.h"
+#import "Tips.h"
 #import "XMLParse.h"
 #import "GADBannerView.h"
 #import "GADRequest.h"
@@ -27,26 +27,26 @@
 
 @implementation RootViewController
 
-@synthesize txtSearch, txtLocation, curZip, curLat, curLng, tblRecent, btnSearch, btnAbout, userSettings;
+@synthesize txtSearch, txtLocation, curZip, curLat, curLng, tblRecent, btnSearch, btnTips, userSettings;
 @synthesize searches, del;
 @synthesize searchVC = _searchVC;
-@synthesize aboutVC = _aboutVC;
+@synthesize tipsVC = _tipsVC;
 @synthesize citiesVC = _citiesVC;
 
 
 // 98052 = 47.615471,-122.207221
 
 
-- (IBAction)readAbout:(id)sender
+- (IBAction)readTips:(id)sender
 {
 
-    // load 'About' screen
-    self.aboutVC = [[About alloc] initWithNibName:@"About" bundle:nil];
-    
+    // load 'Tips' screen
+    self.tipsVC = [[Tips alloc] init];
+
     // temporarily set title to 'Back' for appearance on Results view
     self.title = @"Back";
     
-    [self.navigationController pushViewController:self.aboutVC animated:YES];    
+    [self.navigationController pushViewController:self.tipsVC animated:YES];
 
 }
 
@@ -211,6 +211,8 @@
 - (void)viewWillAppear:(BOOL)animated {
 
     self.title = @"Job Agent";
+    NSLog(@"checking logs");
+
 
     if ([txtLocation.text length] && ![[self.userSettings objectForKey:@"postalcode"] isEqualToString:txtLocation.text]) {
         // returning from city lookup
@@ -445,7 +447,7 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

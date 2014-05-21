@@ -11,6 +11,7 @@
 #import "Company.h"
 #import "AppDelegate.h"
 #import "WebVC.h"
+#import "Common.h"
 
 @implementation JobDetail
 
@@ -26,7 +27,7 @@
 	self.title = @"Job Detail";
 
     if (IS_OS_7_OR_LATER) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.edgesForExtendedLayout = UIRectEdgeNone;
     }
 
 	if (managedObjectContext == nil) 
@@ -56,7 +57,7 @@
 	company.text = [_aJob objectForKey:@"company"];
 	location.text = [_aJob objectForKey:@"city"];
 	description.text = [_aJob objectForKey:@"description"];
-	pubDate.text = ([[_aJob objectForKey:@"pubDate"] length] > 0) ? [del getShortDate:[_aJob objectForKey:@"pubDate"]] : @"";
+	pubDate.text = ([[_aJob objectForKey:@"pubDate"] length] > 0) ? [Common getShortDate:[_aJob objectForKey:@"pubDate"]] : @"";
 	jobType.text = ([[_aJob objectForKey:@"type"] length] > 0) ? [_aJob objectForKey:@"type"] : @"";
 	pay.text = ([[_aJob objectForKey:@"pay"] length] > 0) ? [_aJob objectForKey:@"pay"] : @"";
 
@@ -157,7 +158,7 @@
 
 	[lead setValue:jobTitle.text forKey:@"title"];	
 	[lead setValue:description.text forKey:@"notes"];
-	[lead setValue:[del dateFromString:[_aJob valueForKey:@"pubDate"]] forKey:@"date"];
+	[lead setValue:[Common dateFromString:[_aJob valueForKey:@"pubDate"]] forKey:@"date"];
 	[lead setValue:[_aJob valueForKey:@"link"] forKey:@"link"];
 	[lead setValue:[_aJob valueForKey:@"city"] forKey:@"city"];
 	[lead setValue:[_aJob valueForKey:@"company"] forKey:@"company"];	
@@ -178,6 +179,7 @@
 {
 //    [del trackEvent:[NSString stringWithFormat:@"Share via %ld",(long)[sender selectedSegmentIndex]]:[_aJob valueForKey:@"title"]:[_aJob valueForKey:@"sectionNum"]:1];
 
+    
     NSLog(@"share option %ld",(long)[sender selectedSegmentIndex]);
 
 	if ([sender selectedSegmentIndex] == 0) {
@@ -199,7 +201,7 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 

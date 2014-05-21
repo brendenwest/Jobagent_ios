@@ -194,7 +194,7 @@ static NSString *kTitleNewItem = @"";
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

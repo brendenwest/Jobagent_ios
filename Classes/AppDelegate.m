@@ -9,17 +9,21 @@
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 
+#import "UAirship.h"
+#import "UAConfig.h"
+#import "UAPush.h"
+
 #import "People.h"
 #import "Leads.h"
 #import "Companies.h"
 #import "Tasks.h"
 #import "Events.h"
-#import "More.h"
+#import "Tips.h"
 #import "Job.h"
 
 /** Google Analytics configuration constants **/
 static NSString *const kGaPropertyId = @"UA-30717261-1"; // Job Agent property ID.
-static int const kGaDispatchPeriod = 15;
+static int const kGaDispatchPeriod = 10;
 static NSString *const kAllowTracking = @"allowTracking";
 static BOOL *const kGaDryRun = NO;
 
@@ -59,9 +63,46 @@ static BOOL *const kGaDryRun = NO;
 //    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
     self.tracker = [[GAI sharedInstance] trackerWithTrackingId:kGaPropertyId];
 
+    // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
+    // or set runtime properties here.
+    UAConfig *config = [UAConfig defaultConfig];
+    
+    
+    // Call takeOff (which creates the UAirship singleton)
+    [UAirship takeOff:config];
 
+    // Request a custom set of notification types
+    [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
+                                         UIRemoteNotificationTypeSound |
+                                         UIRemoteNotificationTypeAlert );
+    
+    if (launchOptions != nil)
+    {
+        NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (dictionary != nil)
+            [self handleRemoteNotification:dictionary];
+    }
+    
     return TRUE;
     
+}
+
+- (void)application:(UIApplication *)app didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [self handleRemoteNotification:userInfo];
+}
+
+-(void)handleRemoteNotification:(NSDictionary*)payload
+{
+    
+    NSString *message = [[payload valueForKey:@"aps"] valueForKey:@"alert"];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"News"
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"Ok"
+                                          otherButtonTitles:nil, nil];
+    [alert show];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 
@@ -132,26 +173,6 @@ static BOOL *const kGaDryRun = NO;
 }
 
 
-- (void)trackEvent:(NSString*)trackCategory :(NSString*)trackAction :(NSString*)trackLabel :(int*)value
-{
-/*
-    [self.tracker sendEventWithCategory:trackCategory
-                        withAction:trackAction
-                         withLabel:trackLabel
-                              withValue:[NSNumber numberWithInt:*value]];
-
-     new syntax
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:trackCategory     // Event category (required)
-                                                          action:trackAction  // Event action (required)
-                                                           label:trackLabel          // Event label
-                                                           value:value] build]];    // Event value
-
-*/
- }
-
-
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
 	// low on memory: do whatever you can to reduce your memory foot print here
@@ -180,10 +201,20 @@ static BOOL *const kGaDryRun = NO;
 	
     Tasks *tasksVC = [[Tasks alloc] initWithNibName:nil bundle:nil];
     tasksVC.managedObjectContext = context;
-    
-    
+
+
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 }
 
+
+// Delegation methods
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
+    // device token handled by UA library
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+    NSLog(@"Error in registration. Error: %@", err);
+}
 
 
 /**
@@ -462,134 +493,6 @@ static BOOL *const kGaDryRun = NO;
 }
 
 
-#pragma mark backup data to E-mail
-
-- (void)archiveData {
-	// need UI to get e-mail address and save to user-settings	
-    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-    if (mailClass != nil)
-    {
-        // Check whether the current device is configured for sending emails
-        if ([mailClass canSendMail])
-        {
-			NSString *dataFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"archive.txt"];
-			NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];		
-			[fetchRequest setResultType:NSDictionaryResultType];
-			[fetchRequest setEntity: [NSEntityDescription entityForName:@"Job" inManagedObjectContext:managedObjectContext]];
-			//			[fetchRequest setPropertiesToFetch:[NSArray arrayWithObjects:@"title",@"company",@"link",nil]];
-			
-			NSError *error = nil;
-			NSMutableArray *fetchResults = [NSMutableArray arrayWithArray:[managedObjectContext executeFetchRequest: fetchRequest error: &error]];
-			
-			// ADD Activities
-			[fetchRequest setEntity: [NSEntityDescription entityForName:@"Event" inManagedObjectContext:managedObjectContext]];
-			[fetchResults addObjectsFromArray:[managedObjectContext executeFetchRequest: fetchRequest error: &error]];
-			
-			// ADD Companies
-			[fetchRequest setEntity: [NSEntityDescription entityForName:@"Company" inManagedObjectContext:managedObjectContext]];
-			[fetchResults addObjectsFromArray:[managedObjectContext executeFetchRequest: fetchRequest error: &error]];
-			
-			// ADD People
-			[fetchRequest setEntity: [NSEntityDescription entityForName:@"Person" inManagedObjectContext:managedObjectContext]];
-			[fetchResults addObjectsFromArray:[managedObjectContext executeFetchRequest: fetchRequest error: &error]];
-			
-			// ADD Tasks
-			[fetchRequest setEntity: [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext]];
-			[fetchResults addObjectsFromArray:[managedObjectContext executeFetchRequest: fetchRequest error: &error]];
-			
-			//			NSLog(@"items: %i",[fetchResults count]);
-			[fetchResults writeToFile:dataFile atomically:NO];
-			
-        }
-    }
-	
-	
-	//	}
-	/*
-	 - check that user can send mail
-	 - fetch data for jobs, companies, people, activities
-	 - store data in text file  
-	 - compose mail. Attach text file
-	 - send mail
-	 */
-	
-	//	[recipients release];
-}
-
-
-#pragma mark date functions
-/** return date from string **/
-- (NSDate *)dateFromString:(NSString *)tmpDate {
-//	NSLog(@"date string in: %@ ",tmpDate);
-	NSDateFormatter *inputFormat = [[NSDateFormatter alloc] init];
-	[inputFormat setDateFormat:@"MM/dd/yy"];
-	[inputFormat setFormatterBehavior:NSDateFormatterBehavior10_4];	
-	[inputFormat setLenient:YES];
-
-    NSDate *retDate = [inputFormat dateFromString:tmpDate];
-    
-    return retDate;
-}	
-
-/** return short date **/
-- (NSString *)shortDate:(NSDate*)tmpDate {	
-	NSDateFormatter *outputFormat = [[NSDateFormatter alloc ] init];
-	[outputFormat setDateStyle:NSDateFormatterShortStyle];
-	if (!tmpDate) { tmpDate = [NSDate date]; }
-
-    NSString *retDate = [outputFormat stringFromDate:tmpDate];
-    return retDate;
-
-}
-
-- (NSString *)getShortDate:(NSString*)tmpDate {
-	
-	NSDateFormatter *outputFormat = [[NSDateFormatter alloc ] init];
-	[outputFormat setDateStyle:NSDateFormatterShortStyle];	
-    NSString *retString = [outputFormat stringFromDate:[NSDate date]];
-	
-	if ([tmpDate length] > 0 && ![tmpDate isEqual:@"(null)"]) { 
-		
-		NSDateFormatter *inputFormat = [[NSDateFormatter alloc] init];
-		[inputFormat setFormatterBehavior:NSDateFormatterBehavior10_4];	
-		[inputFormat setLenient:YES];
-		
-		// indeed: Sat, 03 Apr 2010 12:22:58 GMT
-		[inputFormat setDateFormat:@"eee, dd MMM yyyy hh:mm:ss 'GMT'"];
-		NSDate *formattedDate = [inputFormat dateFromString:tmpDate];
-        
-		//NSLog(@"gsd, indeed date out: %@ ",formattedDate);
-		
-		if (formattedDate == nil) { // try Craigslist format
-			// cr: 2010-04-03T17:04:30-07:00
-			[inputFormat setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZZ"];
-			formattedDate = [inputFormat dateFromString:tmpDate];
-			//NSLog(@"gsd, CR date out: %@ ",formattedDate);
-		}
-		if (formattedDate == nil) { // try Linkup format
-			// LI: April 21, 2010
-			[inputFormat setDateFormat:@"MMMM dd, yyyy"];
-			formattedDate = [inputFormat dateFromString:tmpDate];
-			//NSLog(@"gsd, LU date out: %@ ",formattedDate);
-		}
-		if (formattedDate == nil) { // try system format
-			// 2010-04-06 00:00:00 -0700
-			[inputFormat setDateFormat:@"yyyy-MM-dd hh:mm:ss ZZZZ"];
-			formattedDate = [inputFormat dateFromString:tmpDate];
-		}
-
-
-		if (formattedDate == nil) { // return current date
-
-		} else {
-			retString = [outputFormat stringFromDate:formattedDate];
-		}
-        
-	} else { // no date input
-        retString = [outputFormat stringFromDate:[NSDate date]];
-	}
-    return retString;
-}
 
 
 @end

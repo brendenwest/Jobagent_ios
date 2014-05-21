@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "XMLParse.h"
 #import "GADBannerView.h"
+#import "Common.h"
 
 static NSString *kSafariUA = @"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3";
 
@@ -56,10 +57,9 @@ static NSString *kSafariUA = @"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac O
     [uiLoading startAnimating];
 
     if (IS_OS_7_OR_LATER) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-// NSString* encodedUrl = [url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 	// format is name, url, feed
 	self.siteList = [NSMutableArray arrayWithObjects: 
 
@@ -123,8 +123,8 @@ static NSString *kSafariUA = @"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac O
 		else {
 			feedNew = [feedNew stringByReplacingOccurrencesOfString:@"<ZIPCODE>" withString:txtZip];
 		}
-//  NSLog(@"url = %@",feedNew);
-        // Create the XML parser    
+
+        // Create the XML parser
         NSArray	*ignoreListArray =  [NSArray arrayWithObjects: 
                                      @"/oodle_response/current", @"/oodle_response/meta", nil];
         NSArray	*propertyListArray = [NSArray arrayWithObjects: 
@@ -305,7 +305,7 @@ NSDate *date = [NSDate dateWithTimeIntervalSince1970:1234567];
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 
@@ -430,7 +430,7 @@ NSDate *date = [NSDate dateWithTimeIntervalSince1970:1234567];
 
     //**************
     
-	NSString *jobdate = ([[tmpJob valueForKey:@"pubDate"] length] > 0) ? [NSString stringWithFormat:@"%@ - ",[del getShortDate:[tmpJob valueForKey:@"pubDate"]]] : [NSString stringWithFormat:@" "];
+	NSString *jobdate = ([[tmpJob valueForKey:@"pubDate"] length] > 0) ? [NSString stringWithFormat:@"%@ - ",[Common getShortDate:[tmpJob valueForKey:@"pubDate"]]] : [NSString stringWithFormat:@" "];
 
     NSString *location = ([[tmpJob valueForKey:@"Location"] length] > 0) ? [NSString stringWithFormat:@"%@ - ",[tmpJob valueForKey:@"Location"]] : @"";
 

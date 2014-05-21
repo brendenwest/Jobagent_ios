@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GADBannerView.h"
 
-@class AppDelegate, SearchJobs, About, Cities;
+@class AppDelegate, SearchJobs, Tips, Cities;
 
 @interface RootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, CLLocationManagerDelegate > {
 
@@ -23,11 +23,11 @@
     NSString *curLng;
     
 	IBOutlet UIButton *btnSearch;
-	IBOutlet UIButton *btnAbout;
+	IBOutlet UIButton *btnTips;
 	IBOutlet UITableView	*tblRecent;
 
 	SearchJobs *_searchVC; // for linking to job details
-	About *_aboutVC; // for linking to about screen
+	Tips *_tipsVC; // for linking to tips screen
 	Cities *_citiesVC; // for linking to list of cities w/ zips
 
 	NSMutableDictionary *userSettings;
@@ -47,12 +47,12 @@
 @property (nonatomic, strong) NSString *curLng;
 
 @property (nonatomic, strong) IBOutlet UIButton *btnSearch;
-@property (nonatomic, strong) IBOutlet UIButton *btnAbout;
+@property (nonatomic, strong) IBOutlet UIButton *btnTips;
 
 @property (nonatomic, strong) IBOutlet UITableView *tblRecent;
 
 @property (nonatomic, strong) SearchJobs *searchVC;
-@property (nonatomic, strong) About *aboutVC;
+@property (nonatomic, strong) Tips *tipsVC;
 @property (nonatomic, strong) Cities *citiesVC;
 
 @property (nonatomic, strong) AppDelegate *del;
@@ -65,6 +65,6 @@
 - (IBAction)checkZip:(id)sender;
 - (IBAction)recentSearches:(id)sender;
 - (IBAction)backgroundTouched:(id)sender;
-- (IBAction)readAbout:(id)sender;
+- (IBAction)readTips:(id)sender;
 
 @end
