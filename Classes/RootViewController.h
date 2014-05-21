@@ -51,10 +51,6 @@
 
 @property (nonatomic, strong) IBOutlet UITableView *tblRecent;
 
-@property (nonatomic, strong) SearchJobs *searchVC;
-@property (nonatomic, strong) Tips *tipsVC;
-@property (nonatomic, strong) Cities *citiesVC;
-
 @property (nonatomic, strong) AppDelegate *del;
 
 @property (nonatomic, strong) NSMutableDictionary *userSettings;

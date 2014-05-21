@@ -29,9 +29,6 @@
 
 @synthesize txtSearch, txtLocation, curZip, curLat, curLng, tblRecent, btnSearch, btnTips, userSettings;
 @synthesize searches, del;
-@synthesize searchVC = _searchVC;
-@synthesize tipsVC = _tipsVC;
-@synthesize citiesVC = _citiesVC;
 
 
 // 98052 = 47.615471,-122.207221
@@ -39,14 +36,14 @@
 
 - (IBAction)readTips:(id)sender
 {
-
+    
     // load 'Tips' screen
-    self.tipsVC = [[Tips alloc] init];
+    _tipsVC = [[Tips alloc] init];
 
     // temporarily set title to 'Back' for appearance on Results view
     self.title = @"Back";
     
-    [self.navigationController pushViewController:self.tipsVC animated:YES];
+    [self.navigationController pushViewController:_tipsVC animated:YES];
 
 }
 
@@ -59,7 +56,7 @@
 
 
 // execute search. 
-- (void)searchJobs2 {
+- (void)viewSearchResults {
     
     // save this search
     NSString *thisSearch = [NSString stringWithFormat:@"%@|%@|%@|%@",txtSearch.text,txtLocation.text, curLat, curLng];
@@ -69,16 +66,17 @@
     }
     
     // execute search
-    self.searchVC = [[SearchJobs alloc] initWithNibName:@"SearchJobs" bundle:nil];
-    self.searchVC.txtSearch = txtSearch.text;
-    self.searchVC.txtZip = txtLocation.text;
-    self.searchVC.txtLat = curLat;
-    self.searchVC.txtLng = curLng;
+    if(_searchVC == nil)
+        _searchVC = [[SearchJobs alloc] initWithNibName:nil bundle:nil];
+    _searchVC.txtSearch = txtSearch.text;
+    _searchVC.txtZip = txtLocation.text;
+    _searchVC.txtLat = curLat;
+    _searchVC.txtLng = curLng;
     
     // temporarily set title to 'Back' for appearance on Results view
     self.title = @"Back";
     
-    [self.navigationController pushViewController:self.searchVC animated:YES];    
+    [self.navigationController pushViewController:_searchVC animated:YES];
 	
 }
 
@@ -100,7 +98,7 @@
         [self checkZip:txtLocation];
         // Don't fire job search if user entered city name instead of zip code
         if ([txtLocation.text isEqualToString:[self.userSettings objectForKey:@"postalcode"]]) {
-            [self searchJobs2];
+            [self viewSearchResults];
         }
     }
 }
@@ -114,72 +112,8 @@
 }
 
 
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self == [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return nil;
-}
 
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-
-
-	if (userSettings == nil)
-	{ 
-		self.userSettings = [(AppDelegate *)[[UIApplication sharedApplication] delegate] userSettings]; 
-	}
-
-    // default settings for testing
-//    [self.userSettings setValue:@"98052" forKey:@"postalcode"];
-//    [self.userSettings setValue:@"47.68495" forKey:@"lat"];
-//    [self.userSettings setValue:@"-122.28759" forKey:@"lng"];
-
-//    [self.userSettings setValue:@"" forKey:@"postalcode"]; // clear zip for testing
-
-    // check user's location
-	if (![[self.userSettings valueForKey:@"postalcode"] length] && [del connectedToNetwork]) { 
-        // get location for first-time user
-        
-        NSLog(@"getting location");
-        NSLog(@"location enabled? %d",[CLLocationManager locationServicesEnabled]);
-        //[activityIndicator startAnimating];
-
-        _locationManager = [[CLLocationManager alloc] init];
-        if (![CLLocationManager locationServicesEnabled])
-        {   //show an alert
-            
-        } else {
-            _locationManager.delegate = self;
-            _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
-            [_locationManager startUpdatingLocation];
-            _startLocation = nil;
-        }
-        
-	} else if ([[self.userSettings valueForKey:@"postalcode"] length]) {
-        self.txtLocation.text = [self.userSettings objectForKey:@"postalcode"];
-        curZip = [self.userSettings objectForKey:@"postalcode"];
-        curLat = [self.userSettings objectForKey:@"lat"];
-        curLng = [self.userSettings objectForKey:@"lng"];
-
-	}
-
-
-	if ([[self.userSettings objectForKey:@"searches"] count] > 0) {
-        // use recent searches
-		searches = [[NSMutableArray alloc] initWithArray:[self.userSettings objectForKey:@"searches"]];
-		if (![txtSearch.text length]) {
-			txtSearch.text = [[searches objectAtIndex:0] substringToIndex:[[searches objectAtIndex:0] rangeOfString:@"|"].location];
-		}
-	} else {
-		searches = [[NSMutableArray alloc] init];
-	}
-    
+- (void)getAd {
     // Create ad view of the standard size at the bottom of the screen. Account for nav bar & tab bar heights
     // Available AdSize constants are explained in GADAdSize.h.
     
@@ -201,24 +135,78 @@
     
     // Initiate a generic request to load it with an ad.
     [bannerView_ loadRequest:[GADRequest request]];
-    
 }
 
-- (void)adView:(GADBannerView *)bannerView didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSLog(@"adView:didFailToReceiveAdWithError:%@", [error localizedDescription]);
+- (void)getUserLocation {
+    // get location for first-time user
+    
+    NSLog(@"getting location");
+    //[activityIndicator startAnimating];
+    
+    _locationManager = [[CLLocationManager alloc] init];
+    if (![CLLocationManager locationServicesEnabled])
+    {   //show an alert
+        
+    } else {
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+        [_locationManager startUpdatingLocation];
+        _startLocation = nil;
+    }
+}
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
+	if (userSettings == nil)
+	{ 
+		self.userSettings = [(AppDelegate *)[[UIApplication sharedApplication] delegate] userSettings]; 
+	}
+
+    // default settings for testing
+//    [self.userSettings setValue:@"98052" forKey:@"postalcode"];
+//    [self.userSettings setValue:@"47.68495" forKey:@"lat"];
+//    [self.userSettings setValue:@"-122.28759" forKey:@"lng"];
+
+//    [self.userSettings setValue:@"" forKey:@"postalcode"]; // clear zip for testing
+
+    // check user's location
+	if (![[self.userSettings valueForKey:@"postalcode"] length] && [del connectedToNetwork]) { 
+        [self getUserLocation];
+        
+	} else if ([[self.userSettings valueForKey:@"postalcode"] length]) {
+        self.txtLocation.text = [self.userSettings objectForKey:@"postalcode"];
+        curZip = [self.userSettings objectForKey:@"postalcode"];
+        curLat = [self.userSettings objectForKey:@"lat"];
+        curLng = [self.userSettings objectForKey:@"lng"];
+
+	}
+
+
+	if ([[self.userSettings objectForKey:@"searches"] count] > 0) {
+        // use recent searches
+		searches = [[NSMutableArray alloc] initWithArray:[self.userSettings objectForKey:@"searches"]];
+		if (![txtSearch.text length]) {
+			txtSearch.text = [[searches objectAtIndex:0] substringToIndex:[[searches objectAtIndex:0] rangeOfString:@"|"].location];
+		}
+	} else {
+		searches = [[NSMutableArray alloc] init];
+	}
+    
+    [self getAd];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 
     self.title = @"Job Agent";
-    NSLog(@"checking logs");
-
 
     if ([txtLocation.text length] && ![[self.userSettings objectForKey:@"postalcode"] isEqualToString:txtLocation.text]) {
-        // returning from city lookup
-//        NSLog(@"returning from Cities. Location = %@", self.citiesVC.location.locality);
-        [self performCoordinateGeocode:self.citiesVC.location.location];
-        [self searchJobs2];
+        // returning from city selection
+        txtLocation.text = [self.userSettings objectForKey:@"postalcode"];
     }
 
     
@@ -257,6 +245,9 @@
     NSLog(@"Received ad successfully");
 }
 
+- (void)adView:(GADBannerView *)bannerView didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"adView:didFailToReceiveAdWithError:%@", [error localizedDescription]);
+}
 
 
 #pragma mark Location Manager methods
@@ -276,7 +267,6 @@
         
         if (newLocation.horizontalAccuracy <= _locationManager.desiredAccuracy) {
             
-             NSLog(@"detected lat-lon = %.4F - %.4F",newLocation.coordinate.latitude, newLocation.coordinate.longitude);
             // reverse Geocode the lat-long
             [self performCoordinateGeocode:newLocation];
             
@@ -299,12 +289,11 @@
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         if (error){
             NSLog(@"Geocode failed with error: %@", error);
-//            [self displayError:error];
             return;
         }
 
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        [self setUserLocation:placemark];
+        [self setUserLocation:placemark :placemark.region.center.latitude :placemark.region.center.longitude];
         
     }];
 }
@@ -312,6 +301,7 @@
 
 - (void)forwardGeocode:(NSString *)placename
 {
+    NSLog(@"placename %@",placename);
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
     [geocoder geocodeAddressString:placename completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -319,47 +309,64 @@
         
         if ([placemarks count] == 1) { // one city returned. set location accordingly
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
-            [self setUserLocation:placemark];
+            NSLog(@"one location found %@",placemark);
+            CLLocation *loc = [[CLLocation alloc] initWithLatitude:placemark.region.center.latitude longitude:placemark.region.center.longitude];
+            [geocoder reverseGeocodeLocation:loc completionHandler:
+             ^(NSArray* placemarks, NSError* error){
+                 if ([placemarks count] > 0)
+                 {
+                     NSLog(@"reverse geocode found one location %@",[placemarks objectAtIndex:0]);
+                     CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
+                     [self setUserLocation:newPlacemark :loc.coordinate.latitude :loc.coordinate.longitude];
+                     
+                 }
+             }];
         } else if ([placemarks count] > 1) { //
-                if(self.citiesVC == nil)
-                    self.citiesVC = [[Cities alloc] initWithNibName:nil bundle:nil];
-                self.citiesVC.placemarks = placemarks;
-               [self.navigationController pushViewController:self.citiesVC animated:YES];
+            NSLog(@"> one location found");
+                if(_citiesVC == nil)
+                    _citiesVC = [[Cities alloc] initWithNibName:nil bundle:nil];
+                _citiesVC.placemarks = placemarks;
+               [self.navigationController pushViewController:_citiesVC animated:YES];
         }
 
     }];
 
 }
 
-- (void)setUserLocation:(CLPlacemark *)placemark {
+- (void)setUserLocation:(CLPlacemark *)placemark :(double)latitude :(double)longitude {
 
-    // populate user settings
+    // populate user settings based on new geocode values
     [self.userSettings setValue:(NSString *)placemark.locality forKey:@"city"];
     [self.userSettings setValue:(NSString *)placemark.administrativeArea forKey:@"state"];
     [self.userSettings setValue:(NSString *)placemark.ISOcountryCode forKey:@"country"];
     [self.userSettings setValue:(NSString *)placemark.postalCode forKey:@"postalcode"];
-    [self.userSettings setValue:(NSString *)[NSString stringWithFormat:@"%f", placemark.region.center.latitude] forKey:@"lat"];
-    [self.userSettings setValue:(NSString *)[NSString stringWithFormat:@"%f", placemark.region.center.longitude] forKey:@"lng"];
+    [self.userSettings setValue:(NSString *)[NSString stringWithFormat:@"%.4F", latitude] forKey:@"lat"];
+    [self.userSettings setValue:(NSString *)[NSString stringWithFormat:@"%.4F", longitude] forKey:@"lng"];
     
-    txtLocation.text = placemark.postalCode;
-    curZip = placemark.postalCode;
-    curLat = [NSString stringWithFormat:@"%f", placemark.region.center.latitude];
-    curLng = [NSString stringWithFormat:@"%f", placemark.region.center.longitude];
+    [self updateUILocation];
 
 }
 
+- (void)updateUILocation {
+    // update current location values in UI
+    self.txtLocation.text = [self.userSettings objectForKey:@"postalcode"];
+    curZip = [self.userSettings objectForKey:@"postalcode"];
+    curLat = [self.userSettings objectForKey:@"lat"];
+    curLng = [self.userSettings objectForKey:@"lng"];
+    
+}
+
 - (IBAction)checkZip:(id)sender {
-        // check that entered zip code is valid
-        NSInteger intZip = [txtLocation.text integerValue];
+    // check that entered zip code is valid
+    NSString *enteredLocation = txtLocation.text;
+    NSLog(@"entered location %@",enteredLocation);
+        NSInteger intZip = [enteredLocation integerValue];
         BOOL validZip = intZip > 9999 && intZip < 100000; // US 5-digit zip
 
-        if (!validZip) { // user entered a string or incomplete zip. search for matching city.
-            [self forwardGeocode:txtLocation.text];
-            
- 
-        } else if (![txtLocation.text isEqualToString:curZip]) { 
-            // get location info for new zip so they're in synch
-            [self forwardGeocode:txtLocation.text];
+        if (!validZip || ![enteredLocation isEqualToString:curZip]) {
+            // user entered a string or new zip.
+            // get location info from geocoder
+            [self forwardGeocode:enteredLocation];
         }
  
 }
@@ -436,7 +443,7 @@
     if ([del connectedToNetwork]) {
         NSArray *tmpSearch = [[searches objectAtIndex:indexPath.row] componentsSeparatedByString:@"|"];
         txtSearch.text = [tmpSearch objectAtIndex:0];
-        [self searchJobs2];
+        [self viewSearchResults];
     } else {
         UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Network connection \nappears to be offline" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
         [noNetworkAlert show];        

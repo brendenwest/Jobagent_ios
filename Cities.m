@@ -11,7 +11,7 @@
 
 @implementation Cities
 
-@synthesize del, placemarks, location;
+@synthesize del, placemarks;
 
 
 - (void)viewDidLoad {
@@ -90,13 +90,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 	
-	NSString *zip = [[placemarks objectAtIndex:indexPath.row] valueForKey:@"postalCode"];
 	NSString *cityTmp = [[placemarks objectAtIndex:indexPath.row] valueForKey:@"locality"];
 	NSString *state = [[placemarks objectAtIndex:indexPath.row] valueForKey:@"administrativeArea"];
 
-//    NSLog(@"city, state, zip %@, %@ - %@", cityTmp, state, zip);
-
-	cell.textLabel.text = [NSString stringWithFormat:@"%@, %@ - %@", cityTmp, state, zip];
+	cell.textLabel.text = [NSString stringWithFormat:@"%@, %@", cityTmp, state];
 	
     return cell;
 }
@@ -105,17 +102,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	// add selected place to user settings and go back to job listings
 
-    location = [placemarks objectAtIndex:indexPath.row];
+    CLPlacemark *placemark = [placemarks objectAtIndex:indexPath.row];
+    NSLog(@"getting zip for : %@", placemark);
 
 //NSLog(@"place %.4F - %.4F", placemark.location.coordinate.latitude,placemark.location.coordinate.longitude);
-
-    [del.userSettings setValue:location.postalCode forKey:@"postalcode"];
-    [del.userSettings setValue:[NSString stringWithFormat:@"%.4F",location.region.center.latitude] forKey:@"lat"];
-    [del.userSettings setValue:[NSString stringWithFormat:@"%.4F",location.region.center.longitude] forKey:@"lng"];
     
-//    NSLog(@"lat-long is %.4F - %.4F", placemark.region.center.latitude,placemark.region.center.longitude);
-     [self.navigationController popViewControllerAnimated:YES];
-	
+        CLLocation *loc = [[CLLocation alloc] initWithLatitude:placemark.region.center.latitude longitude:placemark.region.center.longitude];
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    
+        [geocoder reverseGeocodeLocation:loc completionHandler:
+         ^(NSArray* placemarksForZip, NSError* error){
+             if (error){
+                 NSLog(@"Geocode failed with error: %@", error);
+                 return;
+             }
+             NSLog(@"Received placemarks: %@", placemarksForZip);
+             CLPlacemark *newPlacemark = [placemarksForZip objectAtIndex:0];
+             [del.userSettings setValue:newPlacemark.postalCode forKey:@"postalcode"];
+             [del.userSettings setValue:[NSString stringWithFormat:@"%.4F",newPlacemark.region.center.latitude] forKey:@"lat"];
+             [del.userSettings setValue:[NSString stringWithFormat:@"%.4F",newPlacemark.region.center.longitude] forKey:@"lng"];
+             
+             //    NSLog(@"lat-long is %.4F - %.4F", placemark.region.center.latitude,placemark.region.center.longitude);
+             [self.navigationController popViewControllerAnimated:YES];
+         }];
+    
 }
 
 

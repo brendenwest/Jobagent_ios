@@ -25,7 +25,7 @@
 static NSString *const kGaPropertyId = @"UA-30717261-1"; // Job Agent property ID.
 static int const kGaDispatchPeriod = 10;
 static NSString *const kAllowTracking = @"allowTracking";
-static BOOL *const kGaDryRun = NO;
+static BOOL *const kGaDryRun = YES;
 
 
 @implementation AppDelegate
