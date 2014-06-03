@@ -48,6 +48,7 @@ static NSString *kTitleNewItem = @"";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
 
     [del trackPV:self.title];
 

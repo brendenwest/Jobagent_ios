@@ -132,4 +132,13 @@
 }
 
 
++ (UITextView *)formatTextView:(UITextView*)textView :(NSString*)placeholder {
+    textView.layer.cornerRadius = 8;
+	textView.layer.borderWidth = 1;
+	textView.layer.borderColor = [[UIColor grayColor] CGColor];
+    textView.text = placeholder;
+    textView.textColor = [UIColor lightGrayColor];
+    return textView;
+}
+
 @end

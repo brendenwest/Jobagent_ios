@@ -22,6 +22,7 @@
 @synthesize managedObjectContext;
 @synthesize personDetailVC = _personDetailVC;
 @synthesize firstInsert = _firstInsert;
+@synthesize selectedCompany = _selectedCompany;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -97,6 +98,16 @@
 	return [[fetchedResultsController sections] count];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName;
+    if (_selectedCompany != NULL) {
+        sectionName = [NSString stringWithFormat:@"Contacts for %@",_selectedCompany];
+    } else {
+        sectionName = @"";
+    }
+    return sectionName;
+}
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -184,10 +195,6 @@
     }   
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
-}
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -203,6 +210,13 @@
 	}
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    // find contacts for specific company if linked from Company detail view
+    if (_selectedCompany != NULL) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"company LIKE[cd] %@", _selectedCompany];
+        [fetchRequest setPredicate:predicate];
+    }
+
 	NSEntityDescription *entity = 
 	[NSEntityDescription entityForName:@"Person"
 				inManagedObjectContext:managedObjectContext];
@@ -281,6 +295,8 @@
 	// Release any retained subviews of the main view.
 	self.fetchedResultsController = nil;
 	self.personDetailVC = nil;
+    self.selectedCompany = nil;
+
 }
 
 

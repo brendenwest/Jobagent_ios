@@ -7,64 +7,25 @@
 //
 
 #import "CompanyDetail.h"
-#import "LeadDetail.h"
 #import "SearchJobs.h"
+#import "Leads.h"
+#import "People.h"
 #import "Company.h"
-#import "Job.h"
-#import "Person.h"
-#import "PersonDetail.h"
+#import "Common.h"
 #import "AppDelegate.h"
+
+NSInteger currentType = 0;
+NSString *textViewPlaceholder = @"notes";
 
 @implementation CompanyDetail
 
-@synthesize coName, coType, notes, people, jobs, tblJobsPeople, userSettings, myPickerView, pickerViewArray, btnMap, btnType, btnJobsPeople;
+@synthesize coName, tableCoType, notes, userSettings, btnExternalLinks, coTypes;
 @synthesize selectedCompany = _selectedCompany;
-@synthesize leadVC = leadVC;
-@synthesize personVC = personVC;
 @synthesize searchVC = searchVC;
+@synthesize leadsVC = leadsVC;
+@synthesize contactsVC = contactsVC;
 @synthesize managedObjectContext;
 
-- (IBAction) showPicker:(id)sender { 
-	myPickerView.hidden = NO;
-	// add the "Done" button to the nav bar
-	UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone  target:self action:@selector(doneAction:)];	
-	self.navigationItem.rightBarButtonItem = doneButton;
-}
-
-- (void)doneAction:(id)sender 
-{
-	
-	// remove the "Done" button in the nav bar
-	self.navigationItem.rightBarButtonItem = nil;
-	myPickerView.hidden = YES;
-	
-}
-
-- (IBAction) switchView:(id)sender {
-
-	NSInteger tmpSegment = [sender selectedSegmentIndex];
-    
-    if (tmpSegment == 0 || tmpSegment == 1) { // jobs or people
-        [self.tblJobsPeople reloadData]; 
-    } else if (tmpSegment == 2 && coName.text.length > 0) {
-        if (![(AppDelegate *)[[UIApplication sharedApplication] delegate] connectedToNetwork]) {
-            UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Network connection \nappears to be offline" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
-            [noNetworkAlert show];        
-        } else {
-
-            if(self.searchVC == nil)
-                self.searchVC = [[SearchJobs alloc] initWithNibName:@"SearchJobs" bundle:nil];
-            
-            self.searchVC.txtSearch = coName.text;
-            self.searchVC.txtZip = [self.userSettings valueForKey:@"postalcode"];
-            self.searchVC.txtLat = [self.userSettings valueForKey:@"lat"];
-            self.searchVC.txtLng = [self.userSettings valueForKey:@"lng"];
-            
-            [self.navigationController pushViewController:self.searchVC animated:YES];
-        }
-    }
-    
-}
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
@@ -75,56 +36,54 @@
 }
 
 
-- (IBAction) searchMap:(id)sender { 
-	if ([coName.text length] > 0) {
-		NSString *url = [NSString stringWithFormat:@"http://maps.google.com/maps?mrt=yp&q=%@&near=%@", [coName.text stringByReplacingOccurrencesOfString:@" " withString:@"+"], [userSettings valueForKey:@"postalcode"]];
+- (void) loadExternalLink:(id)sender {
+    NSInteger tmpSegment = [sender selectedSegmentIndex];
+    NSString *url;
+    NSLog(@"loading # %i", tmpSegment);
+    
+    if ([coName.text length] > 0) {
 
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-	}
-}
+        if (tmpSegment == 0 ) { // link to map
+                url = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@&near=%@", [coName.text stringByReplacingOccurrencesOfString:@" " withString:@"+"], [userSettings valueForKey:@"postalcode"]];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 
-- (void)checkTextFields {
-    btnMap.hidden = ([coName.text length] > 0) ? NO : YES;
-}
+        } else if (tmpSegment == 1 ) { // link to LinkedIn
+            url = [NSString stringWithFormat:@"https://www.linkedin.com/company/%@", [coName.text stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        } else if (tmpSegment == 2) {
+            if(self.leadsVC == nil)
+                self.leadsVC = [[Leads alloc] initWithNibName:nil bundle:nil];
+            
+            self.leadsVC.selectedCompany = coName.text;
+            [self.navigationController pushViewController:self.leadsVC animated:YES];
+        } else if (tmpSegment == 3) {
+            if(_contactsVC == nil)
+                _contactsVC = [[People alloc] initWithNibName:nil bundle:nil];
+            
+            _contactsVC.selectedCompany = coName.text;
+            [self.navigationController pushViewController:_contactsVC animated:YES];
 
+        } else if (tmpSegment == 4) {
+            if (![(AppDelegate *)[[UIApplication sharedApplication] delegate] connectedToNetwork]) {
+                UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Network connection \nappears to be offline" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+                [noNetworkAlert show];
+            } else {
+                if(self.searchVC == nil)
+                    self.searchVC = [[SearchJobs alloc] initWithNibName:@"SearchJobs" bundle:nil];
+                
+                self.searchVC.txtSearch = coName.text;
+                self.searchVC.txtZip = [self.userSettings valueForKey:@"postalcode"];
+                self.searchVC.txtLat = [self.userSettings valueForKey:@"lat"];
+                self.searchVC.txtLng = [self.userSettings valueForKey:@"lng"];
+                
+                [self.navigationController pushViewController:self.searchVC animated:YES];
+            }
+        }
+    } else {
+        // show alert about company name
+    }
+    btnExternalLinks.selectedSegmentIndex = nil;
 
-// return the picker frame based on its size, positioned at the bottom of the page
-- (CGRect)pickerFrameWithSize:(CGSize)size
-{
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGRect pickerRect = CGRectMake(	0.0,
-								   screenRect.size.height - 54.0 - size.height,
-								   size.width,
-								   size.height);
-	return pickerRect;
-}
-
-#pragma mark -
-#pragma mark UIPickerView
-- (void)createPicker
-{
-	pickerViewArray = [NSArray arrayWithObjects:
-						@"Primary", @"Temp Agency", @"Consulting", @"Recruiter", @"Other",
-						nil];
-	// note we are using CGRectZero for the dimensions of our picker view,
-	// this is because picker views have a built in optimum size,
-	// you just need to set the correct origin in your view.
-	//
-	// position the picker at the bottom
-	myPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-	CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
-	myPickerView.frame = [self pickerFrameWithSize:pickerSize];
-	
-	myPickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	myPickerView.showsSelectionIndicator = YES;	// note this is default to NO
-	
-	// this view controller is the data source and delegate
-	myPickerView.delegate = self;
-	myPickerView.dataSource = self;
-	
-	// add this picker to our view controller, initially hidden
-	myPickerView.hidden = YES;
-	[self.view addSubview:myPickerView];
 }
 
 
@@ -137,11 +96,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (btnJobsPeople.selectedSegmentIndex == 1) {
-		return [people count];
-	} else {
-		return [jobs count];
-     }
+    return [coTypes count];
 }
 
 
@@ -154,43 +109,32 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-	if (btnJobsPeople.selectedSegmentIndex == 0 && [self.jobs count] > 0) {
-		Job *lead = [self.jobs objectAtIndex:indexPath.row];
-		NSString *tmpTitle = lead.title;
-		if ([lead.type length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@"; %@",lead.type]; }
-		if ([lead.pay length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@"; %@",lead.pay]; }
-		cell.textLabel.text = tmpTitle;
-	} else if (btnJobsPeople.selectedSegmentIndex == 1) {
-		Person *person = [people objectAtIndex:indexPath.row];
-		NSString *tmpTitle = (person.title.length > 0) ? person.title : @"";
-        
-		cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ - %@", person.firstName, person.lastName, tmpTitle];
-	}
-
-	cell.textLabel.font = [UIFont boldSystemFontOfSize:14];	
-	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	
+	cell.textLabel.text = [coTypes objectAtIndex:indexPath.row];
+	cell.textLabel.font = [UIFont systemFontOfSize:14];
+    if (indexPath.row == currentType) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	} else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (btnJobsPeople.selectedSegmentIndex == 0) {
-		Job *lead = [jobs objectAtIndex:indexPath.row];
-		if(self.leadVC == nil)
-			self.leadVC = [[LeadDetail alloc] initWithNibName:@"LeadDetail" bundle:nil];
-		
-		self.leadVC.selectedLead = lead;
-		[self.navigationController pushViewController:self.leadVC animated:YES];
-	} else {
-		Person *person = [people objectAtIndex:indexPath.row];
-		if(self.personVC == nil)
-			self.personVC = [[PersonDetail alloc] initWithNibName:@"PersonDetail" bundle:nil];
-		
-		self.personVC.selectedPerson = person;
-		[self.navigationController pushViewController:self.personVC animated:YES];
-	}
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 
+    NSIndexPath *oldIndexPath = [NSIndexPath indexPathForRow:currentType inSection:0];
+    
+    UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
+    if (newCell.accessoryType == UITableViewCellAccessoryNone) {
+        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        currentType = indexPath.row;
+    }
+    
+    UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
+    if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        oldCell.accessoryType = UITableViewCellAccessoryNone;
+    }
 }
 
 
@@ -199,7 +143,11 @@
     [super viewDidLoad];
 	self.title = @"Company";
 
-	if (managedObjectContext == nil) 
+    if (IS_OS_7_OR_LATER) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+
+	if (managedObjectContext == nil)
 	{ 
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
 	}
@@ -208,57 +156,39 @@
 		self.userSettings = [(AppDelegate *)[[UIApplication sharedApplication] delegate] userSettings]; 
 	}
 
-    jobs = [[NSMutableArray alloc] init];
-	people = [[NSMutableArray alloc] init];
-
-	tblJobsPeople.dataSource = self;
-
-    [self checkTextFields];
+    coTypes = [NSArray arrayWithObjects:@"Default",@"Agency",@"Govt",@"Training", nil];
     
-	[self createPicker];
-
-    notes.layer.cornerRadius = 8;
-	notes.layer.borderWidth = 1;
-	notes.layer.borderColor = [[UIColor grayColor] CGColor];	
-
+    tableCoType.dataSource = self;
+    
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
 	temporaryBarButtonItem.title = @"Back";
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    
+    // configure link controls
+    [btnExternalLinks addTarget:self action:@selector(loadExternalLink:) forControlEvents:UIControlEventValueChanged];
+
 }
 
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
-}
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     
+    [Common formatTextView:notes:textViewPlaceholder];
+    NSLog(@"company name - %@",self.selectedCompany.coName);
+    
     coName.text = _selectedCompany.coName;
-	notes.text = _selectedCompany.notes;
-	coType.text = _selectedCompany.coType;
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"company LIKE[cd] %@", _selectedCompany.coName];
-	[fetchRequest setPredicate:predicate];	
-    
-    // fetch jobs by company
-	[fetchRequest setEntity: [NSEntityDescription entityForName:@"Job" inManagedObjectContext:managedObjectContext]];
-    
-    NSError *error = nil;
-	NSArray *fetchResults = [managedObjectContext executeFetchRequest: fetchRequest error: &error];
-    
-	[self.jobs setArray:fetchResults];
-	[tblJobsPeople reloadData];
-    
-    // fetch people by company
-	[fetchRequest setEntity: [NSEntityDescription entityForName:@"Person" inManagedObjectContext:managedObjectContext]];
-    
-	fetchResults = [managedObjectContext executeFetchRequest: fetchRequest error: &error];
-	[self.people setArray:fetchResults];
+    if (_selectedCompany.coType != NULL) {
+        currentType = [coTypes indexOfObject:_selectedCompany.coType];
+    }
+    if (_selectedCompany.notes != NULL) {
+        notes.text = _selectedCompany.notes;
+    }
+
+    // populate table of company types
+    [self.tableCoType reloadData];
+//    [tableCoType selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentType inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+
 
     // Log pageview w/ Google Analytics
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] trackPVFull:@"Company" :@"Co name" :@"detail" :_selectedCompany.coName];
@@ -273,113 +203,54 @@
     return YES;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+- (void)textFieldDidBeginEditing:(UITextField*)textField
 {
     
-	[textField resignFirstResponder];
-    [self checkTextFields];
-	
 }
 
 #pragma mark textView methods
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text { if([text isEqualToString:@"\n"]) [textView resignFirstResponder]; return YES; }
 
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
-	return YES;
-}
-
-- (void)textViewShouldReturn:(UITextView *)textView {
-	[textView resignFirstResponder];
-}
-
-#pragma mark -
-#pragma mark UIPickerViewDelegate
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+- (void)textViewDidBeginEditing:(UITextView *)textView
 {
-	if (pickerView == myPickerView)	// don't show selection for the custom picker
-	{
-		// report the selection to the UI label
-		coType.text = [NSString stringWithFormat:@"%@",
-					   [pickerViewArray objectAtIndex:[pickerView selectedRowInComponent:0]]];
-		pickerView.hidden = YES;
-
-        // remove the "Done" button in the nav bar
-        self.navigationItem.rightBarButtonItem = nil;
-	}
+    if ([textView.text isEqualToString:textViewPlaceholder]) {
+        textView.text = @"";
+    }
+    [textView becomeFirstResponder];
 }
 
-
-#pragma mark -
-#pragma mark UIPickerViewDataSource
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+- (void)textViewDidEndEditing:(UITextView *)textView
 {
-	NSString *returnStr = @"";
-	
-	// note: custom picker doesn't care about titles, it uses custom views
-	if (pickerView == myPickerView)
-	{
-		if (component == 0)
-		{
-			returnStr = [pickerViewArray objectAtIndex:row];
-		}
-		else
-		{
-			returnStr = [[NSNumber numberWithInt:row] stringValue];
-		}
-	}
-	
-	return returnStr;
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = textViewPlaceholder;
+        textView.textColor = [UIColor lightGrayColor]; //optional
+    }
+    [textView resignFirstResponder];
 }
 
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
-{
-	CGFloat componentWidth = 0.0;
-	
-	if (component == 0)
-		componentWidth = 240.0;	// first column size is wider to hold names
-	else
-		componentWidth = 40.0;	// second column is narrower to show numbers
-	
-	return componentWidth;
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
-{
-	return 40.0;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-	return [pickerViewArray count];
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-	return 1;
-}
 
 - (void)viewWillDisappear:(BOOL)animated {
     // save entries only if name is entered
 	if ([coName.text length] > 0) {
+
+        // save any user edits
+        self.selectedCompany.coName = coName.text;
+        self.selectedCompany.coType = [coTypes objectAtIndex:currentType];
+        self.selectedCompany.notes = notes.text;
+        currentType = 0;
 
         NSError *error = nil;
         if (![self.selectedCompany.managedObjectContext save:&error]) {
             // Handle the error...
             NSLog(@"Error saving %@, %@", error, [error userInfo]);
         }
-
-        self.selectedCompany.coName = coName.text;
-        self.selectedCompany.coType = coType.text;
-        self.selectedCompany.notes = notes.text;
+        
     } else if (managedObjectContext) {
         // delete record with no company name
         [self.selectedCompany.managedObjectContext deleteObject:self.selectedCompany];
     }
-	jobs = nil;
-    people = nil;
+
 }
 
 - (void)didReceiveMemoryWarning {

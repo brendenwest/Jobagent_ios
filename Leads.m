@@ -23,6 +23,7 @@
 @synthesize leadDetailVC = _leadDetailVC;
 @synthesize firstInsert = _firstInsert;
 @synthesize del;
+@synthesize selectedCompany = _selectedCompany;
 
 static NSString *kTitleNewItem = @"";
 
@@ -38,11 +39,6 @@ static NSString *kTitleNewItem = @"";
 
 	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
-	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
-		// handle the error...
-	}
-
 	[self customBarButtons];
 }
 
@@ -101,6 +97,13 @@ static NSString *kTitleNewItem = @"";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+		// handle the error...
+	}
+
+    [self.tableView reloadData];
+    
     [del trackPV:self.title];
 
 }
@@ -131,6 +134,16 @@ static NSString *kTitleNewItem = @"";
 	return [[fetchedResultsController sections] count];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName;
+    if (_selectedCompany != NULL) {
+        sectionName = [NSString stringWithFormat:@"Leads for %@",_selectedCompany];
+    } else {
+        sectionName = @"";
+    }
+    return sectionName;
+}
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -184,14 +197,6 @@ static NSString *kTitleNewItem = @"";
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:YES];
@@ -230,12 +235,21 @@ static NSString *kTitleNewItem = @"";
 
 // fetchedResultsController - get data from SQL
 - (NSFetchedResultsController *)fetchedResultsController {
-	if (fetchedResultsController != nil) {
+	if (fetchedResultsController != nil && _selectedCompany == nil) {
 		return fetchedResultsController;
 	}
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = 
+    NSPredicate *predicate = nil;
+
+    // find leads for specific company if linked from Company detail view
+    if (_selectedCompany != NULL) {
+        NSLog(@"setting fetch predicate for %@",_selectedCompany);
+        predicate = [NSPredicate predicateWithFormat:@"company LIKE[cd] %@", _selectedCompany];
+        [fetchRequest setPredicate:predicate];
+    }
+
+	NSEntityDescription *entity =
 	[NSEntityDescription entityForName:@"Job"
 				inManagedObjectContext:managedObjectContext];
 	[fetchRequest setEntity:entity];
@@ -248,7 +262,7 @@ static NSString *kTitleNewItem = @"";
 	[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 										managedObjectContext:managedObjectContext
 										  sectionNameKeyPath:nil
-												   cacheName:@"Root"];
+												   cacheName:nil];
 	aFetchedResultsController.delegate = self; // <label id="code.RVC.FRC.delegate"/>
 	self.fetchedResultsController = aFetchedResultsController;
 	

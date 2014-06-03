@@ -133,8 +133,6 @@ static BOOL *const kGaDryRun = YES;
 - (void)trackPVFull:(NSString*)screenName :(NSString*)eventCategory :(NSString*)eventAction :(NSString*)eventLabel
 {
     
-    NSLog(@"logging pv for %@ and event %@",screenName,eventCategory);
-
     // Google Analytics v3
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     

@@ -28,7 +28,8 @@ static NSString *kTitleNewItem = @"";
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+    self.title = @"Companies";
+
 	if (managedObjectContext == nil) 
 	{ 
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
@@ -43,8 +44,7 @@ static NSString *kTitleNewItem = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.title = @"Companies";
-    [super viewWillAppear:animated];
+    [self.tableView reloadData];
     
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] trackPV:self.title];
 
@@ -85,7 +85,8 @@ static NSString *kTitleNewItem = @"";
 // Insert new item
 - (void)insertItem {
 	self.firstInsert = [self.fetchedResultsController.sections count] == 0;
-	
+	NSLog(@"Inserting new company");
+
 	NSManagedObjectContext *context = 
 	[self.fetchedResultsController managedObjectContext];
 	NSEntityDescription *entity = 
@@ -192,10 +193,6 @@ static NSString *kTitleNewItem = @"";
     }   
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
-}
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.

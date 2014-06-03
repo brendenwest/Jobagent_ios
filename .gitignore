@@ -6,3 +6,10 @@
 #
 # Pods/
 
+# ignore following directories
+Archive/
+build/
+jobagent Tests/
+
+# ignore following files
+AirshipConfig.plist
