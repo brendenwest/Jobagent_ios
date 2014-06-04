@@ -16,7 +16,7 @@
 #endif
 
 // Analytics
-// Enable/Disable reporting to SiteCatalyst
+// Enable/Disable reporting to Google Analytics
 #define ANALYTICS_ENABLED
 
 // Ads

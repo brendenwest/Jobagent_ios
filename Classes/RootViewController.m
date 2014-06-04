@@ -70,8 +70,6 @@
         _searchVC = [[SearchJobs alloc] initWithNibName:nil bundle:nil];
     _searchVC.txtSearch = txtSearch.text;
     _searchVC.txtZip = txtLocation.text;
-    _searchVC.txtLat = curLat;
-    _searchVC.txtLng = curLng;
     
     // temporarily set title to 'Back' for appearance on Results view
     self.title = @"Back";

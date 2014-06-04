@@ -110,6 +110,7 @@
     NSURL *url = [NSURL URLWithString:@"http://brisksoft.us/jobagent/tips.json"];
     NSLog(@"url = %@", url);
 
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //AFNetworking asynchronous url request
     

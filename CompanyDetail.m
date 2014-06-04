@@ -73,8 +73,6 @@ NSString *textViewPlaceholder = @"notes";
                 
                 self.searchVC.txtSearch = coName.text;
                 self.searchVC.txtZip = [self.userSettings valueForKey:@"postalcode"];
-                self.searchVC.txtLat = [self.userSettings valueForKey:@"lat"];
-                self.searchVC.txtLng = [self.userSettings valueForKey:@"lng"];
                 
                 [self.navigationController pushViewController:self.searchVC animated:YES];
             }

@@ -37,10 +37,7 @@
 	
 	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
-	// set border around text view
-	description.layer.cornerRadius = 8;
-	description.layer.borderWidth = 1;
-	description.layer.borderColor = [[UIColor grayColor] CGColor];	
+    [Common formatTextView:description :@""];
 	
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
@@ -55,9 +52,9 @@
 	[super viewWillAppear:animated];
 	jobTitle.text = [_aJob objectForKey:@"title"];
 	company.text = [_aJob objectForKey:@"company"];
-	location.text = [_aJob objectForKey:@"city"];
+	location.text = [_aJob objectForKey:@"location"];
 	description.text = [_aJob objectForKey:@"description"];
-	pubDate.text = ([[_aJob objectForKey:@"pubDate"] length] > 0) ? [Common getShortDate:[_aJob objectForKey:@"pubDate"]] : @"";
+	pubDate.text = [_aJob objectForKey:@"pubdate"];
 	jobType.text = ([[_aJob objectForKey:@"type"] length] > 0) ? [_aJob objectForKey:@"type"] : @"";
 	pay.text = ([[_aJob objectForKey:@"pay"] length] > 0) ? [_aJob objectForKey:@"pay"] : @"";
 
@@ -85,8 +82,6 @@
 }
 
 - (void)shareJob {
-    NSLog(@"sharing in general");
-    
 
     NSString *tinyUrl1 = [NSString stringWithFormat:@"http://tinyurl.com/api-create.php?url=%@",[_aJob valueForKey:@"link"]];
     NSString *shortURLforJob = [NSString stringWithContentsOfURL:[NSURL URLWithString:tinyUrl1]
@@ -124,33 +119,6 @@
     
 }
 
-- (void)sendMail {
-	// add check for can't send mail
-
-	MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
-	NSString *subject = [NSString stringWithFormat:@"Job lead - %@", [_aJob valueForKey:@"title"]];
-	NSString *body = [NSString stringWithFormat:@"Check out this job :\n\n %@ \n \n Sent via Job Agent app.\n\n http://itunes.apple.com/us/app/job-agent/id517622797?ls=1&mt=8", [_aJob valueForKey:@"link"]];
-	
-	mailController.mailComposeDelegate = self;
-	[mailController setSubject:subject];
-	[mailController setMessageBody:body isHTML:YES];
-    [self presentViewController:mailController animated:YES completion:NULL];
-
-}
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error 
-{
-	if (error) {
-		UIAlertView *cantMailAlert = [[UIAlertView alloc] initWithTitle:@"Mail error" message:[error localizedDescription] delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
-		[cantMailAlert show];
-	} else if (result == MFMailComposeResultSent) { // mail was sent
-        
-        [self saveToLeads:[NSNumber numberWithInt:1]];	// save lead if it was mailed
-    }
-    [controller dismissViewControllerAnimated:YES completion:nil];
-
-}
-
 
 - (void)saveToLeads:(NSNumber *)selectedAction {
 
@@ -158,9 +126,9 @@
 
 	[lead setValue:jobTitle.text forKey:@"title"];	
 	[lead setValue:description.text forKey:@"notes"];
-	[lead setValue:[Common dateFromString:[_aJob valueForKey:@"pubDate"]] forKey:@"date"];
+	[lead setValue:[Common dateFromString:[_aJob valueForKey:@"pubdate"]] forKey:@"date"];
 	[lead setValue:[_aJob valueForKey:@"link"] forKey:@"link"];
-	[lead setValue:[_aJob valueForKey:@"city"] forKey:@"city"];
+	[lead setValue:[_aJob valueForKey:@"location"] forKey:@"city"];
 	[lead setValue:[_aJob valueForKey:@"company"] forKey:@"company"];	
 
 	[lead setValue:selectedAction forKey:@"bMailed"];	
@@ -169,7 +137,7 @@
 	if (![managedObjectContext save:&error]) {
 									  // Handle the error...
 	}
-								  
+
 	 UIAlertView *saveLeadAlert = [[UIAlertView alloc] initWithTitle:@"Saved to Leads" message:nil delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[saveLeadAlert show];
  
@@ -177,11 +145,9 @@
 
 - (void)segmentAction:(id)sender
 {
-//    [del trackEvent:[NSString stringWithFormat:@"Share via %ld",(long)[sender selectedSegmentIndex]]:[_aJob valueForKey:@"title"]:[_aJob valueForKey:@"sectionNum"]:1];
+    [del trackPVFull:@"Listing" :@"Action" :[NSString stringWithFormat:@"%ld",(long)[sender selectedSegmentIndex]] :@""];
 
     
-    NSLog(@"share option %ld",(long)[sender selectedSegmentIndex]);
-
 	if ([sender selectedSegmentIndex] == 0) {
 		[self saveToLeads:[NSNumber numberWithInt:0]];
 	} else if ([sender selectedSegmentIndex] == 2){
@@ -198,11 +164,6 @@
 	
 }	
 
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
-}
 
 
 - (void)didReceiveMemoryWarning {

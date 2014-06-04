@@ -67,6 +67,7 @@
 		CE10EC7B18FB569D00BA4B01 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3ADF7D18EA5ADC00259F05 /* libGoogleAnalyticsServices.a */; };
 		CE10EC7F18FBACD700BA4B01 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE10EC7E18FBACD700BA4B01 /* libz.dylib */; };
 		CE1B83CF193E4C8700058D22 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1B83CD193E4C1B00058D22 /* libGoogleAdMobAds.a */; };
+		CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1B83D2193E917A00058D22 /* appconfig.plist */; };
 		CE1EB5E7191C6E330000901C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1EB5E6191C6E330000901C /* XCTest.framework */; };
 		CE1EB5E8191C6E330000901C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		CE1EB5E9191C6E330000901C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -205,59 +206,60 @@
 		5AF99D64175A978000713946 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		5AF99D66175A978900713946 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* jobagent-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "jobagent-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		CE10EC7C18FBA56B00BA4B01 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = ../GoogleAnalyticsServicesiOS_3.06/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		CE10EC7C18FBA56B00BA4B01 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = ../../GoogleAnalyticsServicesiOS_3.06/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		CE10EC7E18FBACD700BA4B01 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		CE1B83C1193E4AA400058D22 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdMobExtras.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADAdMobExtras.h"; sourceTree = "<group>"; };
-		CE1B83C2193E4AA400058D22 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdNetworkExtras.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADAdNetworkExtras.h"; sourceTree = "<group>"; };
-		CE1B83C3193E4AA400058D22 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdSize.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADAdSize.h"; sourceTree = "<group>"; };
-		CE1B83C4193E4AA400058D22 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerView.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADBannerView.h"; sourceTree = "<group>"; };
-		CE1B83C5193E4AA400058D22 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerViewDelegate.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADBannerViewDelegate.h"; sourceTree = "<group>"; };
-		CE1B83C6193E4AA400058D22 /* GADInAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInAppPurchase.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADInAppPurchase.h"; sourceTree = "<group>"; };
-		CE1B83C7193E4AA400058D22 /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInAppPurchaseDelegate.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADInAppPurchaseDelegate.h"; sourceTree = "<group>"; };
-		CE1B83C8193E4AA400058D22 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitial.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADInterstitial.h"; sourceTree = "<group>"; };
-		CE1B83C9193E4AA400058D22 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADInterstitialDelegate.h"; sourceTree = "<group>"; };
-		CE1B83CA193E4AA400058D22 /* GADModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADModules.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADModules.h"; sourceTree = "<group>"; };
-		CE1B83CB193E4AA400058D22 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequest.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADRequest.h"; sourceTree = "<group>"; };
-		CE1B83CC193E4AA400058D22 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequestError.h; path = "../GoogleMobileAdsSdkiOS-6.9.2/GADRequestError.h"; sourceTree = "<group>"; };
-		CE1B83CD193E4C1B00058D22 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../GoogleMobileAdsSdkiOS-6.9.2/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
+		CE1B83C1193E4AA400058D22 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdMobExtras.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdMobExtras.h"; sourceTree = "<group>"; };
+		CE1B83C2193E4AA400058D22 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdNetworkExtras.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdNetworkExtras.h"; sourceTree = "<group>"; };
+		CE1B83C3193E4AA400058D22 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdSize.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdSize.h"; sourceTree = "<group>"; };
+		CE1B83C4193E4AA400058D22 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerView.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADBannerView.h"; sourceTree = "<group>"; };
+		CE1B83C5193E4AA400058D22 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerViewDelegate.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADBannerViewDelegate.h"; sourceTree = "<group>"; };
+		CE1B83C6193E4AA400058D22 /* GADInAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInAppPurchase.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADInAppPurchase.h"; sourceTree = "<group>"; };
+		CE1B83C7193E4AA400058D22 /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInAppPurchaseDelegate.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADInAppPurchaseDelegate.h"; sourceTree = "<group>"; };
+		CE1B83C8193E4AA400058D22 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitial.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADInterstitial.h"; sourceTree = "<group>"; };
+		CE1B83C9193E4AA400058D22 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADInterstitialDelegate.h"; sourceTree = "<group>"; };
+		CE1B83CA193E4AA400058D22 /* GADModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADModules.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADModules.h"; sourceTree = "<group>"; };
+		CE1B83CB193E4AA400058D22 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequest.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADRequest.h"; sourceTree = "<group>"; };
+		CE1B83CC193E4AA400058D22 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequestError.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADRequestError.h"; sourceTree = "<group>"; };
+		CE1B83CD193E4C1B00058D22 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../../GoogleMobileAdsSdkiOS-6.9.2/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
+		CE1B83D2193E917A00058D22 /* appconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appconfig.plist; sourceTree = "<group>"; };
 		CE1EB5E5191C6E330000901C /* jobagent Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "jobagent Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1EB5E6191C6E330000901C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		CE1EB5EC191C6E330000901C /* jobagent Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "jobagent Tests-Info.plist"; sourceTree = "<group>"; };
 		CE1EB5EE191C6E330000901C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CE1EB5F0191C6E330000901C /* jobagent_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jobagent_Tests.m; sourceTree = "<group>"; };
 		CE1EB5F2191C6E330000901C /* jobagent Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "jobagent Tests-Prefix.pch"; sourceTree = "<group>"; };
-		CE3ADF7B18EA5A1500259F05 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../GoogleAdMobAdsSdkiOS-6.8.0/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
-		CE3ADF7D18EA5ADC00259F05 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = ../GoogleAnalyticsServicesiOS_3.06/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
-		CE49DD60191AB87A00AC18A2 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperation.h"; sourceTree = "<group>"; };
-		CE49DD61191AB87A00AC18A2 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperation.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperation.m"; sourceTree = "<group>"; };
-		CE49DD62191AB87A00AC18A2 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperationManager.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperationManager.h"; sourceTree = "<group>"; };
-		CE49DD63191AB87A00AC18A2 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperationManager.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperationManager.m"; sourceTree = "<group>"; };
-		CE49DD64191AB87A00AC18A2 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPSessionManager.h"; sourceTree = "<group>"; };
-		CE49DD65191AB87A00AC18A2 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPSessionManager.m"; sourceTree = "<group>"; };
-		CE49DD66191AB87A00AC18A2 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworking.h"; sourceTree = "<group>"; };
-		CE49DD67191AB87A00AC18A2 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworkReachabilityManager.h"; sourceTree = "<group>"; };
-		CE49DD68191AB87A00AC18A2 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworkReachabilityManager.m"; sourceTree = "<group>"; };
-		CE49DD69191AB87A00AC18A2 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFSecurityPolicy.h"; sourceTree = "<group>"; };
-		CE49DD6A191AB87A00AC18A2 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFSecurityPolicy.m"; sourceTree = "<group>"; };
-		CE49DD6B191AB87A00AC18A2 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLConnectionOperation.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLConnectionOperation.h"; sourceTree = "<group>"; };
-		CE49DD6C191AB87A00AC18A2 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLConnectionOperation.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLConnectionOperation.m"; sourceTree = "<group>"; };
-		CE49DD6D191AB87A00AC18A2 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLRequestSerialization.h"; sourceTree = "<group>"; };
-		CE49DD6E191AB87A00AC18A2 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLRequestSerialization.m"; sourceTree = "<group>"; };
-		CE49DD6F191AB87A00AC18A2 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLResponseSerialization.h"; sourceTree = "<group>"; };
-		CE49DD70191AB87A00AC18A2 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLResponseSerialization.m"; sourceTree = "<group>"; };
-		CE49DD71191AB87A00AC18A2 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLSessionManager.h"; sourceTree = "<group>"; };
-		CE49DD72191AB87A00AC18A2 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = "../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLSessionManager.m"; sourceTree = "<group>"; };
+		CE3ADF7B18EA5A1500259F05 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "/Users/brenden/workspace/GoogleMobileAdsSdkiOS-6.9.2/libGoogleAdMobAds.a"; sourceTree = "<absolute>"; };
+		CE3ADF7D18EA5ADC00259F05 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = /Users/brenden/workspace/GoogleAnalyticsServicesiOS_3.06/libGoogleAnalyticsServices.a; sourceTree = "<absolute>"; };
+		CE49DD60191AB87A00AC18A2 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperation.h"; sourceTree = "<group>"; };
+		CE49DD61191AB87A00AC18A2 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperation.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperation.m"; sourceTree = "<group>"; };
+		CE49DD62191AB87A00AC18A2 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperationManager.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperationManager.h"; sourceTree = "<group>"; };
+		CE49DD63191AB87A00AC18A2 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperationManager.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperationManager.m"; sourceTree = "<group>"; };
+		CE49DD64191AB87A00AC18A2 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPSessionManager.h"; sourceTree = "<group>"; };
+		CE49DD65191AB87A00AC18A2 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPSessionManager.m"; sourceTree = "<group>"; };
+		CE49DD66191AB87A00AC18A2 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworking.h"; sourceTree = "<group>"; };
+		CE49DD67191AB87A00AC18A2 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworkReachabilityManager.h"; sourceTree = "<group>"; };
+		CE49DD68191AB87A00AC18A2 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworkReachabilityManager.m"; sourceTree = "<group>"; };
+		CE49DD69191AB87A00AC18A2 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFSecurityPolicy.h"; sourceTree = "<group>"; };
+		CE49DD6A191AB87A00AC18A2 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFSecurityPolicy.m"; sourceTree = "<group>"; };
+		CE49DD6B191AB87A00AC18A2 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLConnectionOperation.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLConnectionOperation.h"; sourceTree = "<group>"; };
+		CE49DD6C191AB87A00AC18A2 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLConnectionOperation.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLConnectionOperation.m"; sourceTree = "<group>"; };
+		CE49DD6D191AB87A00AC18A2 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLRequestSerialization.h"; sourceTree = "<group>"; };
+		CE49DD6E191AB87A00AC18A2 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLRequestSerialization.m"; sourceTree = "<group>"; };
+		CE49DD6F191AB87A00AC18A2 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLResponseSerialization.h"; sourceTree = "<group>"; };
+		CE49DD70191AB87A00AC18A2 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLResponseSerialization.m"; sourceTree = "<group>"; };
+		CE49DD71191AB87A00AC18A2 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLSessionManager.h"; sourceTree = "<group>"; };
+		CE49DD72191AB87A00AC18A2 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLSessionManager.m"; sourceTree = "<group>"; };
 		CE5AB1A81919D435008146A1 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
-		CE5AB1AA1919D5CE008146A1 /* libUAirship-4.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-4.0.0.a"; path = "../libUAirship-latest/Airship/libUAirship-4.0.0.a"; sourceTree = "<group>"; };
+		CE5AB1AA1919D5CE008146A1 /* libUAirship-4.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-4.0.0.a"; path = "/Users/brenden/workspace/libUAirship-latest/Airship/libUAirship-4.0.0.a"; sourceTree = "<absolute>"; };
 		CE5AB1B8191A0690008146A1 /* Tips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tips.h; sourceTree = "<group>"; };
 		CE5AB1B9191A0690008146A1 /* Tips.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tips.m; sourceTree = "<group>"; };
 		CE68CA09190032480044CA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		CE6E365F18E93430000240F6 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = ../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAI.h; sourceTree = "<group>"; };
-		CE6E366018E93430000240F6 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = ../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
-		CE6E366118E93430000240F6 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = ../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAIFields.h; sourceTree = "<group>"; };
-		CE6E366218E93430000240F6 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAILogger.h; path = ../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAILogger.h; sourceTree = "<group>"; };
-		CE6E366318E93430000240F6 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = ../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAITrackedViewController.h; sourceTree = "<group>"; };
-		CE6E366418E93430000240F6 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = ../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAITracker.h; sourceTree = "<group>"; };
+		CE6E365F18E93430000240F6 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAI.h; sourceTree = "<group>"; };
+		CE6E366018E93430000240F6 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		CE6E366118E93430000240F6 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAIFields.h; sourceTree = "<group>"; };
+		CE6E366218E93430000240F6 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAILogger.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAILogger.h; sourceTree = "<group>"; };
+		CE6E366318E93430000240F6 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAITrackedViewController.h; sourceTree = "<group>"; };
+		CE6E366418E93430000240F6 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAITracker.h; sourceTree = "<group>"; };
 		CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobagent_Prefix.pch; sourceTree = "<group>"; };
 		CEABD63118F0F7800027C366 /* DFPBannerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
 		CEABD63218F0F7800027C366 /* DFPExtras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
@@ -325,7 +327,7 @@
 		CEABD67B18F0F7800027C366 /* CuteAnimals-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CuteAnimals-Info.plist"; sourceTree = "<group>"; };
 		CEABD67C18F0F7800027C366 /* CuteAnimals-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CuteAnimals-Prefix.pch"; sourceTree = "<group>"; };
 		CEABD67D18F0F7800027C366 /* CuteAnimals.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CuteAnimals.xcodeproj; sourceTree = "<group>"; };
-		CEABD68018F0F7800027C366 /* GTM-XXXX */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-XXXX"; sourceTree = "<group>"; };
+		CEABD68018F0F7800027C366 /* GTM-XXXX */ = {isa = PBXFileReference; lastKnownFileType = text; path = "GTM-XXXX"; sourceTree = "<group>"; };
 		CEABD68118F0F7800027C366 /* GTM-XXXX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTM-XXXX.plist"; sourceTree = "<group>"; };
 		CEABD68318F0F7800027C366 /* Bunny-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Bunny-1.jpg"; sourceTree = "<group>"; };
 		CEABD68418F0F7800027C366 /* Bunny-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Bunny-2.jpg"; sourceTree = "<group>"; };
@@ -579,6 +581,7 @@
 				CE5AB1A51919D416008146A1 /* Airship */,
 				CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */,
 				8D1107310486CEB800E47090 /* jobagent-Info.plist */,
+				CE1B83D2193E917A00058D22 /* appconfig.plist */,
 				0445965F1533D3ED0078698D /* GoogleAnalytics */,
 				5A226F43151EC88300880C6B /* GoogleAds */,
 				04B36748126BFE0900249902 /* Helpers */,
@@ -1124,6 +1127,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */,
 				04E1CCA315237AD1003C4A7F /* MainWindow.xib in Resources */,
 				CEF52224191C188900844450 /* Tips.xib in Resources */,
 				04BD71BD11498F1300EEB368 /* JobDetail.xib in Resources */,
@@ -1251,14 +1255,13 @@
 				GCC_PREFIX_HEADER = jobagent_Prefix.pch;
 				GCC_VERSION = "";
 				GENERATE_MASTER_OBJECT_FILE = NO;
-				HEADER_SEARCH_PATHS = "../libUAirship-latest/Airship/**";
+				HEADER_SEARCH_PATHS = "/Users/brenden/workspace/libUAirship-latest/Airship/**";
 				INFOPLIST_FILE = "jobagent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_GENERATE_MAP_FILE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"/Users/brenden/workspace/GoogleAdMobAdsSdkiOS-6.8.0",
 					/Users/brenden/workspace/GoogleAnalyticsServicesiOS_3.06,
 					"/Users/brenden/workspace/libUAirship-latest/Airship",
 					"/Users/brenden/workspace/GoogleMobileAdsSdkiOS-6.9.2",
@@ -1293,14 +1296,13 @@
 				GCC_PREFIX_HEADER = jobagent_Prefix.pch;
 				GCC_VERSION = "";
 				GENERATE_MASTER_OBJECT_FILE = NO;
-				HEADER_SEARCH_PATHS = "../libUAirship-latest/Airship/**";
+				HEADER_SEARCH_PATHS = "/Users/brenden/workspace/libUAirship-latest/Airship/**";
 				INFOPLIST_FILE = "jobagent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_GENERATE_MAP_FILE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"/Users/brenden/workspace/GoogleAdMobAdsSdkiOS-6.8.0",
 					/Users/brenden/workspace/GoogleAnalyticsServicesiOS_3.06,
 					"/Users/brenden/workspace/libUAirship-latest/Airship",
 					"/Users/brenden/workspace/GoogleMobileAdsSdkiOS-6.9.2",
@@ -1335,6 +1337,11 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/brenden/workspace/libUAirship-latest/Airship",
+					"/Users/brenden/workspace/GoogleMobileAdsSdkiOS-6.9.2",
+					/Users/brenden/workspace/GoogleAnalyticsServicesiOS_3.06,
+				);
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = "";
@@ -1363,6 +1370,11 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/brenden/workspace/libUAirship-latest/Airship",
+					"/Users/brenden/workspace/GoogleMobileAdsSdkiOS-6.9.2",
+					/Users/brenden/workspace/GoogleAnalyticsServicesiOS_3.06,
+				);
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = "";
