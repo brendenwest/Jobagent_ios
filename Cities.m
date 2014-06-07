@@ -11,7 +11,7 @@
 
 @implementation Cities
 
-@synthesize del, placemarks;
+@synthesize appDelegate, placemarks;
 
 
 - (void)viewDidLoad {
@@ -19,7 +19,7 @@
 	
 	self.title = @"Locations";
 
-    del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
@@ -33,7 +33,7 @@
 
     [self.tableView reloadData];
 
-    [del trackPV:self.title];
+    [appDelegate trackPV:self.title];
 
 }
 
@@ -43,11 +43,6 @@
 
 }
 
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
-}
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -118,9 +113,13 @@
              }
              NSLog(@"Received placemarks: %@", placemarksForZip);
              CLPlacemark *newPlacemark = [placemarksForZip objectAtIndex:0];
-             [del.userSettings setValue:newPlacemark.postalCode forKey:@"postalcode"];
-             [del.userSettings setValue:[NSString stringWithFormat:@"%.4F",newPlacemark.region.center.latitude] forKey:@"lat"];
-             [del.userSettings setValue:[NSString stringWithFormat:@"%.4F",newPlacemark.region.center.longitude] forKey:@"lng"];
+             
+             NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+             [defaults setObject:(NSString *)newPlacemark.postalCode forKey:@"postalcode"];
+             [defaults setObject:(NSString *)newPlacemark.locality forKey:@"city"];
+             [defaults setObject:(NSString *)newPlacemark.administrativeArea forKey:@"state"];
+             [defaults setObject:(NSString *)newPlacemark.ISOcountryCode forKey:@"countryCode"];
+             [defaults synchronize];
              
              //    NSLog(@"lat-long is %.4F - %.4F", placemark.region.center.latitude,placemark.region.center.longitude);
              [self.navigationController popViewControllerAnimated:YES];

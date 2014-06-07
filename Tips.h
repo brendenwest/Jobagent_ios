@@ -13,8 +13,6 @@
 @interface Tips : UIViewController < UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate> {
 
 	IBOutlet UITableView	*tableView;
-//  UIButton *btnTips;
-//    UILabel *lblAbout;
 	
     // Google ad instance
 	GADBannerView *bannerView_;

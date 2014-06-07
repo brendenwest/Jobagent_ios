@@ -14,10 +14,11 @@
 
 @interface SearchJobs : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate> {
 
-	AppDelegate *del;
+	AppDelegate *appDelegate;
 	NSString *txtSearch;
 	NSString *prevSearch;
-	NSString *txtZip;
+	NSString *curLocation;
+	NSString *curLocale;
 		
     UILabel *lblSearch;
 	UITableView	*tableView;
@@ -34,7 +35,8 @@
 
 @property (nonatomic, strong) NSString *txtSearch;
 @property (nonatomic, strong) NSString *prevSearch;
-@property (nonatomic, strong) NSString *txtZip;
+@property (nonatomic, strong) NSString *curLocation;
+@property (nonatomic, strong) NSString *curLocale;
 
 @property (nonatomic, strong) IBOutlet UILabel *lblSearch;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
@@ -43,7 +45,7 @@
 
 @property (nonatomic, strong) IBOutlet JobDetail *jobDetailVC;
 
-@property (nonatomic, strong) AppDelegate *del;
+@property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSArray *siteList;
 @property (nonatomic, strong) NSString *feedNew;
 @property (nonatomic, strong) NSNumber *currentSection;

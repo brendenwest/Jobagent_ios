@@ -19,7 +19,7 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     NSManagedObjectModel *managedObjectModel;
     NSManagedObjectContext *managedObjectContext; 
-	NSMutableDictionary *userSettings;
+//	NSMutableDictionary *userSettings;
 	
     UIWindow *window;
     UITabBarController *tabBarController;
@@ -35,7 +35,7 @@
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong, readonly) NSString *applicationDocumentsDirectory;
-@property (nonatomic, strong) NSMutableDictionary *userSettings;
+//@property (nonatomic, strong) NSMutableDictionary *userSettings;
 @property (nonatomic, strong) NSString *prevSearch;
 @property(nonatomic, strong) id<GAITracker> tracker;
 
@@ -54,6 +54,7 @@
 - (void)setPerson:(NSString*)personName withCo:(NSString*)companyName;
 
 - (NSArray*)getEvents:(NSString*)eventName;
+- (NSMutableDictionary*)getUserSettings;
 
 
 @end

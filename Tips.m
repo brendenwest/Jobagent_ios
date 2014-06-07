@@ -81,10 +81,11 @@
     // Make the request for a test ad if on the simulator as well as any test devices
     request.testDevices = @[ GAD_SIMULATOR_ID ];
 
-    NSString* postalCode = [[(AppDelegate *)[[UIApplication sharedApplication] delegate] userSettings]  valueForKey:@"postalcode"];
+    NSString* postalCode = [[NSUserDefaults standardUserDefaults]  stringForKey:@"postalcode"];
+    NSString* countryCode = [[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"];
     
     // pass current location info on ad request
-    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ US",postalCode]];
+    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ %@",postalCode, countryCode]];
     
     return request;
 }

@@ -19,7 +19,7 @@ NSString *textViewPlaceholder = @"notes";
 
 @implementation CompanyDetail
 
-@synthesize coName, tableCoType, notes, userSettings, btnExternalLinks, coTypes;
+@synthesize coName, tableCoType, notes, btnExternalLinks, coTypes;
 @synthesize selectedCompany = _selectedCompany;
 @synthesize searchVC = searchVC;
 @synthesize leadsVC = leadsVC;
@@ -39,12 +39,13 @@ NSString *textViewPlaceholder = @"notes";
 - (void) loadExternalLink:(id)sender {
     NSInteger tmpSegment = [sender selectedSegmentIndex];
     NSString *url;
+    NSString *curZip = [[NSUserDefaults standardUserDefaults]  stringForKey:@"postalcode"];
     NSLog(@"loading # %i", tmpSegment);
     
     if ([coName.text length] > 0) {
 
         if (tmpSegment == 0 ) { // link to map
-                url = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@&near=%@", [coName.text stringByReplacingOccurrencesOfString:@" " withString:@"+"], [userSettings valueForKey:@"postalcode"]];
+                url = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@&near=%@", [coName.text stringByReplacingOccurrencesOfString:@" " withString:@"+"], curZip];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 
         } else if (tmpSegment == 1 ) { // link to LinkedIn
@@ -72,7 +73,7 @@ NSString *textViewPlaceholder = @"notes";
                     self.searchVC = [[SearchJobs alloc] initWithNibName:@"SearchJobs" bundle:nil];
                 
                 self.searchVC.txtSearch = coName.text;
-                self.searchVC.txtZip = [self.userSettings valueForKey:@"postalcode"];
+                self.searchVC.curLocation = curZip;
                 
                 [self.navigationController pushViewController:self.searchVC animated:YES];
             }
@@ -148,10 +149,6 @@ NSString *textViewPlaceholder = @"notes";
 	if (managedObjectContext == nil)
 	{ 
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
-	}
-	if (userSettings == nil) 
-	{ 
-		self.userSettings = [(AppDelegate *)[[UIApplication sharedApplication] delegate] userSettings]; 
 	}
 
     coTypes = [NSArray arrayWithObjects:@"Default",@"Agency",@"Govt",@"Training", nil];

@@ -16,7 +16,6 @@
 	UITextField	*coName;
 	UITableView *tableCoType;
 	UITextView	*notes;
-	NSMutableDictionary *userSettings;
     
 	NSManagedObjectContext *managedObjectContext;
 	Company *_selectedCompany;
@@ -33,13 +32,10 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableCoType;
 @property (nonatomic, strong) IBOutlet UITextView *notes;
 
-@property (nonatomic, strong) NSMutableDictionary *userSettings;
-
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) Company *selectedCompany;
 
 @property (nonatomic, strong) NSArray *coTypes;
-
 
 @property (nonatomic, strong) SearchJobs *searchVC; // for linking to job search
 @property (nonatomic, strong) Leads *leadsVC; // for linking to job search

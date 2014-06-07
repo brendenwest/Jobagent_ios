@@ -15,8 +15,8 @@
 @implementation PersonDetail
 @synthesize companyVC = _companyVC;
 
-@synthesize del, scrollView, name, pTitle, phone, email, company, activeField, description;
-@synthesize btnCompany, btnMail, btnPhone, userSettings;
+@synthesize appDelegate, scrollView, name, pTitle, phone, email, company, activeField, description;
+@synthesize btnCompany, btnMail, btnPhone;
 @synthesize selectedPerson = _selectedPerson;
 
 - (void)sendMail {
@@ -38,11 +38,11 @@
 
 - (IBAction)btnPushed:(id)sender {
 	if (sender == btnCompany && [company.text length] > 0) {
-		[del setCompany:company.text];
+		[appDelegate setCompany:company.text];
 		CompanyDetail *companyVC = [[CompanyDetail alloc]
                                     initWithNibName:@"CompanyDetail" bundle:nil];
         
-		NSArray *companies = [del getCompanies:company.text];
+		NSArray *companies = [appDelegate getCompanies:company.text];
 		if ([companies count] > 0) {
 			companyVC.selectedCompany = [companies objectAtIndex:0];
         }
@@ -153,11 +153,8 @@
     
     [self registerForKeyboardNotifications];
 
-	if (userSettings == nil)
-	{ 
-		self.userSettings = [(AppDelegate *)[[UIApplication sharedApplication] delegate] userSettings]; 
-	}
-	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
+	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
@@ -192,7 +189,7 @@
 
     [self checkTextFields];
 
-    [del trackPV:self.title];
+    [appDelegate trackPV:self.title];
 
 }
 
@@ -252,7 +249,7 @@
         }
         if ([company.text length] > 0) {
             self.selectedPerson.company = company.text;
-            [del setCompany:company.text];
+            [appDelegate setCompany:company.text];
         }
         if ([phone.text length] > 0) {
             self.selectedPerson.phone = phone.text;

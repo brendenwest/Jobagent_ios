@@ -15,7 +15,7 @@
 
 @interface PersonDetail : UIViewController <UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, MFMailComposeViewControllerDelegate > {
 
-	AppDelegate *del;
+	AppDelegate *appDelegate;
     IBOutlet UIScrollView *scrollView;
 
 	UITextField	*name;
@@ -29,13 +29,12 @@
 	UIButton *btnCompany;
 	UIButton *btnPhone;
 	UIButton *btnMail;
-	NSMutableDictionary *userSettings;
 	
 	Person *_selectedPerson;
 	CompanyDetail *_companyVC;
 }
 
-@property (nonatomic, strong) AppDelegate *del;
+@property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) IBOutlet UITextField *name;
@@ -51,7 +50,6 @@
 @property (nonatomic, strong) IBOutlet UIButton *btnCompany;
 @property (nonatomic, strong) IBOutlet UIButton *btnPhone;
 @property (nonatomic, strong) IBOutlet UIButton *btnMail;
-@property (nonatomic, strong) NSMutableDictionary *userSettings;
 
 @property (nonatomic, strong) Person *selectedPerson;
 @property (nonatomic, strong) CompanyDetail *companyVC; // for linking to company details

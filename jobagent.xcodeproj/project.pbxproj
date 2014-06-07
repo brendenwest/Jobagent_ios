@@ -90,6 +90,7 @@
 		CEB1A208190394410008F0A2 /* jobagent_icon_58.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A204190394410008F0A2 /* jobagent_icon_58.png */; };
 		CEB1A209190394410008F0A2 /* jobagent_icon_80.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A205190394410008F0A2 /* jobagent_icon_80.png */; };
 		CEB1A20A190394410008F0A2 /* jobagent_icon_120.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A206190394410008F0A2 /* jobagent_icon_120.png */; };
+		CEB27814193F81770071EC32 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CEB27813193F81770071EC32 /* Settings.bundle */; };
 		CEE831281905ACD0004EA382 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE831271905ACD0004EA382 /* StoreKit.framework */; };
 		CEF52220191BDD8500844450 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF5221F191BDD8500844450 /* Common.m */; };
 		CEF52224191C188900844450 /* Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF52223191C188900844450 /* Tips.xib */; };
@@ -396,6 +397,7 @@
 		CEB1A204190394410008F0A2 /* jobagent_icon_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_58.png; path = Resources/jobagent_icon_58.png; sourceTree = "<group>"; };
 		CEB1A205190394410008F0A2 /* jobagent_icon_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_80.png; path = Resources/jobagent_icon_80.png; sourceTree = "<group>"; };
 		CEB1A206190394410008F0A2 /* jobagent_icon_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_120.png; path = Resources/jobagent_icon_120.png; sourceTree = "<group>"; };
+		CEB27813193F81770071EC32 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		CEE831271905ACD0004EA382 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CEF5221E191BDD8500844450 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		CEF5221F191BDD8500844450 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEB27813193F81770071EC32 /* Settings.bundle */,
 				04F4FD8D175B176F00FED540 /* Default-568h@2x.png */,
 				04C12457162273C800BADCE6 /* Default-568h@2x.png */,
 				CEB1A203190394410008F0A2 /* jobagent_icon_29.png */,
@@ -1149,6 +1152,7 @@
 				CEB1A207190394410008F0A2 /* jobagent_icon_29.png in Resources */,
 				04F4FD84175B161200FED540 /* jobagent_icon_57.png in Resources */,
 				04F4FD86175B165100FED540 /* jobagent_icon_114.png in Resources */,
+				CEB27814193F81770071EC32 /* Settings.bundle in Resources */,
 				04F4FD8A175B168300FED540 /* Default@2x.png in Resources */,
 				04F4FD8E175B176F00FED540 /* Default-568h@2x.png in Resources */,
 			);

@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="btnSearch" destination="114" id="236"/>
                 <outlet property="btnTips" destination="259" id="Mgg-q0-zPF"/>
+                <outlet property="lblCityState" destination="HEI-jB-zFg" id="CxY-cF-4eE"/>
                 <outlet property="tblRecent" destination="249" id="251"/>
                 <outlet property="txtLocation" destination="217" id="234"/>
                 <outlet property="txtSearch" destination="193" id="235"/>
@@ -21,11 +22,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="114" userLabel="btnSearch">
-                    <rect key="frame" x="242" y="85" width="52" height="29"/>
+                    <rect key="frame" x="236" y="46" width="52" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                     <state key="normal" title="Go">
-                        <color key="titleColor" red="0.48514851489999999" green="0.48514851489999999" blue="0.48514851489999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -53,7 +53,7 @@
                     </connections>
                 </textField>
                 <tableView hidden="YES" autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" id="249">
-                    <rect key="frame" x="20" y="134" width="280" height="305"/>
+                    <rect key="frame" x="20" y="151" width="280" height="288"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -80,6 +80,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.40217391299999999" green="0.40217391299999999" blue="0.40217391299999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="city, state" lineBreakMode="tailTruncation" minimumFontSize="10" id="HEI-jB-zFg" userLabel="lblCityState">
+                    <rect key="frame" x="39" y="115" width="189" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

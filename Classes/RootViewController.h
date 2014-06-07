@@ -14,23 +14,22 @@
 
 @interface RootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, CLLocationManagerDelegate > {
 
-	AppDelegate *del;
+	AppDelegate *appDelegate;
 
 	IBOutlet UITextField *txtSearch;
 	IBOutlet UITextField *txtLocation;
-    NSString *curZip;
-    NSString *curLat;
-    NSString *curLng;
+    NSString *curLocation;
+    NSString *curLocale;
     
 	IBOutlet UIButton *btnSearch;
 	IBOutlet UIButton *btnTips;
+	IBOutlet UILabel *lblCityState;
 	IBOutlet UITableView	*tblRecent;
 
 	SearchJobs *_searchVC; // for linking to job details
 	Tips *_tipsVC; // for linking to tips screen
 	Cities *_citiesVC; // for linking to list of cities w/ zips
 
-	NSMutableDictionary *userSettings;
 	NSMutableArray *searches;
     
     GADBannerView *bannerView_;
@@ -42,16 +41,16 @@
 @property (nonatomic, strong) IBOutlet UITextField *txtSearch;
 @property (nonatomic, strong) IBOutlet UITextField *txtLocation;
 
-@property (nonatomic, strong) NSString *curZip;
-@property (nonatomic, strong) NSString *curLat;
-@property (nonatomic, strong) NSString *curLng;
+@property (nonatomic, strong) NSString *curLocation;
+@property (nonatomic, strong) NSString *curLocale;
 
 @property (nonatomic, strong) IBOutlet UIButton *btnSearch;
 @property (nonatomic, strong) IBOutlet UIButton *btnTips;
+@property (nonatomic, strong) IBOutlet UILabel *lblCityState;
 
 @property (nonatomic, strong) IBOutlet UITableView *tblRecent;
 
-@property (nonatomic, strong) AppDelegate *del;
+@property (nonatomic, strong) AppDelegate *appDelegate;
 
 @property (nonatomic, strong) NSMutableDictionary *userSettings;
 @property (nonatomic, strong) NSMutableArray *searches;

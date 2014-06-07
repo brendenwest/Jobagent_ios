@@ -15,8 +15,8 @@
 
 @implementation SearchJobs
 
-@synthesize txtSearch, prevSearch, lblSearch, txtZip, btnJobSite, uiLoading, siteList, tableView;
-@synthesize feedNew, currentSection, jobsAll, jobsForSite, del;
+@synthesize txtSearch, prevSearch, lblSearch, curLocation, curLocale, btnJobSite, uiLoading, siteList, tableView;
+@synthesize feedNew, currentSection, jobsAll, jobsForSite, appDelegate;
 @synthesize jobDetailVC = _jobDetailVC;
 
 
@@ -36,7 +36,7 @@
 }
     
 - (void)viewDidAppear:(BOOL)animated {
-    NSString *newSearch = [NSString stringWithFormat:@"%@+%@",txtSearch, txtZip];
+    NSString *newSearch = [NSString stringWithFormat:@"%@+%@",txtSearch, curLocation];
     if (txtSearch && ![newSearch isEqualToString:prevSearch]) {
         prevSearch = newSearch;
 		[self requestJobs:nil];
@@ -69,7 +69,7 @@
                 [NSDictionary dictionaryWithObjectsAndKeys:
                  @"LinkUp", @"displayName", @"http://www.linkup.com", @"domain", @"linkup", @"tag", nil], nil];
     
-	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
 	tableView.dataSource = self;
 	
@@ -87,10 +87,24 @@
 - (void)requestJobs:(id)sender
 {
 	NSString *query = [txtSearch stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *locationEncoded = [curLocation stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    
+    NSLog(@"maxResults %@",  [settings objectForKey:@"maxResults"]);
+    NSLog(@"ageResults %@",  [settings objectForKey:@"ageResults"]);
+    NSLog(@"distanceResults %@",  [settings objectForKey:@"distanceResults"]);
+    NSLog(@"countryCode %@",  curLocale);
 
-    NSString *searchUrl = @"http://brisksoft.heroku.com/getjobs?postalcode=<postalcode>&kw=<kw>&v=1&loc=";
+//    NSString *searchUrl = @"http://brisksoft.heroku.com/getjobs?postalcode=<postalcode>&kw=<kw>&v=1&locale=&age=<age>&max=<max>&distance=<distance>";
+    NSString *searchUrl = @"http://localhost:8888/getjobs?location=<location>&kw=<kw>&v=1&country=<country>&age=<age>&max=<max>&distance=<distance>";
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<kw>" withString:query];
-    searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<postalcode>" withString:txtZip];
+    searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<location>" withString:locationEncoded];
+    searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<max>" withString:[settings stringForKey:@"maxResults"]];
+    searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<age>" withString:[settings stringForKey:@"ageResults"]];
+    searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<distance>" withString:[settings stringForKey:@"distanceResults"]];
+
+    searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<country>" withString:curLocale];
+    
     NSURL *url = [NSURL URLWithString:searchUrl];
     
     NSLog(@"search url = %@",searchUrl);
@@ -103,6 +117,8 @@
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.jobsAll = [responseObject objectForKey:@"jobs"];
+//        NSLog(@"received jobs: %@", [responseObject objectForKey:@"jobs"]);
+        
         [self switchJobSite:nil];
 
         tableView.hidden = NO;
@@ -209,7 +225,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-    lblSearch.text = [NSString stringWithFormat:@"Job listings for '%@' in %@",txtSearch,txtZip];
+    lblSearch.text = [NSString stringWithFormat:@"Job listings for '%@' in %@",txtSearch,curLocation];
 
     // Google ads
     // Create a view of the standard size at the bottom of the screen.
@@ -235,13 +251,13 @@
                            nil];
     
     // pass current location info on ad request
-    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ US",[del.userSettings objectForKey:@"postalcode"]]];
+    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ US",[[NSUserDefaults standardUserDefaults] stringForKey:@"postalcode"]]];
     
     // Initiate a generic request to load it with an ad.
     [bannerView_ loadRequest:request]; 
 
     // Log pageview w/ Google Analytics
-    [del trackPVFull:@"SearchJobs" :@"search term" :@"search" :txtSearch];
+    [appDelegate trackPVFull:@"SearchJobs" :@"search term" :@"search" :txtSearch];
 }
 
 

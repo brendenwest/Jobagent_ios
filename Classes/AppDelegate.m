@@ -34,7 +34,7 @@ static BOOL *const kGaDryRun = YES;
 @synthesize tabBarController=_tabBarController;
 @synthesize navigationController =_navigationController;
 
-@synthesize prevSearch, userSettings;
+@synthesize prevSearch;
 @synthesize managedObjectModel;
 @synthesize managedObjectContext;
 @synthesize persistentStoreCoordinator;
@@ -43,16 +43,45 @@ static BOOL *const kGaDryRun = YES;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 
+
 }
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     
+    // get bundle defaults
+    [self registerDefaultsFromSettingsBundle];
+    
+    // get user defaults object
+    NSUserDefaults *newDefaults = [NSUserDefaults standardUserDefaults];
+
+    // get system default country code
+    [newDefaults setObject:[[NSLocale currentLocale] objectForKey:NSLocaleCountryCode] forKey:@"countryCode"];
+
+
+    // add values from legacy settings.xml if found
+    NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
+	
+	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
+		NSDictionary *oldSettings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
+        
+        [newDefaults setObject:[oldSettings objectForKey:@"city"] forKey:@"city"];
+        [newDefaults setObject:[oldSettings objectForKey:@"state"] forKey:@"state"];
+        if ([oldSettings objectForKey:@"postalcode"] != nil) {
+            [newDefaults setObject:[oldSettings objectForKey:@"postalcode"] forKey:@"postalcode"];
+        }
+        [newDefaults setObject:[oldSettings objectForKey:@"country"] forKey:@"countryCode"];
+
+    }
+    [newDefaults synchronize];
+
+    
     NSDictionary *appDefaults = @{kAllowTracking: @(YES)};
-    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
     
     // User must be able to opt out of tracking
     [GAI sharedInstance].optOut =
     ![[NSUserDefaults standardUserDefaults] boolForKey:kAllowTracking];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
     
     // Initialize Google Analytics with a N-second dispatch interval. There is a
     // tradeoff between battery usage and timely dispatch.
@@ -85,6 +114,50 @@ static BOOL *const kGaDryRun = YES;
     
     return TRUE;
     
+}
+
+- (void)registerDefaultsFromSettingsBundle
+{
+    NSLog(@"Registering default values from Settings.bundle");
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    [defs synchronize];
+    
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    
+    if(!settingsBundle)
+    {
+        NSLog(@"Could not find Settings.bundle");
+        return;
+    }
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+    NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
+    
+    for (NSDictionary *prefSpecification in preferences)
+    {
+        NSString *key = [prefSpecification objectForKey:@"Key"];
+        if (key)
+        {
+            // check if value readable in userDefaults
+            id currentObject = [defs objectForKey:key];
+            if (currentObject == nil)
+            {
+                // not readable: set value from Settings.bundle
+                id objectToSet = [prefSpecification objectForKey:@"DefaultValue"];
+                [defaultsToRegister setObject:objectToSet forKey:key];
+                NSLog(@"Setting object %@ for key %@", objectToSet, key);
+            }
+            else
+            {
+                // already readable: don't touch
+                NSLog(@"Key %@ is readable (value: %@), nothing written to defaults.", key, currentObject);
+            }
+        }
+    }
+    
+    [defs registerDefaults:defaultsToRegister];
+    [defs synchronize];
 }
 
 - (void)application:(UIApplication *)app didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -155,7 +228,7 @@ static BOOL *const kGaDryRun = YES;
 
 - (void)trackPV:(NSString*)screenName
 {
-    NSLog(@"logging pv for %@",screenName);
+//    NSLog(@"logging pv for %@",screenName);
     
     // Google Analytics v3
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -226,12 +299,11 @@ static BOOL *const kGaDryRun = YES;
             // Handle the error.
         } 
     }
-	NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
-	NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings 
-																 format:NSPropertyListXMLFormat_v1_0 
-													   errorDescription:nil];
-	[xmlData writeToFile:settingsFile atomically:YES];
     
+    // Store user settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -242,11 +314,11 @@ static BOOL *const kGaDryRun = YES;
             // Handle the error.
         } 
     }
-    NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
-    NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings 
-                                                                 format:NSPropertyListXMLFormat_v1_0 
-                                                       errorDescription:nil];
-    [xmlData writeToFile:settingsFile atomically:YES];
+    
+    
+    // Store user settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
 
 }
 
@@ -270,27 +342,19 @@ static BOOL *const kGaDryRun = YES;
 
 #pragma mark userSettings
 /**
- Returns userSettings dictionary
+ Returns userSettings dictionary. Now used only for recent searches
  */
-- (NSMutableDictionary *) userSettings {
-	
-    if (userSettings != nil) {
-        return userSettings;
-    }
+- (NSMutableDictionary *) getUserSettings {
 	
     NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
 	
 	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
-		userSettings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
+		return [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
 	} else {
-		userSettings = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-						@"", @"city", @"", @"state",@"", @"postalcode", @"", @"country",
-						@"", @"lat", @"", @"lng", @"", @"linkedin",
-						nil];
-	}
-	
-	return userSettings;
+        return nil;
+    }
 }
+
 
 #pragma mark -
 #pragma mark Core Data stack

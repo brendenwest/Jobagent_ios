@@ -11,13 +11,14 @@
 #import "SearchJobs.h"
 #import "Cities.h"
 #import "Tips.h"
-#import "XMLParse.h"
 #import "GADBannerView.h"
 #import "GADRequest.h"
 
 
 #define kSampleAdUnitID @"a14f6e8f0c6d11b"
 //#define GAD_SIMULATOR_ID @"577bade797151a79f2a87a61c9b5b30c697fee41"
+
+// [[NSUserDefaults standardUserDefaults]  stringForKey:@"postalcode"]
 
 @interface RootViewController ()
 
@@ -27,8 +28,8 @@
 
 @implementation RootViewController
 
-@synthesize txtSearch, txtLocation, curZip, curLat, curLng, tblRecent, btnSearch, btnTips, userSettings;
-@synthesize searches, del;
+@synthesize txtSearch, txtLocation, curLocation, curLocale, tblRecent, btnSearch, btnTips, lblCityState;
+@synthesize searches, userSettings, appDelegate;
 
 
 // 98052 = 47.615471,-122.207221
@@ -59,7 +60,7 @@
 - (void)viewSearchResults {
     
     // save this search
-    NSString *thisSearch = [NSString stringWithFormat:@"%@|%@|%@|%@",txtSearch.text,txtLocation.text, curLat, curLng];
+    NSString *thisSearch = [NSString stringWithFormat:@"%@|%@|%@",txtSearch.text,txtLocation.text,curLocale,nil];
     if (![searches containsObject:thisSearch]) {
         [searches insertObject:thisSearch atIndex:0];
         [self.userSettings setValue:searches forKey:@"searches"];
@@ -69,7 +70,8 @@
     if(_searchVC == nil)
         _searchVC = [[SearchJobs alloc] initWithNibName:nil bundle:nil];
     _searchVC.txtSearch = txtSearch.text;
-    _searchVC.txtZip = txtLocation.text;
+    _searchVC.curLocation = txtLocation.text;
+    _searchVC.curLocale = curLocale;
     
     // temporarily set title to 'Back' for appearance on Results view
     self.title = @"Back";
@@ -85,28 +87,27 @@
     [txtLocation resignFirstResponder];
 
     // check if location field changed
-    if (![del connectedToNetwork]) {
+    if (![appDelegate connectedToNetwork]) {
         UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Network connection \nappears to be offline" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
         [noNetworkAlert show];
     } else if (![txtLocation.text length] || ![txtSearch.text length]) {
-        UIAlertView *emptyFieldAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Be sure to enter a \nsearch term and zipcode" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+        UIAlertView *emptyFieldAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Be sure to enter a \nsearch term and location" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
 		[emptyFieldAlert show];
     } else {
 
         [self checkZip:txtLocation];
-        // Don't fire job search if user entered city name instead of zip code
-        if ([txtLocation.text isEqualToString:[self.userSettings objectForKey:@"postalcode"]]) {
+        // Don't fire job search if user entered invalid location
+        if ([txtLocation.text isEqual:curLocation]) {
             [self viewSearchResults];
         }
     }
 }
 
 
-
 // user clicked on recent searches
 - (IBAction)recentSearches:(id)sender {
 	txtSearch.text = nil;
-	[txtSearch resignFirstResponder];
+//	[txtSearch resignFirstResponder];
 }
 
 
@@ -157,36 +158,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    userSettings = [appDelegate getUserSettings];
 
-	if (userSettings == nil)
-	{ 
-		self.userSettings = [(AppDelegate *)[[UIApplication sharedApplication] delegate] userSettings]; 
-	}
 
     // default settings for testing
 //    [self.userSettings setValue:@"98052" forKey:@"postalcode"];
-//    [self.userSettings setValue:@"47.68495" forKey:@"lat"];
-//    [self.userSettings setValue:@"-122.28759" forKey:@"lng"];
 
 //    [self.userSettings setValue:@"" forKey:@"postalcode"]; // clear zip for testing
-
-    // check user's location
-	if (![[self.userSettings valueForKey:@"postalcode"] length] && [del connectedToNetwork]) { 
+    
+    NSString *zip = [[NSUserDefaults standardUserDefaults]  stringForKey:@"postalcode"];
+    NSString *city = [[NSUserDefaults standardUserDefaults]  stringForKey:@"city"];
+    NSString *countryCode = [[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"];
+    
+    // set current location
+    if ([zip length] && [countryCode isEqual:@"US"]) {
+        // user location previously set to US
+        curLocation = zip;
+        curLocale = @"US";
+    } else if ([city length] && ![countryCode isEqual:@"US"]) {
+        // user location previously set to non-US
+        curLocation = [NSString stringWithFormat:@"%@, %@",city,countryCode];
+        curLocale = countryCode;
+    } else if ([appDelegate connectedToNetwork]) {
+        // no user location set. Detect current location
         [self getUserLocation];
-        
-	} else if ([[self.userSettings valueForKey:@"postalcode"] length]) {
-        self.txtLocation.text = [self.userSettings objectForKey:@"postalcode"];
-        curZip = [self.userSettings objectForKey:@"postalcode"];
-        curLat = [self.userSettings objectForKey:@"lat"];
-        curLng = [self.userSettings objectForKey:@"lng"];
-
 	}
+    NSLog(@"stored location = %@",curLocation);
+    NSLog(@"stored countryCode = %@",countryCode);
 
-
-	if ([[self.userSettings objectForKey:@"searches"] count] > 0) {
+	if ([[userSettings objectForKey:@"searches"] count] > 0) {
         // use recent searches
-		searches = [[NSMutableArray alloc] initWithArray:[self.userSettings objectForKey:@"searches"]];
+		searches = [[NSMutableArray alloc] initWithArray:[userSettings objectForKey:@"searches"]];
 		if (![txtSearch.text length]) {
 			txtSearch.text = [[searches objectAtIndex:0] substringToIndex:[[searches objectAtIndex:0] rangeOfString:@"|"].location];
 		}
@@ -201,13 +204,8 @@
 - (void)viewWillAppear:(BOOL)animated {
 
     self.title = @"Job Agent";
+    [self updateLocationFields];
 
-    if ([txtLocation.text length] && ![[self.userSettings objectForKey:@"postalcode"] isEqualToString:txtLocation.text]) {
-        // returning from city selection
-        txtLocation.text = [self.userSettings objectForKey:@"postalcode"];
-    }
-
-    
 	tblRecent.dataSource = self;
 
     if ([searches count] > 0) {
@@ -219,7 +217,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     
-    [del trackPV:@"Home"]; // Google Analytics call needs to happen here, or initial launch event not recorded
+    [appDelegate trackPV:@"Home"]; // Google Analytics call needs to happen here, or initial launch event not recorded
 }
 
 #pragma mark GADRequest generation
@@ -231,7 +229,7 @@
     request.testDevices = @[ GAD_SIMULATOR_ID ];
 
     // pass current location info on ad request
-    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ US",[self.userSettings objectForKey:@"postalcode"]]];
+    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ %@",[[NSUserDefaults standardUserDefaults]  stringForKey:@"postalcode"],[[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"]]];
 
     return request;
 }
@@ -246,6 +244,7 @@
 - (void)adView:(GADBannerView *)bannerView didFailToReceiveAdWithError:(GADRequestError *)error {
     NSLog(@"adView:didFailToReceiveAdWithError:%@", [error localizedDescription]);
 }
+
 
 
 #pragma mark Location Manager methods
@@ -291,7 +290,7 @@
         }
 
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        [self setUserLocation:placemark :placemark.region.center.latitude :placemark.region.center.longitude];
+        [self setUserLocation:placemark];
         
     }];
 }
@@ -315,7 +314,7 @@
                  {
                      NSLog(@"reverse geocode found one location %@",[placemarks objectAtIndex:0]);
                      CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
-                     [self setUserLocation:newPlacemark :loc.coordinate.latitude :loc.coordinate.longitude];
+                     [self setUserLocation:newPlacemark];
                      
                  }
              }];
@@ -331,41 +330,71 @@
 
 }
 
-- (void)setUserLocation:(CLPlacemark *)placemark :(double)latitude :(double)longitude {
+- (void)setUserLocation:(CLPlacemark *)placemark {
 
     // populate user settings based on new geocode values
-    [self.userSettings setValue:(NSString *)placemark.locality forKey:@"city"];
-    [self.userSettings setValue:(NSString *)placemark.administrativeArea forKey:@"state"];
-    [self.userSettings setValue:(NSString *)placemark.ISOcountryCode forKey:@"country"];
-    [self.userSettings setValue:(NSString *)placemark.postalCode forKey:@"postalcode"];
-    [self.userSettings setValue:(NSString *)[NSString stringWithFormat:@"%.4F", latitude] forKey:@"lat"];
-    [self.userSettings setValue:(NSString *)[NSString stringWithFormat:@"%.4F", longitude] forKey:@"lng"];
     
-    [self updateUILocation];
+
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:(NSString *)placemark.locality forKey:@"city"];
+    [defaults setObject:(NSString *)placemark.administrativeArea forKey:@"state"];
+    [defaults setObject:(NSString *)placemark.ISOcountryCode forKey:@"countryCode"];
+    [defaults setObject:(NSString *)placemark.postalCode forKey:@"postalcode"];
+    [defaults synchronize];
+    
+    // set current location
+    if ([(NSString *)placemark.ISOcountryCode isEqual:@"US"]) {
+        // user location previously set to US
+        curLocation = (NSString *)placemark.postalCode;
+    } else if (![(NSString *)placemark.ISOcountryCode isEqual:@"US"]) {
+        // user location previously set to non-US
+        curLocation = [NSString stringWithFormat:@"%@, %@",(NSString *)placemark.locality,(NSString *)placemark.ISOcountryCode];
+    }
+    curLocale =(NSString *)placemark.ISOcountryCode;
+    NSLog(@"set current location %@ ",curLocation);
+    
+    [self updateLocationFields];
 
 }
 
-- (void)updateUILocation {
+- (void)updateLocationFields {
     // update current location values in UI
-    self.txtLocation.text = [self.userSettings objectForKey:@"postalcode"];
-    curZip = [self.userSettings objectForKey:@"postalcode"];
-    curLat = [self.userSettings objectForKey:@"lat"];
-    curLng = [self.userSettings objectForKey:@"lng"];
     
+    if (curLocale == nil) { curLocale = [[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"]; }
+    
+    if ([curLocation length] && [curLocale isEqual:@"US"]) {
+        txtLocation.text = curLocation;
+        lblCityState.hidden = NO;
+        lblCityState.text = [NSString stringWithFormat:@"%@, %@",[[NSUserDefaults standardUserDefaults]  stringForKey:@"city"], [[NSUserDefaults standardUserDefaults]  stringForKey:@"state"]];
+    } else if ([[NSUserDefaults standardUserDefaults]  stringForKey:@"city"] && ![curLocale isEqual:@"US"]) {
+        curLocation = [NSString stringWithFormat:@"%@, %@",[[NSUserDefaults standardUserDefaults]  stringForKey:@"city"], [[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"]];
+        txtLocation.text = curLocation;
+        lblCityState.hidden = YES;
+    }
 }
 
 - (IBAction)checkZip:(id)sender {
-    // check that entered zip code is valid
+    // check that entered location code is valid
+    // valid entries either match current stored location or a valid US 5-digit zip
     NSString *enteredLocation = txtLocation.text;
-    NSLog(@"entered location %@",enteredLocation);
-        NSInteger intZip = [enteredLocation integerValue];
-        BOOL validZip = intZip > 9999 && intZip < 100000; // US 5-digit zip
+    NSInteger integerZip = [enteredLocation integerValue];
+    
+    BOOL validUSzip = integerZip > 9999 && integerZip < 100000;
+    
+    NSLog(@"checkZip for %@",enteredLocation);
+    NSLog(@"integerZip %i",integerZip);
+    NSLog(@"validUSzip %d",validUSzip);
+    NSLog(@"entered location - %@; stored location %@",enteredLocation, curLocation);    
+    NSLog(@"enteredLocation != curLocation %d",![enteredLocation isEqualToString:curLocation]);
 
-        if (!validZip || ![enteredLocation isEqualToString:curZip]) {
-            // user entered a string or new zip.
-            // get location info from geocoder
-            [self forwardGeocode:enteredLocation];
-        }
+    if (integerZip > 0 && !validUSzip) {
+        UIAlertView *validZipAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Please enter a valid 5-digit zipcode" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+        [validZipAlert show];
+    } else if (!validUSzip && ![enteredLocation isEqualToString:curLocation]) {
+        // user entered a string or new zip.
+        // get location info from geocoder
+        [self forwardGeocode:enteredLocation];
+    }
  
 }
 
@@ -378,8 +407,9 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == txtLocation && textField.text != [userSettings objectForKey:@"postalcode"]) {
+    if (textField == txtLocation && textField.text != curLocation) {
         // new location entered
+        NSLog(@"new location entered");
         [self checkZip:textField];
     } else if (textField == txtSearch) {
 		[self searchJobs:btnSearch];
@@ -438,9 +468,18 @@
 
 // Table row selected 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {	
-    if ([del connectedToNetwork]) {
+    if ([appDelegate connectedToNetwork]) {
         NSArray *tmpSearch = [[searches objectAtIndex:indexPath.row] componentsSeparatedByString:@"|"];
         txtSearch.text = [tmpSearch objectAtIndex:0];
+        curLocation = [tmpSearch objectAtIndex:1];
+        // TODO add check for users w/ o locale setting
+        curLocale = [tmpSearch objectAtIndex:2];
+        
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:curLocale forKey:@"countryCode"];
+        [defaults synchronize];
+        
+        [self updateLocationFields];
         [self viewSearchResults];
     } else {
         UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Network connection \nappears to be offline" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
@@ -449,12 +488,17 @@
 	
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
+    // store recent searches
+    NSLog(@"storing recent searches");
+    NSString *settingsFile = [appDelegate.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
+    NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
+                                                                 format:NSPropertyListXMLFormat_v1_0
+                                                       errorDescription:nil];
+    [xmlData writeToFile:settingsFile atomically:YES];
+
 }
-
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];

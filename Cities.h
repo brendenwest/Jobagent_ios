@@ -12,13 +12,13 @@
 
 @interface Cities : UITableViewController <NSXMLParserDelegate> {
 
-    AppDelegate *del;
+    AppDelegate *appDelegate;
 
 	NSArray *placemarks;
 	
 }
 
-@property (nonatomic, strong) AppDelegate *del;
+@property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSArray *placemarks;
 
 
