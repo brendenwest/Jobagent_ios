@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSDate * date;
 @property (nonatomic, strong) NSString * company;
 @property (nonatomic, strong) NSString * city;
+@property (nonatomic, strong) NSString * state;
+@property (nonatomic, strong) NSString * country;
 @property (nonatomic, strong) NSString * person;
 @property (nonatomic, strong) NSString * link;
 @property (nonatomic, strong) NSString * notes;

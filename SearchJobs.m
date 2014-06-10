@@ -211,7 +211,7 @@
 	if(self.jobDetailVC == nil)
 		self.jobDetailVC = [[JobDetail alloc] initWithNibName:@"JobDetail" bundle:nil];
 		
-	self.jobDetailVC.aJob = [jobsForSite objectAtIndex:indexPath.row];
+	self.jobDetailVC.aJob = [[jobsForSite objectAtIndex:indexPath.row] mutableCopy];
     	
 	[self.navigationController pushViewController:self.jobDetailVC animated:YES];
 	

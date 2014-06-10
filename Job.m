@@ -16,6 +16,8 @@
 @dynamic date;
 @dynamic company;
 @dynamic city;
+@dynamic state;
+@dynamic country;
 @dynamic person;
 @dynamic link;
 @dynamic notes;

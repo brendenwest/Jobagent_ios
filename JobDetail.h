@@ -12,41 +12,33 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
+#import "EditItemVC.h"
 
 @class AppDelegate, WebVC;
 
-@interface JobDetail : UIViewController <UITextViewDelegate, MFMailComposeViewControllerDelegate, NSFetchedResultsControllerDelegate> {
+@interface JobDetail : UIViewController <EditItemDelegate, MFMailComposeViewControllerDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
 	
-	AppDelegate *del;
-	UILabel	*jobTitle;
-	UILabel	*company;
-	UILabel	*location;
-	UILabel *pubDate;
-	UILabel *jobType;
-	UILabel *pay;
-	UITextView *description;
+	AppDelegate *appDelegate;
+	UITableView	*tableView;
 	UISegmentedControl *jobActions;
 
 	NSManagedObjectContext *managedObjectContext;
-	NSDictionary *_aJob;
+	NSMutableDictionary *aJob;
 	WebVC *_webVC;
 
 }
 
-@property (nonatomic, strong) AppDelegate *del;
+@property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) WebVC *webVC;
 
-@property (nonatomic, strong) IBOutlet UILabel *jobTitle;
-@property (nonatomic, strong) IBOutlet UILabel *company;
-@property (nonatomic, strong) IBOutlet UILabel *location;
-@property (nonatomic, strong) IBOutlet UILabel *pubDate;
-@property (nonatomic, strong) IBOutlet UILabel *jobType;
-@property (nonatomic, strong) IBOutlet UILabel *pay;
-@property (nonatomic, strong) IBOutlet UITextView *description;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *jobActions;
+@property (nonatomic, strong) NSArray *jobFields;
+@property (nonatomic, strong) NSString *editedItemId;
+
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSDictionary *aJob;
+@property (nonatomic, strong) NSMutableDictionary *aJob;
 
 @end
 

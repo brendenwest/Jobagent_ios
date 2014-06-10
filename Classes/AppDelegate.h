@@ -19,7 +19,6 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     NSManagedObjectModel *managedObjectModel;
     NSManagedObjectContext *managedObjectContext; 
-//	NSMutableDictionary *userSettings;
 	
     UIWindow *window;
     UITabBarController *tabBarController;
@@ -35,7 +34,6 @@
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong, readonly) NSString *applicationDocumentsDirectory;
-//@property (nonatomic, strong) NSMutableDictionary *userSettings;
 @property (nonatomic, strong) NSString *prevSearch;
 @property(nonatomic, strong) id<GAITracker> tracker;
 
