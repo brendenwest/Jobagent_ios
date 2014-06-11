@@ -17,7 +17,7 @@
 
 @implementation JobDetail
 
-@synthesize  jobFields, jobActions, appDelegate, tableView, aJob, editedItemId;
+@synthesize  jobFields, jobTypes, jobActions, appDelegate, tableView, aJob, editedItemId;
 @synthesize managedObjectContext;
 @synthesize webVC = _webVC;
 @synthesize selectedLead = _selectedLead;
@@ -44,7 +44,11 @@ BOOL isSavedJob;
     
     // Use this array to display field labels and map data to Job object keys
     jobFields = [NSArray arrayWithObjects:@"Title", @"Company", @"Location", @"Date", @"Type", @"Link", @"Contact", @"Pay", @"Notes", nil];
-    
+    jobTypes = [NSArray arrayWithObjects:
+                     @"Full-time", @"Part-time", @"Contract - W2",
+                     @"Contract - 1099", @"Intern", @"Volunteer", @"Other",
+                     nil];
+
 	
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
@@ -60,8 +64,6 @@ BOOL isSavedJob;
     if (aJob == nil) { //
         aJob = [[NSMutableDictionary alloc] init];
         [aJob setValue:_selectedLead.jobid forKey:@"jobid"];
-        NSLog(@"view will appear for job %@",[aJob valueForKey:@"title"]);
-
         [aJob setValue:_selectedLead.title forKey:@"title"];
         [aJob setValue:_selectedLead.company forKey:@"company"];
         [aJob setValue:_selectedLead.city forKey:@"location"];
@@ -70,7 +72,6 @@ BOOL isSavedJob;
         [aJob setValue:_selectedLead.notes forKey:@"notes"];
         [aJob setValue:_selectedLead.date forKey:@"pubdate"];
         [aJob setValue:_selectedLead.type forKey:@"type"];
-        [aJob setValue:_selectedLead.jobid forKey:@"jobid"];
         isSavedJob = YES;
     }
     [self.tableView reloadData];
@@ -250,17 +251,29 @@ BOOL isSavedJob;
 - (void)tableView:(UITableView *)tblView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
     
-    EditItemVC *editItemVC = [[EditItemVC alloc] init];
-    
-    UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
-    
+    // store text ID of selected row for use when returning from child view
     editedItemId = [jobFields objectAtIndex:indexPath.row];
-
-	editItemVC.labelText = selectedCell.textLabel.text;
-	editItemVC.itemText = selectedCell.detailTextLabel.text;
-    editItemVC.delegate = self;
     
-	[self.navigationController pushViewController:editItemVC animated:YES];
+    if ([editedItemId isEqual:@"Type"]) {
+        PickList *pickList = [[PickList alloc] init];
+        pickList.header = @"Select job type";
+        pickList.options = jobTypes;
+        UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
+        pickList.selectedItem = selectedCell.detailTextLabel.text;
+        pickList.delegate = self;
+        
+        [self.navigationController pushViewController:pickList animated:YES];
+        
+    } else {
+
+        EditItemVC *editItemVC = [[EditItemVC alloc] init];
+        UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
+        editItemVC.labelText = selectedCell.textLabel.text;
+        editItemVC.itemText = selectedCell.detailTextLabel.text;
+        editItemVC.delegate = self;
+        
+        [self.navigationController pushViewController:editItemVC animated:YES];
+    }
 	
 }
 
@@ -273,6 +286,13 @@ BOOL isSavedJob;
  
 }
 
+-(void)pickItem:(NSString *)item {
+    
+    NSString *itemKey = ([editedItemId isEqualToString:@"Date"]) ? @"pubdate" : [editedItemId lowercaseString];
+    [aJob setValue:item forKey:itemKey];
+    
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
 
@@ -280,44 +300,15 @@ BOOL isSavedJob;
     if (viewControllers.count > 1 && [viewControllers objectAtIndex:viewControllers.count-2] == self) {
         // View is disappearing because a new view controller was pushed onto the stack
         // Navigating to item editor
-        NSLog(@"navigating to EditItem");
     } else if ([viewControllers indexOfObject:self] == NSNotFound) {
         // View is disappearing because it was popped from the stack
         if (self.selectedLead.title.length > 0) {
-            NSLog(@"save existing job");
             [self saveJob:0];
         } else {
             // delete empty job lead record
-            NSLog(@"delete empty record");
             [self.selectedLead.managedObjectContext deleteObject:self.selectedLead];
         }
     }
-
-    
-/*
-        self.selectedLead.title = jobTitle.text;
-        self.selectedLead.company = company.text;
-        if ([company.text length] > 0) {
-            [del setCompany:company.text]; // save to SQL
-        }
-        self.selectedLead.city = city.text;
-        
-        self.selectedLead.person = person.text;
-        if ([person.text length] > 0) {
-            [del setPerson:person.text withCo:company.text];	// save person to SQL
-        }
-        
-        self.selectedLead.link = link.text;
-        self.selectedLead.type = jobType.text;
-        self.selectedLead.pay = pay.text;
-        self.selectedLead.date = [Common dateFromString:btnDate.currentTitle];
-        
-        NSError *error = nil;
-        if (![self.selectedLead.managedObjectContext save:&error]) {
-            // Handle the error...
-            NSLog(@"Error saving %@, %@", error, [error userInfo]);
-        }
-*/
 }
 
 - (void)didReceiveMemoryWarning {

@@ -13,10 +13,11 @@
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 #import "EditItemVC.h"
+#import "PickList.h"
 
 @class AppDelegate, WebVC, Job;
 
-@interface JobDetail : UIViewController <EditItemDelegate, MFMailComposeViewControllerDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface JobDetail : UIViewController <EditItemDelegate, PickListDelegate, MFMailComposeViewControllerDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
 	
 	AppDelegate *appDelegate;
 	UITableView	*tableView;
@@ -35,6 +36,7 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *jobActions;
 @property (nonatomic, strong) NSArray *jobFields;
+@property (nonatomic, strong) NSArray *jobTypes;
 @property (nonatomic, strong) NSString *editedItemId;
 
 
