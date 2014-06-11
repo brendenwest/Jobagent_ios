@@ -20,6 +20,9 @@
 @synthesize  jobFields, jobActions, appDelegate, tableView, aJob, editedItemId;
 @synthesize managedObjectContext;
 @synthesize webVC = _webVC;
+@synthesize selectedLead = _selectedLead;
+
+BOOL isSavedJob;
 
 
 // Implement viewDidLoad to do additional setup after loading the view.
@@ -39,6 +42,7 @@
 	
 	tableView.dataSource = self;
     
+    // Use this array to display field labels and map data to Job object keys
     jobFields = [NSArray arrayWithObjects:@"Title", @"Company", @"Location", @"Date", @"Type", @"Link", @"Contact", @"Pay", @"Notes", nil];
     
 	
@@ -53,10 +57,26 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    if (aJob == nil) { //
+        aJob = [[NSMutableDictionary alloc] init];
+        [aJob setValue:_selectedLead.jobid forKey:@"jobid"];
+        NSLog(@"view will appear for job %@",[aJob valueForKey:@"title"]);
+
+        [aJob setValue:_selectedLead.title forKey:@"title"];
+        [aJob setValue:_selectedLead.company forKey:@"company"];
+        [aJob setValue:_selectedLead.city forKey:@"location"];
+        [aJob setValue:_selectedLead.person forKey:@"contact"];
+        [aJob setValue:_selectedLead.link forKey:@"link"];
+        [aJob setValue:_selectedLead.notes forKey:@"notes"];
+        [aJob setValue:_selectedLead.date forKey:@"pubdate"];
+        [aJob setValue:_selectedLead.type forKey:@"type"];
+        [aJob setValue:_selectedLead.jobid forKey:@"jobid"];
+        isSavedJob = YES;
+    }
     [self.tableView reloadData];
     
     // Log pageview w/ Google Analytics
-    [appDelegate trackPVFull:@"Listing" :@"job site" :@"listings" :[aJob valueForKey:@"sectionNum"]];
+    [appDelegate trackPV:@"Job Details"];
     
 }
 
@@ -117,32 +137,47 @@
 }
 
 
-- (void)saveToLeads:(NSNumber *)selectedAction {
+- (void)saveJob:(BOOL)clickedSaveBtn {
 
-	NSManagedObject *lead = [NSEntityDescription insertNewObjectForEntityForName: @"Job" inManagedObjectContext: managedObjectContext];
+    Job *lead = _selectedLead;
+    if (clickedSaveBtn) {
+        _selectedLead = [NSEntityDescription insertNewObjectForEntityForName: @"Job" inManagedObjectContext: managedObjectContext];
+    }
 
-	[lead setValue:[aJob valueForKey:@"title"] forKey:@"title"];
-	[lead setValue:[aJob valueForKey:@"company"] forKey:@"company"];
-	[lead setValue:[aJob valueForKey:@"location"] forKey:@"city"];
-	[lead setValue:[aJob valueForKey:@"contact"] forKey:@"person"];
-	[lead setValue:[aJob valueForKey:@"link"] forKey:@"link"];
-	[lead setValue:[aJob valueForKey:@"type"] forKey:@"type"];
-	[lead setValue:[aJob valueForKey:@"notes"] forKey:@"notes"];
-	[lead setValue:[Common dateFromString:[aJob valueForKey:@"pubdate"]] forKey:@"date"];
-	[lead setValue:[aJob valueForKey:@"pay"] forKey:@"pay"];
+	[_selectedLead setValue:[aJob valueForKey:@"jobid"] forKey:@"jobid"];
+	[_selectedLead setValue:[aJob valueForKey:@"title"] forKey:@"title"];
+	[_selectedLead setValue:[aJob valueForKey:@"company"] forKey:@"company"];
+	[_selectedLead setValue:[aJob valueForKey:@"location"] forKey:@"city"];
+	[_selectedLead setValue:[aJob valueForKey:@"contact"] forKey:@"person"];
+	[_selectedLead setValue:[aJob valueForKey:@"link"] forKey:@"link"];
+	[_selectedLead setValue:[aJob valueForKey:@"type"] forKey:@"type"];
+	[_selectedLead setValue:[aJob valueForKey:@"notes"] forKey:@"notes"];
+	[_selectedLead setValue:[Common dateFromString:[aJob valueForKey:@"pubdate"]] forKey:@"date"];
+	[_selectedLead setValue:[aJob valueForKey:@"pay"] forKey:@"pay"];
 
+    // save Company and Contact records if user has entered values
+    if ([_selectedLead.company length] > 0) {
+        [appDelegate setCompany:_selectedLead.company]; // save company
+    }
+
+    if ([_selectedLead.person length] > 0) {
+        [appDelegate setPerson:_selectedLead.person withCo:_selectedLead.company];	// save person to SQL
+    }
+
+    
 //    @property (nonatomic, strong) NSString * state;
 //    @property (nonatomic, strong) NSString * country;
 
     
-    
 	NSError *error = nil;
-	if (![managedObjectContext save:&error]) {
+	if (![lead.managedObjectContext save:&error]) {
 									  // Handle the error...
 	}
 
-	 UIAlertView *saveLeadAlert = [[UIAlertView alloc] initWithTitle:@"Saved to Leads" message:nil delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	[saveLeadAlert show];
+    if (clickedSaveBtn) {
+        UIAlertView *saveLeadAlert = [[UIAlertView alloc] initWithTitle:@"Saved to Leads" message:nil delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [saveLeadAlert show];
+    }
  
 }
 
@@ -152,7 +187,7 @@
 
     
 	if ([sender selectedSegmentIndex] == 0) {
-		[self saveToLeads:[NSNumber numberWithInt:0]];
+		[self saveJob:1];
 	} else if ([sender selectedSegmentIndex] == 2){
 		WebVC *webVC = [[WebVC alloc]
 						initWithNibName:nil bundle:nil];
@@ -235,8 +270,55 @@
     
     NSString *itemKey = ([editedItemId isEqualToString:@"Date"]) ? @"pubdate" : [editedItemId lowercaseString];
     [aJob setValue:editedItemText forKey:itemKey];
+ 
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1 && [viewControllers objectAtIndex:viewControllers.count-2] == self) {
+        // View is disappearing because a new view controller was pushed onto the stack
+        // Navigating to item editor
+        NSLog(@"navigating to EditItem");
+    } else if ([viewControllers indexOfObject:self] == NSNotFound) {
+        // View is disappearing because it was popped from the stack
+        if (self.selectedLead.title.length > 0) {
+            NSLog(@"save existing job");
+            [self saveJob:0];
+        } else {
+            // delete empty job lead record
+            NSLog(@"delete empty record");
+            [self.selectedLead.managedObjectContext deleteObject:self.selectedLead];
+        }
+    }
+
+    
+/*
+        self.selectedLead.title = jobTitle.text;
+        self.selectedLead.company = company.text;
+        if ([company.text length] > 0) {
+            [del setCompany:company.text]; // save to SQL
+        }
+        self.selectedLead.city = city.text;
+        
+        self.selectedLead.person = person.text;
+        if ([person.text length] > 0) {
+            [del setPerson:person.text withCo:company.text];	// save person to SQL
+        }
+        
+        self.selectedLead.link = link.text;
+        self.selectedLead.type = jobType.text;
+        self.selectedLead.pay = pay.text;
+        self.selectedLead.date = [Common dateFromString:btnDate.currentTitle];
+        
+        NSError *error = nil;
+        if (![self.selectedLead.managedObjectContext save:&error]) {
+            // Handle the error...
+            NSLog(@"Error saving %@, %@", error, [error userInfo]);
+        }
+*/
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview

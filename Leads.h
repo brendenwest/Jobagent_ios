@@ -8,22 +8,22 @@
 
 #import <CoreData/CoreData.h>
 
-@class AppDelegate, LeadDetail;
+@class AppDelegate, JobDetail;
 
 @interface Leads : UITableViewController <NSFetchedResultsControllerDelegate> {
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext *managedObjectContext;
 				
-	LeadDetail *_leadDetailVC; // for linking to job details
+	JobDetail *_jobDetailVC; // for linking to job details
 	BOOL _firstInsert;
-	AppDelegate *del;
+	AppDelegate *appDelegate;
     NSString *_selectedCompany; // for links from Company details
 
 }
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) IBOutlet LeadDetail *leadDetailVC;
-@property (nonatomic, strong) AppDelegate *del;
+@property (nonatomic, strong) IBOutlet JobDetail *jobDetailVC;
+@property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSString *selectedCompany;
 
 - (void)configureCell:(UITableViewCell *)cell 

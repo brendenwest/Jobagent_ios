@@ -14,7 +14,7 @@
 #import <Accounts/Accounts.h>
 #import "EditItemVC.h"
 
-@class AppDelegate, WebVC;
+@class AppDelegate, WebVC, Job;
 
 @interface JobDetail : UIViewController <EditItemDelegate, MFMailComposeViewControllerDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
 	
@@ -23,7 +23,8 @@
 	UISegmentedControl *jobActions;
 
 	NSManagedObjectContext *managedObjectContext;
-	NSMutableDictionary *aJob;
+	NSMutableDictionary *aJob; // used by search results VC
+	Job *_selectedLead; // used by favorites VC
 	WebVC *_webVC;
 
 }
@@ -39,6 +40,7 @@
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSMutableDictionary *aJob;
+@property (nonatomic, strong) Job *selectedLead;
 
 @end
 

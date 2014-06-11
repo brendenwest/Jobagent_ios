@@ -463,7 +463,7 @@ static BOOL *const kGaDryRun = YES;
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	[fetchRequest setEntity: [NSEntityDescription entityForName:@"Company" inManagedObjectContext:managedObjectContext]];
 	[fetchRequest setResultType:NSDictionaryResultType];
-	if (companyName) {
+	if (companyName.length > 0) {
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"coName LIKE %@", companyName];
 		[fetchRequest setPredicate:predicate];	
 	}

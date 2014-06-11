@@ -210,7 +210,8 @@
     // Navigation logic may go here. Create and push another view controller.
 	if(self.jobDetailVC == nil)
 		self.jobDetailVC = [[JobDetail alloc] initWithNibName:@"JobDetail" bundle:nil];
-		
+    
+    NSLog(@"selected job = %@",[jobsForSite objectAtIndex:indexPath.row]);
 	self.jobDetailVC.aJob = [[jobsForSite objectAtIndex:indexPath.row] mutableCopy];
     	
 	[self.navigationController pushViewController:self.jobDetailVC animated:YES];

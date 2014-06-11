@@ -12,7 +12,7 @@
 #import "CompanyDetail.h"
 
 @interface Companies()
-@property(nonatomic, assign) BOOL firstInsert;
+    @property(nonatomic, assign) BOOL firstInsert;
 @end
 
 
@@ -221,7 +221,7 @@ static NSString *kTitleNewItem = @"";
 	[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 										managedObjectContext:managedObjectContext
 										  sectionNameKeyPath:nil
-												   cacheName:@"Root"];
+												   cacheName:nil];
 	aFetchedResultsController.delegate = self; 
 	self.fetchedResultsController = aFetchedResultsController;
 	

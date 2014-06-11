@@ -9,35 +9,34 @@
 #import "AppDelegate.h"
 #import "Leads.h"
 #import "Job.h"
-#import "LeadDetail.h"
+#import "JobDetail.h"
 #import "Common.h"
 
 @interface Leads()
-@property(nonatomic, assign) BOOL firstInsert;
+    @property(nonatomic, assign) BOOL firstInsert;
 @end
 
 @implementation Leads
 
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
-@synthesize leadDetailVC = _leadDetailVC;
+@synthesize jobDetailVC = _jobDetailVC;
 @synthesize firstInsert = _firstInsert;
-@synthesize del;
+@synthesize appDelegate;
 @synthesize selectedCompany = _selectedCompany;
 
-static NSString *kTitleNewItem = @"";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
 	self.title = @"Leads";
     
-	if (managedObjectContext == nil) 
+	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	if (managedObjectContext == nil)
 	{ 
-		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
+		managedObjectContext = [appDelegate managedObjectContext];
 	}
 
-	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
 	[self customBarButtons];
 }
@@ -52,13 +51,12 @@ static NSString *kTitleNewItem = @"";
 	[self.fetchedResultsController.fetchRequest entity];
 	Job *lead = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
 												 inManagedObjectContext:context];
-	[lead setValue:kTitleNewItem forKey:@"title"];	
 	
-	if(self.leadDetailVC == nil)
-		self.leadDetailVC = [[LeadDetail alloc] initWithNibName:@"LeadDetail" bundle:nil];
+	if(self.jobDetailVC == nil)
+		self.jobDetailVC = [[JobDetail alloc] initWithNibName:@"JobDetail" bundle:nil];
 	
-	self.leadDetailVC.selectedLead = lead;
-	[self.navigationController pushViewController:self.leadDetailVC animated:YES];
+	self.jobDetailVC.selectedLead = lead;
+	[self.navigationController pushViewController:self.jobDetailVC animated:YES];
 }
 
 
@@ -104,7 +102,7 @@ static NSString *kTitleNewItem = @"";
 
     [self.tableView reloadData];
     
-    [del trackPV:self.title];
+    [appDelegate trackPV:self.title];
 
 }
 
@@ -187,13 +185,12 @@ static NSString *kTitleNewItem = @"";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    // Navigation logic may go here. Create and push another view controller.
 	Job *lead = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-	if(self.leadDetailVC == nil)
-		self.leadDetailVC = [[LeadDetail alloc] initWithNibName:@"LeadDetail" bundle:nil];
+	if(self.jobDetailVC == nil)
+		self.jobDetailVC = [[JobDetail alloc] initWithNibName:@"JobDetail" bundle:nil];
 
-	self.leadDetailVC.selectedLead = lead;
-	[self.navigationController pushViewController:self.leadDetailVC animated:YES];
+	self.jobDetailVC.selectedLead = lead;
+	[self.navigationController pushViewController:self.jobDetailVC animated:YES];
 }
 
 
