@@ -12,6 +12,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
+#import "WebVC.h"
 #import "EditItemVC.h"
 #import "PickList.h"
 
@@ -43,6 +44,20 @@
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSMutableDictionary *aJob;
 @property (nonatomic, strong) Job *selectedLead;
+
+// Date Picker properties
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+
+// keep track which indexPath points to the cell with UIDatePicker
+@property (nonatomic, strong) NSIndexPath *datePickerIndexPath;
+
+@property (assign) NSInteger pickerCellRowHeight;
+
+@property (nonatomic, strong) IBOutlet UIDatePicker *pickerView;
+
+// this button appears only when the date picker is shown (iOS 6.1.x or earlier)
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
+
 
 @end
 

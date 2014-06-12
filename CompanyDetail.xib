@@ -60,7 +60,7 @@
                     </connections>
                 </textView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="plain" momentary="YES" id="LFD-37-5F0" userLabel="btnExternalLinks">
-                    <rect key="frame" x="12" y="348" width="299" height="29"/>
+                    <rect key="frame" x="12" y="398" width="299" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="Map"/>
