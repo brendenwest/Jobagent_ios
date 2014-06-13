@@ -151,10 +151,9 @@
 
 - (void)configureCell:(UITableViewCell *)cell withLead:(Job *)lead {
 
-	NSString *tmpTitle = (lead.date) ? [Common getShortDate:[NSString stringWithFormat:@"%@",lead.date]] : @"";
-	if ([lead.company length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@" - %@",lead.company]; }
-	if ([lead.type length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@"; %@",lead.type]; }
-	if ([lead.pay length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@"; %@",lead.pay]; }
+	NSString *tmpTitle = (lead.date != nil) ? [Common stringFromDate:lead.date] : @"";
+	if ([lead.company length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@" ~ %@",lead.company]; }
+	if ([lead.type length] > 0) { tmpTitle = [tmpTitle stringByAppendingFormat:@" ~ %@",lead.type]; }
 
 	cell.textLabel.text = lead.title;
 	cell.textLabel.font = [UIFont boldSystemFontOfSize:14];

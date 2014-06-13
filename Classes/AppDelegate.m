@@ -22,9 +22,7 @@
 #import "Job.h"
 
 /** Google Analytics configuration constants **/
-static NSString *const kGaPropertyId = @"UA-30717261-1"; // Job Agent property ID.
-static int const kGaDispatchPeriod = 10;
-static NSString *const kAllowTracking = @"allowTracking";
+/** Other settings in appconfig.plist **/
 static BOOL *const kGaDryRun = YES;
 
 
@@ -39,6 +37,7 @@ static BOOL *const kGaDryRun = YES;
 @synthesize managedObjectContext;
 @synthesize persistentStoreCoordinator;
 @synthesize applicationDocumentsDirectory;
+@synthesize configuration = _configuration;
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -57,7 +56,6 @@ static BOOL *const kGaDryRun = YES;
     // get system default country code
     [newDefaults setObject:[[NSLocale currentLocale] objectForKey:NSLocaleCountryCode] forKey:@"countryCode"];
 
-
     // add values from legacy settings.xml if found
     NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
 	
@@ -73,25 +71,22 @@ static BOOL *const kGaDryRun = YES;
 
     }
     [newDefaults synchronize];
+    
+    // load values from appconfig.plist
+    _configuration = [self configuration];
 
     
-    NSDictionary *appDefaults = @{kAllowTracking: @(YES)};
-    
     // User must be able to opt out of tracking
-    [GAI sharedInstance].optOut =
-    ![[NSUserDefaults standardUserDefaults] boolForKey:kAllowTracking];
-    
-    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    [GAI sharedInstance].optOut = ![_configuration objectForKey:@"kAllowTracking"];
     
     // Initialize Google Analytics with a N-second dispatch interval. There is a
     // tradeoff between battery usage and timely dispatch.
-    [GAI sharedInstance].dispatchInterval = kGaDispatchPeriod;
+    [GAI sharedInstance].dispatchInterval = (int)[_configuration objectForKey:@"kGaDispatchPeriod"];
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [[GAI sharedInstance] setDryRun:kGaDryRun];
     // Set the log level to verbose.
-//    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
-    self.tracker = [[GAI sharedInstance] trackerWithTrackingId:kGaPropertyId];
-
+    self.tracker = [[GAI sharedInstance] trackerWithTrackingId:[_configuration objectForKey:@"kGaPropertyId"]];
+    
     // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
     // or set runtime properties here.
     UAConfig *config = [UAConfig defaultConfig];
@@ -146,7 +141,6 @@ static BOOL *const kGaDryRun = YES;
                 // not readable: set value from Settings.bundle
                 id objectToSet = [prefSpecification objectForKey:@"DefaultValue"];
                 [defaultsToRegister setObject:objectToSet forKey:key];
-                NSLog(@"Setting object %@ for key %@", objectToSet, key);
             }
             else
             {
@@ -228,7 +222,6 @@ static BOOL *const kGaDryRun = YES;
 
 - (void)trackPV:(NSString*)screenName
 {
-//    NSLog(@"logging pv for %@",screenName);
     
     // Google Analytics v3
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -340,9 +333,71 @@ static BOOL *const kGaDryRun = YES;
 	
 }
 
+
+- (NSDictionary *)configuration
+{
+    if (_configuration == nil)
+    {
+        NSMutableDictionary *configuration = [[NSMutableDictionary alloc] init];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        // init configuration map
+        NSDictionary *configMap = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"kGaPropertyId",           @"kGaPropertyId",
+                                   @"kGaDispatchPeriod",       @"kGaDispatchPeriod",
+                                   @"kAllowTracking",          @"kAllowTracking",
+                                   @"adUnitID",                @"adUnitID",
+                                   @"apiDomainDev",            @"apiDomainDev",
+                                   @"apiDomainProd",           @"apiDomainProd",
+                                   @"searchUrl",               @"searchUrl",
+                                   @"tipsUrl",                 @"tipsUrl",
+                                   nil];
+        
+
+        // loading configuration from stored plist
+            NSLog(@"load stored configuration ...");
+            for (NSString *key in configMap.allKeys)
+            {
+                id object = [userDefaults objectForKey:key];
+                if (object != nil)
+                {
+                    [configuration setObject:object forKey:key];
+                }
+            }
+   
+        
+
+        // loading the rest of configuration from default plist
+        if (configuration.allKeys.count < configMap.allKeys.count)
+        {
+            NSLog(@"load default configuration ...");
+            NSString *defaultConfFile = [[NSBundle mainBundle] pathForResource:@"appconfig" ofType:@"plist"];
+            NSDictionary *defaultConfig = [NSDictionary dictionaryWithContentsOfFile:defaultConfFile];
+            
+            for (NSString *key in configMap.allKeys)
+            {
+                id defaultObject = [defaultConfig objectForKey:[configMap objectForKey:key]];
+                id storedObject = [configuration objectForKey:key];
+                if (storedObject == nil && defaultObject != nil)
+                {
+                    [configuration setObject:defaultObject forKey:key];
+                    [userDefaults setObject:defaultObject forKey:key];
+                }
+            }
+            
+            [userDefaults synchronize];
+        }
+
+        _configuration = configuration;
+    }
+    
+    return _configuration;
+}
+
+
 #pragma mark userSettings
 /**
- Returns userSettings dictionary. Now used only for recent searches
+ Returns userSettings dictionary. Now used only for storing recent searches
  */
 - (NSMutableDictionary *) getUserSettings {
 	

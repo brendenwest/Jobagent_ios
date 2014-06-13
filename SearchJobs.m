@@ -25,7 +25,6 @@
     NSPredicate *sPredicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF.link contains[c] '%@'",tag]];
    
     jobsForSite = [self.jobsAll filteredArrayUsingPredicate:sPredicate];
-//    NSLog(@"site #%i - %i",btnJobSite.selectedSegmentIndex,[jobsForSite count]);
     
     if ([self.jobsAll count] > 0) {
         [self.tableView reloadData]; 
@@ -90,24 +89,21 @@
     NSString *locationEncoded = [curLocation stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    NSLog(@"maxResults %@",  [settings objectForKey:@"maxResults"]);
-    NSLog(@"ageResults %@",  [settings objectForKey:@"ageResults"]);
-    NSLog(@"distanceResults %@",  [settings objectForKey:@"distanceResults"]);
-    NSLog(@"countryCode %@",  curLocale);
-
-//    NSString *searchUrl = @"http://brisksoft.heroku.com/getjobs?postalcode=<postalcode>&kw=<kw>&v=1&locale=&age=<age>&max=<max>&distance=<distance>";
-    NSString *searchUrl = @"http://localhost:8888/getjobs?location=<location>&kw=<kw>&v=1&country=<country>&age=<age>&max=<max>&distance=<distance>";
+    NSString *searchUrl;
+    #ifdef DEVAPI
+        searchUrl = [NSString stringWithFormat:@"%@%@",[appDelegate.configuration objectForKey:@"apiDomainDev"],[appDelegate.configuration objectForKey:@"searchUrl"]];
+    #else
+        searchUrl = [NSString stringWithFormat:@"%@%@",[appDelegate.configuration objectForKey:@"apiDomainProd"],[appDelegate.configuration objectForKey:@"searchUrl"]];
+    #endif
+    
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<kw>" withString:query];
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<location>" withString:locationEncoded];
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<max>" withString:[settings stringForKey:@"maxResults"]];
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<age>" withString:[settings stringForKey:@"ageResults"]];
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<distance>" withString:[settings stringForKey:@"distanceResults"]];
-
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<country>" withString:curLocale];
     
     NSURL *url = [NSURL URLWithString:searchUrl];
-    
-    NSLog(@"search url = %@",searchUrl);
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //AFNetworking asynchronous url request
@@ -117,7 +113,6 @@
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.jobsAll = [responseObject objectForKey:@"jobs"];
-//        NSLog(@"received jobs: %@", [responseObject objectForKey:@"jobs"]);
         
         [self switchJobSite:nil];
 
@@ -198,7 +193,7 @@
     NSArray *tmpJob = [jobsForSite objectAtIndex:indexPath.row];
     
 	cell.textLabel.text = [tmpJob valueForKey:@"title"];
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@ %@",[Common getShortDate:[tmpJob valueForKey:@"pubDate"]], [tmpJob valueForKey:@"company"], [tmpJob valueForKey:@"location"]];
+	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ ~ %@ ~ %@",[Common getShortDate:[tmpJob valueForKey:@"pubdate"]], [tmpJob valueForKey:@"company"], [tmpJob valueForKey:@"location"]];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	cell.textLabel.font = [UIFont systemFontOfSize:14];
 	
@@ -211,9 +206,16 @@
 	if(self.jobDetailVC == nil)
 		self.jobDetailVC = [[JobDetail alloc] initWithNibName:@"JobDetail" bundle:nil];
     
-    NSLog(@"selected job = %@",[jobsForSite objectAtIndex:indexPath.row]);
-	self.jobDetailVC.aJob = [[jobsForSite objectAtIndex:indexPath.row] mutableCopy];
-    	
+    NSDictionary *tmpJob = [jobsForSite objectAtIndex:indexPath.row];
+    
+    // Convert date string to same format as used by Core Data
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'000'Z'"]; // "2014-06-13T03:53:35.000Z"
+    NSDate *date = [dateFormat dateFromString:[tmpJob valueForKey:@"pubdate"]];
+    
+	self.jobDetailVC.aJob = [tmpJob mutableCopy];
+    // job feeds use 'pubdate' key but JobDetail uses 'date' key since user can modify the value
+    [self.jobDetailVC.aJob setValue:date forKey:@"date"];
 	[self.navigationController pushViewController:self.jobDetailVC animated:YES];
 	
 }

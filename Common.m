@@ -72,13 +72,14 @@
 }
 
 /** return short date **/
-+ (NSString *)shortDate:(NSDate*)tmpDate {
-	NSDateFormatter *outputFormat = [[NSDateFormatter alloc ] init];
-	[outputFormat setDateStyle:NSDateFormatterShortStyle];
++ (NSString *)stringFromDate:(NSDate*)tmpDate {
+	NSDateFormatter *shortDateFormatter = [[NSDateFormatter alloc ] init];
+    [shortDateFormatter setLocale:[NSLocale currentLocale]];
+	[shortDateFormatter setDateStyle:NSDateFormatterShortStyle];
 	if (!tmpDate) { tmpDate = [NSDate date]; }
     
-    NSString *retDate = [outputFormat stringFromDate:tmpDate];
-    return retDate;
+    NSString *dateString = [shortDateFormatter stringFromDate:tmpDate];
+    return dateString;
     
 }
 
@@ -98,7 +99,6 @@
 		[inputFormat setDateFormat:@"eee, dd MMM yyyy hh:mm:ss 'GMT'"];
 		NSDate *formattedDate = [inputFormat dateFromString:tmpDate];
         
-		//NSLog(@"gsd, indeed date out: %@ ",formattedDate);
 		
 		if (formattedDate == nil) { // try Craigslist format
 			// cr: 2010-04-03T17:04:30-07:00

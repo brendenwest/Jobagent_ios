@@ -13,7 +13,7 @@
 - (id) init;
 + (UIToolbar *)customBarButtons:buttonProperties;
 + (NSDate *)dateFromString:(NSString *)tmpDate;
-+ (NSString *)shortDate:(NSDate*)tmpDate;
++ (NSString *)stringFromDate:(NSDate*)tmpDate;
 + (NSString *)getShortDate:(NSString*)tmpDate;
 + (UITextView *)formatTextView:(UITextView*)textView :(NSString*)placeholder;
 

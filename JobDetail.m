@@ -16,7 +16,6 @@
 #define kPickerAnimationDuration    0.40   // duration for the animation to slide the date picker into view
 #define kDatePickerTag              99     // view tag identifiying the date picker view
 
-#define kTitleKey       @"title"   // key for obtaining the data source item's title
 #define kDateKey        @"date"    // key for obtaining the data source item's date value
 
 static NSString *kDateCellID = @"date";     // the cells with the start or end date
@@ -26,7 +25,7 @@ static NSString *kDatePickerID = @"datePicker"; // the cell containing the date 
 @implementation JobDetail
 
 @synthesize  jobFields, jobTypes, jobActions, appDelegate, tableView, aJob, editedItemId;
-@synthesize dateFormatter, datePickerIndexPath, pickerCellRowHeight, doneButton;
+@synthesize datePickerIndexPath, pickerCellRowHeight, doneButton;
 @synthesize managedObjectContext;
 @synthesize webVC = _webVC;
 @synthesize selectedLead = _selectedLead;
@@ -63,10 +62,6 @@ BOOL isSavedJob;
 	
     // Date picker setup
 
-
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];    // show short-style date format
-    [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
     self.pickerCellRowHeight = 210; // TODO - check if needs to be variable
     
@@ -97,7 +92,7 @@ BOOL isSavedJob;
         [aJob setValue:_selectedLead.person forKey:@"contact"];
         [aJob setValue:_selectedLead.link forKey:@"link"];
         [aJob setValue:_selectedLead.notes forKey:@"notes"];
-        [aJob setValue:_selectedLead.date forKey:@"pubdate"];
+        [aJob setValue:_selectedLead.date forKey:@"date"];
         [aJob setValue:_selectedLead.type forKey:@"type"];
         isSavedJob = YES;
     }
@@ -189,7 +184,7 @@ BOOL isSavedJob;
 	[_selectedLead setValue:[aJob valueForKey:@"link"] forKey:@"link"];
 	[_selectedLead setValue:[aJob valueForKey:@"type"] forKey:@"type"];
 	[_selectedLead setValue:[aJob valueForKey:@"notes"] forKey:@"notes"];
-	[_selectedLead setValue:[Common dateFromString:[aJob valueForKey:@"pubdate"]] forKey:@"date"];
+	[_selectedLead setValue:[aJob valueForKey:@"date"] forKey:@"date"];
 	[_selectedLead setValue:[aJob valueForKey:@"pay"] forKey:@"pay"];
 
     // save Company and Contact records if user has entered values
@@ -263,34 +258,55 @@ BOOL isSavedJob;
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSString *itemKey = (indexPath.row == [jobFields indexOfObject:@"date"]) ? @"pubdate" : [[jobFields objectAtIndex:indexPath.row] lowercaseString];
+    NSString *itemKey = [[jobFields objectAtIndex:indexPath.row] lowercaseString];
     
     UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:itemKey];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:itemKey];
     }
     
-    NSString *detailText;
-    
-    // Configure the cell...
-	cell.textLabel.text = [jobFields objectAtIndex:indexPath.row];
-    if ([itemKey isEqualToString:@"date"]) {
-        detailText = [aJob objectForKey:itemKey];
-        cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[aJob valueForKey:kDateKey]];
-    } else if (indexPath.row == self.datePickerIndexPath.row && [self hasInlineDatePicker]) {
-        // Configure datePicker Cell
-        [cell.contentView addSubview:_pickerView];
-    } else {
-        detailText = [aJob objectForKey:itemKey];
-        cell.detailTextLabel.text = detailText;
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
-        cell.detailTextLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+    UILabel *label, *detailText;
 
-	cell.textLabel.font = [UIFont systemFontOfSize:10];
-    cell.textLabel.textColor = [UIColor grayColor];
-	
+    // if cell has rendered previously, re-use existing subviews
+    if ([cell.contentView.subviews count] == 0) {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 10.0, 60.0, 25.0)];
+        label.font = [UIFont systemFontOfSize:10.0];
+        label.textAlignment = NSTextAlignmentLeft ;
+        label.textColor = [UIColor grayColor];
+        
+        
+        detailText = [[UILabel alloc] initWithFrame:CGRectMake(65.0, 0.0, [[UIScreen mainScreen] bounds].size.width-80, 44.0)];
+        detailText.font = [UIFont systemFontOfSize:14.0];
+        detailText.textAlignment = NSTextAlignmentLeft;
+        detailText.textColor = [UIColor blackColor];
+    } else if ([cell.contentView.subviews count] > 1) {
+        // don't modify datePicker cell
+        label = cell.contentView.subviews[0];
+        detailText = cell.contentView.subviews[1];
+    }
+    
+        
+        // Configure cell for different content types
+        if ([itemKey isEqualToString:@"date"]) {
+            label.text = [jobFields objectAtIndex:indexPath.row];
+            detailText.text = [Common stringFromDate:[aJob objectForKey:kDateKey]];
+            if ([cell.contentView.subviews count] == 0) {
+                [cell.contentView addSubview:label];
+                [cell.contentView addSubview:detailText];
+            }
+        } else if (indexPath.row == self.datePickerIndexPath.row && [self hasInlineDatePicker]) {
+            // Configure datePicker Cell
+            [cell.contentView addSubview:_pickerView];
+        } else {
+            label.text = [jobFields objectAtIndex:indexPath.row];
+            detailText.text = [aJob objectForKey:itemKey];
+            if ([cell.contentView.subviews count] == 0) {
+                [cell.contentView addSubview:label];
+                [cell.contentView addSubview:detailText];
+            }
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+
     return cell;
 }
 
@@ -311,13 +327,14 @@ BOOL isSavedJob;
             [self displayExternalDatePickerForRowAtIndexPath:indexPath];
     } else {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if ([cell.reuseIdentifier isEqualToString:@"Type"]) {
+        if ([cell.reuseIdentifier isEqualToString:@"type"]) {
             
             PickList *pickList = [[PickList alloc] init];
             pickList.header = @"Select job type";
             pickList.options = jobTypes;
             UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
-            pickList.selectedItem = selectedCell.detailTextLabel.text;
+            UILabel *tmpDetail = selectedCell.contentView.subviews[1];
+            pickList.selectedItem = tmpDetail.text;
             pickList.delegate = self;
             
             [self.navigationController pushViewController:pickList animated:YES];
@@ -326,8 +343,10 @@ BOOL isSavedJob;
 
             EditItemVC *editItemVC = [[EditItemVC alloc] init];
             UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
-            editItemVC.labelText = selectedCell.textLabel.text;
-            editItemVC.itemText = selectedCell.detailTextLabel.text;
+            UILabel *tmpLabel = selectedCell.contentView.subviews[0];
+            editItemVC.labelText = tmpLabel.text;
+            UILabel *tmpDetail = selectedCell.contentView.subviews[1];
+            editItemVC.itemText = tmpDetail.text;
             editItemVC.delegate = self;
             
             [self.navigationController pushViewController:editItemVC animated:YES];
@@ -350,12 +369,10 @@ BOOL isSavedJob;
     } else {
         tableFrame.size.height= [[UIScreen mainScreen] bounds].size.height - 105;
     }
-    NSLog(@"ending table frame height = %f",tableFrame.size.height);
     [tableView setFrame:tableFrame];
     
     btnFrame.origin.y = [[UIScreen mainScreen] bounds].size.height - 154;
     [jobActions setFrame:btnFrame];
-    NSLog(@"ending button origin = %f",self.jobActions.frame.origin.y);
     
 }
 
@@ -364,14 +381,16 @@ BOOL isSavedJob;
 -(void)setItemText:(NSString *)editedItemText {
     
     // job labels and keys are identical, with exception of 'pubdate' key
-    NSString *itemKey = ([editedItemId isEqualToString:@"Date"]) ? @"pubdate" : [editedItemId lowercaseString];
+//    NSString *itemKey = ([editedItemId isEqualToString:@"Date"]) ? @"pubdate" : [editedItemId lowercaseString];
+    NSString *itemKey = [editedItemId lowercaseString];
     [aJob setValue:editedItemText forKey:itemKey];
  
 }
 
 -(void)pickItem:(NSString *)item {
     
-    NSString *itemKey = ([editedItemId isEqualToString:@"Date"]) ? @"pubdate" : [editedItemId lowercaseString];
+//    NSString *itemKey = ([editedItemId isEqualToString:@"Date"]) ? @"pubdate" : [editedItemId lowercaseString];
+    NSString *itemKey = [editedItemId lowercaseString];
     [aJob setValue:item forKey:itemKey];
     
 }
@@ -422,7 +441,6 @@ BOOL isSavedJob;
             // we found a UIDatePicker in this cell, so update it's date value
             //
             NSDate *tmpDate = ([aJob valueForKey:kDateKey] != nil) ? [aJob objectForKey:kDateKey]: [NSDate date];
-    
             [targetedDatePicker setDate:tmpDate animated:NO];
         }
 
@@ -485,7 +503,6 @@ BOOL isSavedJob;
         // didn't find a picker below it, so we should insert it
         [self.tableView insertRowsAtIndexPaths:indexPaths
                               withRowAnimation:UITableViewRowAnimationFade];
-        NSLog(@"inserting row for inline date picker ");
     }
     
     [self.tableView endUpdates];
@@ -602,7 +619,9 @@ BOOL isSavedJob;
     [aJob setValue:targetedDatePicker.date forKey:kDateKey];
     
     // update the cell's date string
-    cell.detailTextLabel.text = [self.dateFormatter stringFromDate:targetedDatePicker.date];
+    UILabel *detailText = [cell.contentView.subviews objectAtIndex:1];
+    detailText.text = [Common stringFromDate:targetedDatePicker.date];
+    
 }
 
 /*! User chose to finish using the UIDatePicker by pressing the "Done" button, (used only for non-inline date picker), iOS 6.1.x or earlier
@@ -640,13 +659,15 @@ BOOL isSavedJob;
         // View is disappearing because a new view controller was pushed onto the stack
         // Navigating to item editor
     } else if ([viewControllers indexOfObject:self] == NSNotFound) {
-        // View is disappearing because it was popped from the stack
+        // View is disappearing because it was popped from the stack (exiting to Leads)
         if (self.selectedLead.title.length > 0) {
             [self saveJob:0];
         } else {
             // delete empty job lead record
             [self.selectedLead.managedObjectContext deleteObject:self.selectedLead];
         }
+        aJob = nil;
+
     }
 }
 

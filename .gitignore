@@ -10,6 +10,7 @@
 Archive/
 build/
 jobagent Tests/
+jobagent.xcodeproj/
 
 # ignore following files
 AirshipConfig.plist

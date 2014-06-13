@@ -15,9 +15,6 @@
 #import "GADRequest.h"
 
 
-#define kSampleAdUnitID @"a14f6e8f0c6d11b"
-//#define GAD_SIMULATOR_ID @"577bade797151a79f2a87a61c9b5b30c697fee41"
-
 // [[NSUserDefaults standardUserDefaults]  stringForKey:@"postalcode"]
 
 @interface RootViewController ()
@@ -30,6 +27,7 @@
 
 @synthesize txtSearch, txtLocation, curLocation, curLocale, tblRecent, btnSearch, btnTips, lblCityState;
 @synthesize searches, userSettings, appDelegate;
+
 
 
 // 98052 = 47.615471,-122.207221
@@ -125,7 +123,7 @@
     bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner origin:origin];
     
     // Specify the ad unit ID.
-    bannerView_.adUnitID = kSampleAdUnitID;
+    bannerView_.adUnitID = [appDelegate.configuration objectForKey:@"adUnitID"];
     
     // Let the runtime know which UIViewController to restore after taking
     // the user wherever the ad goes and add it to the view hierarchy.

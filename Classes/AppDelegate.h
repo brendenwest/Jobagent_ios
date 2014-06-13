@@ -11,6 +11,9 @@
 
 // Other
 #define IS_OS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+#define DEVMODE
+//#define DEVAPI
+
 
 @class RootViewController;
 
@@ -36,6 +39,7 @@
 @property (nonatomic, strong, readonly) NSString *applicationDocumentsDirectory;
 @property (nonatomic, strong) NSString *prevSearch;
 @property(nonatomic, strong) id<GAITracker> tracker;
+@property (strong, nonatomic, readonly) NSDictionary *configuration;
 
 
 - (IBAction)saveAction:sender;

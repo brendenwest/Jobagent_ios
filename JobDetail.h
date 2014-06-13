@@ -46,8 +46,6 @@
 @property (nonatomic, strong) Job *selectedLead;
 
 // Date Picker properties
-@property (nonatomic, strong) NSDateFormatter *dateFormatter;
-
 // keep track which indexPath points to the cell with UIDatePicker
 @property (nonatomic, strong) NSIndexPath *datePickerIndexPath;
 
