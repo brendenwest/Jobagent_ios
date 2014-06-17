@@ -55,7 +55,6 @@ BOOL isSavedEvent;
     eventLabels = [NSArray arrayWithObjects:
                  NSLocalizedString(@"STR_TITLE_ACTIVITY", nil),
                  NSLocalizedString(@"STR_DATE", nil),
-                 NSLocalizedString(@"STR_TYPE", nil),
                  NSLocalizedString(@"STR_COMPANY", nil),
                  NSLocalizedString(@"STR_JOB", nil),
                  NSLocalizedString(@"STR_CONTACT", nil),
@@ -65,7 +64,6 @@ BOOL isSavedEvent;
     eventKeys = [NSArray arrayWithObjects:
                @"title",
                @"date",
-               @"type",
                @"company",
                @"jobtitle",
                @"person",
@@ -82,7 +80,7 @@ BOOL isSavedEvent;
                 NSLocalizedString(@"STR_EVENT_TYPE_FAIR", nil),
                 NSLocalizedString(@"STR_JOB_TYPE_OTHER", nil), nil];
 	
-    eventPriorities = [NSArray arrayWithObjects:@"high",@"med",@"low",nil];
+    eventPriorities = [NSArray arrayWithObjects:@"low",@"med",@"high",nil];
     
     // configure segmented control for priority selector
     CGRect tmpFrame = CGRectMake(65.0, 6.0, [[UIScreen mainScreen] bounds].size.width-80, 28.0);
@@ -212,6 +210,17 @@ BOOL isSavedEvent;
         } else if (indexPath.row == self.datePickerIndexPath.row && [self hasInlineDatePicker]) {
             // Configure datePicker Cell
             [cell.contentView addSubview:_pickerView];
+        } else if ([itemKey isEqualToString:@"title"]) {
+            // add text field for manual edit of Title field
+            if ([cell.contentView.subviews count] == 0) {
+                [cell.contentView addSubview:label];
+                [cell.contentView addSubview:[[UITextField alloc] initWithFrame:CGRectMake(65.0, 0.0, [[UIScreen mainScreen] bounds].size.width-80, 44.0)]];
+            }
+            UITextField *detailTextField = cell.contentView.subviews[1];
+            detailTextField.delegate = self;
+            detailTextField.returnKeyType = UIReturnKeyDone;
+            detailTextField.text = [_selectedEvent valueForKey:itemKey];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if ([itemKey isEqualToString:@"priority"]) {
             if ([cell.contentView.subviews count] == 0) {
                 [cell.contentView addSubview:label];
@@ -248,7 +257,7 @@ BOOL isSavedEvent;
             [self displayExternalDatePickerForRowAtIndexPath:indexPath];
     } else {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if ([cell.reuseIdentifier isEqualToString:@"type"]) {
+        if ([cell.reuseIdentifier isEqualToString:@"title"]) {
             
             PickList *pickList = [[PickList alloc] init];
             pickList.header = NSLocalizedString(@"STR_SEL_EVENT_TYPE", nil);
@@ -306,6 +315,7 @@ BOOL isSavedEvent;
     // on return from pickList view...
     NSString *itemKey = [editedItemId lowercaseString];
     [_selectedEvent setValue:item forKey:itemKey];
+    NSLog(@"updated event %@",_selectedEvent);
     
 }
 
@@ -569,7 +579,10 @@ BOOL isSavedEvent;
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+        [textField resignFirstResponder];
+    return YES;
+}
 
 #pragma mark End date picker methods
 

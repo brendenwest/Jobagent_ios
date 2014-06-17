@@ -54,8 +54,6 @@
 
 - (GADRequest *)request;
 - (IBAction)searchJobs:(id)sender;
-- (IBAction)checkEnteredLocation:(id)sender;
-- (IBAction)backgroundTouched:(id)sender;
 - (IBAction)readTips:(id)sender;
 
 @end

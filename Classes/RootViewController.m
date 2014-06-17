@@ -42,8 +42,9 @@
 
 }
 
-- (IBAction)backgroundTouched:(id)sender
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesEnded:touches withEvent:event];
     [txtSearch resignFirstResponder];
     [txtLocation resignFirstResponder];
     
@@ -55,11 +56,9 @@
     
     // save this search
     NSString *thisSearch = [NSString stringWithFormat:@"%@|%@|%@",txtSearch.text,txtLocation.text,[curLocation objectForKey:@"country"],nil];
-    NSLog(@"new search = %@",thisSearch);
     if (![searches containsObject:thisSearch]) {
         [searches insertObject:thisSearch atIndex:0];
         [self.userSettings setValue:searches forKey:@"searches"];
-        NSLog(@"interim search results = %@",userSettings);
     }
     
     // execute search
@@ -90,10 +89,9 @@
         UIAlertView *emptyFieldAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_EMPTY_FIELD", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
 		[emptyFieldAlert show];
     } else {
-        NSLog(@"searchJobs");
 
         [self checkEnteredLocation:txtLocation];
-        NSLog(@"completed checkEnteredLocation");
+
         // Don't fire job search if user entered invalid location
         if ([txtLocation.text isEqualToString:[curLocation objectForKey:@"usertext"]]) {
             [self viewSearchResults];
@@ -176,7 +174,6 @@
 	{
 		userSettings = [appDelegate userSettings];
 	}
-    NSLog(@"userSettings = %@",userSettings);
 
 	if ([[userSettings objectForKey:@"searches"] count] > 0) {
         // use recent searches
@@ -187,8 +184,8 @@
 	} else {
 		searches = [[NSMutableArray alloc] init];
 	}
-    NSLog(@"stored searches = %@",[userSettings objectForKey:@"searches"]);
     
+    [self addTipsButton];
     [self getAd];
     
 }
@@ -212,6 +209,13 @@
     [appDelegate trackPV:@"Home"]; // Google Analytics call needs to happen here, or initial launch event not recorded
 }
 
+- (void)addTipsButton {
+
+    // create a standard "bookmarks" button in the nav bar
+    UIBarButtonItem* bi = [[UIBarButtonItem alloc]
+                           initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(readTips:)];
+    self.navigationItem.rightBarButtonItem = bi;
+}
 #pragma mark GADRequest generation
 
 - (GADRequest *)request {
@@ -387,7 +391,6 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField == txtLocation && textField.text != [curLocation objectForKey:@"usertext"]) {
-        NSLog(@"text field ! = curLocation");
         // new location entered
         [self checkEnteredLocation:textField];
     } else if (textField == txtSearch) {
@@ -474,17 +477,7 @@
     [defaults setObject:[curLocation objectForKey:@"country"] forKey:@"countryCode"];
     [defaults setObject:[curLocation objectForKey:@"postalcode"] forKey:@"postalcode"];
     [defaults synchronize];
-/*
-    NSLog(@"recent searches = %@",searches);
-    // store recent searches
-    [userSettings setValue:searches forKey:@"searches"];
-    NSLog(@"user settings = %@",userSettings);
-    NSString *settingsFile = [appDelegate.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
-    NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:self.userSettings
-                                                                 format:NSPropertyListXMLFormat_v1_0
-                                                       errorDescription:nil];
-    [xmlData writeToFile:settingsFile atomically:YES];
-*/
+
 }
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.

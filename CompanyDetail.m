@@ -65,7 +65,7 @@ NSInteger currentType = 0;
 
         } else if (tmpSegment == 4) {
             if (![(AppDelegate *)[[UIApplication sharedApplication] delegate] connectedToNetwork]) {
-                UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Network connection \nappears to be offline" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+                UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_NO_NETWORK", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
                 [noNetworkAlert show];
             } else {
                 if(self.searchVC == nil)
@@ -155,7 +155,8 @@ NSInteger currentType = 0;
                NSLocalizedString(@"STR_CO_TYPE_DEFAULT", nil),
                NSLocalizedString(@"STR_CO_TYPE_AGENCY", nil),
                NSLocalizedString(@"STR_CO_TYPE_GOVT", nil),
-               NSLocalizedString(@"STR_CO_TYPE_EDUC", nil), nil];
+               NSLocalizedString(@"STR_CO_TYPE_EDUC", nil),
+               NSLocalizedString(@"STR_CO_TYPE_OTHER", nil), nil];
     
     tableCoType.dataSource = self;
     
@@ -185,8 +186,6 @@ NSInteger currentType = 0;
 
     // populate table of company types
     [self.tableCoType reloadData];
-//    [tableCoType selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentType inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-
 
     // Log pageview w/ Google Analytics
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] trackPVFull:@"Company" :@"Co name" :@"detail" :_selectedCompany.coName];
@@ -201,10 +200,6 @@ NSInteger currentType = 0;
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField*)textField
-{
-    
-}
 
 #pragma mark textView methods
 

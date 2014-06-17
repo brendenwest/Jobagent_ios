@@ -67,6 +67,11 @@
     
     // create a custom navigation bar button and set it to always say "Back"
     
+    // create a standard "bookmarks" button in the nav bar
+    UIBarButtonItem* bi = [[UIBarButtonItem alloc]
+                           initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(shareJobAgent:)];
+    self.navigationItem.rightBarButtonItem = bi;
+
     
 }
 

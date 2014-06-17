@@ -83,7 +83,7 @@ BOOL isSavedJob;
                 NSLocalizedString(@"STR_JOB_TYPE_C2C", nil),
                 NSLocalizedString(@"STR_JOB_TYPE_INTERN", nil),
                 NSLocalizedString(@"STR_JOB_TYPE_VOL", nil),
-                NSLocalizedString(@"STR_OTHER", nil), nil];
+                NSLocalizedString(@"STR_JOB_TYPE_OTHER", nil), nil];
 	
     // Date picker setup
 

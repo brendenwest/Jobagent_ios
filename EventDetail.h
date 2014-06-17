@@ -12,7 +12,7 @@
 
 @class AppDelegate, Event;
 
-@interface EventDetail : UIViewController <EditItemDelegate, PickListDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface EventDetail : UIViewController <EditItemDelegate, UITextFieldDelegate, PickListDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
 	
 	AppDelegate *appDelegate;
 	UITableView	*tableView;
