@@ -18,6 +18,7 @@
 	GADBannerView *bannerView_;
 }
 
+@property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UIButton *btnTips;
 @property (nonatomic, weak) IBOutlet UILabel *lblAbout;

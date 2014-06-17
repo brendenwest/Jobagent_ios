@@ -18,7 +18,9 @@
 @dynamic jobtitle;
 @dynamic jobid;
 @dynamic date;
-@dynamic action;
+@dynamic type;
+@dynamic priority;
+@dynamic title;
 @dynamic company;
 @dynamic notes;
 @dynamic toPerson;

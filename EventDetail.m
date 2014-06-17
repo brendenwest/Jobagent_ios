@@ -1,8 +1,8 @@
 //
-//  EventDetail.m
+//  JobDetail.m
 //  jobagent
 //
-//  Created by mac on 3/25/10.
+//  Created by mac on 3/9/10.
 //  Copyright 2014 Brisk Software LLC. All rights reserved.
 //
 
@@ -11,435 +11,598 @@
 #import "AppDelegate.h"
 #import "Common.h"
 
+
+#define kPickerAnimationDuration    0.40   // duration for the animation to slide the date picker into view
+#define kDatePickerTag              99     // view tag identifiying the date picker view
+
+#define kDateKey        @"date"    // key for obtaining the data source item's date value
+
+static NSString *kDateCellID = @"date";     // the cells with the start or end date
+static NSString *kDatePickerID = @"datePicker"; // the cell containing the date picker
+
+
 @implementation EventDetail
 
-@synthesize del, scrollView, dateFormatter, action, person, company, jobtitle, jobid, btnDate, btnCurrent, btnCompanies, btnActions, btnPeople, btnJobs, description, datePickerView, myPickerView;
-@synthesize pickerViewArray, aCompanies, aJobs, aEvents, aPeople;
-
+@synthesize  eventLabels, eventKeys, eventTypes, eventPriority, eventPriorities, appDelegate, tableView, editedItemId;
+@synthesize datePickerIndexPath, pickerCellRowHeight, doneButton;
+@synthesize managedObjectContext;
 @synthesize selectedEvent = _selectedEvent;
 
-- (IBAction)switchView:(id)sender 
-{ }
-
-- (IBAction)doneAction:(id)sender 
-{
-	
-	// remove the "Done" button in the nav bar
-	self.navigationItem.rightBarButtonItem = nil;
-	
-	if (btnCurrent == btnDate) {
-		[btnCurrent setTitle:[self.dateFormatter stringFromDate:self.datePickerView.date] forState:(UIControlState)UIControlStateNormal];
-		datePickerView.hidden = YES;
-	} else {
-		myPickerView.hidden = YES;
-	}
-}
-
-- (IBAction)showPicker:(id)sender {
-	
-	// add the "Done" button to the nav bar
-	UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone  target:self action:@selector(doneAction:)];
-	
-	self.navigationItem.rightBarButtonItem = doneButton;
-	
-	btnCurrent = (UIButton *)sender;
-	
-	if (btnCurrent == btnDate) {
-		if ([btnCurrent.currentTitle length] > 0) {
-			self.datePickerView.date = [self.dateFormatter dateFromString:btnCurrent.currentTitle];
-		}
-		datePickerView.hidden = NO;
-	} else {
-		myPickerView.hidden = NO;
-		if (btnCurrent == btnCompanies) {			
-			[self.pickerViewArray setArray:self.aCompanies];
-		}
-		else if (btnCurrent == btnActions) {
-			[self.pickerViewArray setArray:self.aEvents];
-		}
-		else if (btnCurrent == btnPeople) {
-			[self.pickerViewArray setArray:self.aPeople];
-		}
-		else if (btnCurrent == btnJobs) {
-			[self.pickerViewArray setArray:self.aJobs];
-		}
-		[myPickerView reloadAllComponents];
-	}
-	
-}
+BOOL isSavedEvent;
+#define EMBEDDED_DATE_PICKER (IS_OS_7_OR_LATER)
 
 
-// return the picker frame based on its size, positioned at the bottom of the page
-- (CGRect)pickerFrameWithSize:(CGSize)size
-{
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGRect pickerRect = CGRectMake(	0.0,
-								   screenRect.size.height - 84.0 - size.height,
-								   size.width,
-								   size.height);
-	return pickerRect;
-}
-
-#pragma mark -
-#pragma mark UIPickerView
-- (void)createPicker
-{
-	// note we are using CGRectZero for the dimensions of our picker view,
-	// this is because picker views have a built in optimum size,
-	// you just need to set the correct origin in your view.
-	//
-	// position the picker at the bottom
-	myPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-	CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
-	myPickerView.frame = [self pickerFrameWithSize:pickerSize];
-	
-	myPickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	myPickerView.showsSelectionIndicator = YES;	// note this is default to NO
-	
-	// this view controller is the data source and delegate
-	myPickerView.delegate = self;
-	myPickerView.dataSource = self;
-	
-	// add this picker to our view controller, initially hidden
-	myPickerView.hidden = YES;
-	[self.view addSubview:myPickerView];
-}
-
-#pragma mark UIPickerView - Date/Time
-- (void)createDatePicker
-{
-	datePickerView = [[UIDatePicker alloc] initWithFrame:CGRectZero];
-	datePickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	datePickerView.datePickerMode = UIDatePickerModeDate;
-	
-	//
-	// position the picker at the bottom
-	CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
-	datePickerView.frame = [self pickerFrameWithSize:pickerSize];
-	
-	// add this picker to our view controller, initially hidden
-	datePickerView.hidden = YES;
-	[self.view addSubview:datePickerView];
-}
-
-#pragma Helper methods
-
-- (void) backgroundTouched {
-    
-	for (UIView* view in self.view.subviews) {
-		if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UITextView class]])
-			[view resignFirstResponder];
-	}
-}
-
-// Call this method somewhere in your view controller setup code.
-- (void)registerForKeyboardNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
-}
-
-
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void)keyboardWasShown:(NSNotification*)aNotification
-{
-    // get kb height
-    // get textfield bottom Y coord
-    // if textfield bottom Y coord < KB height (coordinates start from lower left of screen), then move scrollview
-    
-    NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    _scrollDown = scrollView.contentOffset.y;
-    
-    
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Homebrewed
-    _scrollUp = (activeField.frame.origin.y + activeField.frame.size.height) - (self.view.frame.size.height-kbSize.height+scrollView.contentOffset.y);
-    if (_scrollUp > 0) {
-        
-        CGPoint scrollPoint = CGPointMake(0.0, _scrollUp);
-        [scrollView setContentOffset:scrollPoint animated:YES];
-    }
-    
-}
-
-
-// Called when the UIKeyboardWillHideNotification is sent
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    if (_scrollUp > 0) {
-        
-        CGPoint scrollPoint = CGPointMake(0.0, _scrollDown);
-        [scrollView setContentOffset:scrollPoint animated:YES];
-        _scrollUp = 0;
-    }
-}
-
-// end Helper methods
-//*******
-
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+// Implement viewDidLoad to do additional setup after loading the view.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
 
-	self.title = @"Activity";
+    if (IS_OS_7_OR_LATER) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
 
-    // allow user to dismiss keyboard by tapping background screen
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTouched)];
-    
-    // make sure gesture recognizer doesn't cancel button touches
-    singleTap.cancelsTouchesInView = NO;
-    
-    [scrollView addGestureRecognizer: singleTap];
-    scrollView.contentSize = self.view.frame.size;
-    scrollView.delegate = self;
-    
-    [self registerForKeyboardNotifications];
-
-	self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
+	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	if (managedObjectContext == nil)
+	{ 
+		managedObjectContext = [appDelegate managedObjectContext];
+	}
 	
-	self.pickerViewArray = [[NSMutableArray alloc] init];
-	[self createPicker];	
-	[self createDatePicker];	
-	
-	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-	description.delegate = self;
+	tableView.dataSource = self;
+    [self adjustUILayout];
+    
+    // Use this dictionary to display field labels and map data to Job object keys
 
+    eventLabels = [NSArray arrayWithObjects:
+                 NSLocalizedString(@"STR_TITLE_ACTIVITY", nil),
+                 NSLocalizedString(@"STR_DATE", nil),
+                 NSLocalizedString(@"STR_TYPE", nil),
+                 NSLocalizedString(@"STR_COMPANY", nil),
+                 NSLocalizedString(@"STR_JOB", nil),
+                 NSLocalizedString(@"STR_CONTACT", nil),
+                 NSLocalizedString(@"STR_NOTES", nil),
+                 NSLocalizedString(@"STR_PRIORITY", nil), nil];
+
+    eventKeys = [NSArray arrayWithObjects:
+               @"title",
+               @"date",
+               @"type",
+               @"company",
+               @"jobtitle",
+               @"person",
+               @"notes",
+               @"priority", nil];
+    
+    
+    eventTypes = [NSArray arrayWithObjects:
+                NSLocalizedString(@"STR_EVENT_TYPE_EMAIL", nil),
+                NSLocalizedString(@"STR_EVENT_TYPE_ONLINE", nil),
+                NSLocalizedString(@"STR_EVENT_TYPE_PHONE", nil),
+                NSLocalizedString(@"STR_EVENT_TYPE_INPERSON", nil),
+                NSLocalizedString(@"STR_EVENT_TYPE_INFORM", nil),
+                NSLocalizedString(@"STR_EVENT_TYPE_FAIR", nil),
+                NSLocalizedString(@"STR_JOB_TYPE_OTHER", nil), nil];
+	
+    eventPriorities = [NSArray arrayWithObjects:@"high",@"med",@"low",nil];
+    
+    // configure segmented control for priority selector
+    CGRect tmpFrame = CGRectMake(65.0, 6.0, [[UIScreen mainScreen] bounds].size.width-80, 28.0);
+    self.eventPriority = [[UISegmentedControl alloc] initWithItems:eventPriorities];
+    self.eventPriority.frame = tmpFrame;
+    [eventPriority addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+
+    // Date picker setup
+    
+    self.pickerCellRowHeight = 210; // TODO - check if needs to be variable
+    // configure date picker
+    self.pickerView = [[UIDatePicker alloc] init];
+    //set the action method that will listen for changes to picker value
+    [self.pickerView addTarget:self
+                        action:@selector(dateAction:)
+              forControlEvents:UIControlEventValueChanged];
+    self.pickerView.tag = 99;
+    self.pickerView.datePickerMode = UIDatePickerModeDate;
+    
+    // listen for locale changes while in the background, so we can update the date
+    // format in the table view cells    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(localeChanged:)
+                                                 name:NSCurrentLocaleDidChangeNotification
+                                               object:nil];
+    
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = @"Back";
+	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-}
-
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
+		
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 
-	action.text = _selectedEvent.action;	
-	company.text = _selectedEvent.company;
-	person.text = _selectedEvent.person;
-	jobtitle.text = _selectedEvent.jobtitle;	
-	jobid.text = _selectedEvent.jobid;	
+    self.eventPriority.selectedSegmentIndex = UISegmentedControlNoSegment;
 
-	description.text =  (_selectedEvent.notes != nil) ? _selectedEvent.notes : @"";
-
-	// set value for date button 
-	NSString *tmpTitle = [Common getShortDate:[NSString stringWithFormat:@"%@",_selectedEvent.date]];
-	[btnDate setTitle:tmpTitle forState:UIControlStateNormal];
-	
-	aEvents = [NSMutableArray arrayWithObjects:@"Phone screen", @"Application", @"Interview", @"E-mail", @"Job fair", @"Other", nil];
-	
-	[aEvents addObjectsFromArray:[[del getEvents:nil] valueForKey:@"title"]];
-
-	aJobs = [NSMutableArray arrayWithArray:[[del getJobs:nil] valueForKey:@"title"]];
-	if ([aJobs count] > 0) {
-		btnJobs.hidden = NO;
-	}
+    [self.tableView reloadData];
     
-    // Populate picker view for people
-	NSArray *tmp = [del getPeople:nil];
-	aPeople = [[NSMutableArray alloc] init];
-	for (int i=0;i< [tmp count] ; i++) {
-		[aPeople addObject:[NSString stringWithFormat:@"%@ %@",[[tmp objectAtIndex:i] valueForKey:@"firstName"],[[tmp objectAtIndex:i] valueForKey:@"lastName"]]];
+    // Log pageview w/ Google Analytics
+    [appDelegate trackPV:@"Event Details"];
+    
+}
+
+
+- (void)saveEvent {
+    NSLog(@"saved date = %@",_selectedEvent.date);
+    // save Company and Contact records if user has entered values
+    if ([_selectedEvent.company length] > 0) {
+        [appDelegate setCompany:_selectedEvent.company]; // save company
+    }
+
+    if ([_selectedEvent.person length] > 0) {
+        [appDelegate setPerson:_selectedEvent.person withCo:_selectedEvent.company];	// save person to SQL
+    }
+
+    
+	NSError *error = nil;
+	if (![_selectedEvent.managedObjectContext save:&error]) {
+									  // Handle the error...
 	}
+ 
+}
 
-	if ([aPeople count] > 0) {
-		btnPeople.hidden = NO;
-	}
-	aCompanies = [NSMutableArray arrayWithArray:[[del getCompanies:nil] valueForKey:@"coName"]];
-	if ([aCompanies count] > 0) {
-		btnCompanies.hidden = NO;
-	}
 
-	description.layer.cornerRadius = 8;
-	description.layer.borderWidth = 1;
-	description.layer.borderColor = [[UIColor grayColor] CGColor];
+#pragma mark Table view methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+// Customize the number of rows in the table view.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if ([self hasInlineDatePicker])
+    {
+        // we have a date picker, so allow for it in the number of rows in this section
+        NSInteger numRows = self.eventKeys.count;
+        return ++numRows;
+    }
+    
+    return self.eventKeys.count;
+}
+
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    NSString *itemKey = [eventKeys objectAtIndex:indexPath.row];
+    
+    UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:itemKey];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:itemKey];
+    }
+    
+    UILabel *label, *detailText;
+
+    // if cell has rendered previously, re-use existing subviews
+    if ([cell.contentView.subviews count] == 0) {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 10.0, 60.0, 25.0)];
+        label.font = [UIFont systemFontOfSize:10.0];
+        label.textAlignment = NSTextAlignmentLeft ;
+        label.textColor = [UIColor grayColor];
+        label.text = [eventLabels objectAtIndex:indexPath.row];
+        
+        
+        detailText = [[UILabel alloc] initWithFrame:CGRectMake(65.0, 0.0, [[UIScreen mainScreen] bounds].size.width-80, 44.0)];
+        detailText.font = [UIFont systemFontOfSize:14.0];
+        detailText.textAlignment = NSTextAlignmentLeft;
+        detailText.textColor = [UIColor blackColor];
+    } else if ([cell.contentView.subviews count] > 1) {
+        // don't modify datePicker cell
+        label = cell.contentView.subviews[0];
+        label.text = [eventLabels objectAtIndex:indexPath.row];
+        detailText = cell.contentView.subviews[1];
+    }
+    
+        
+        // Configure cell for different content types
+        if ([itemKey isEqualToString:@"date"]) {
+            detailText.text = (_selectedEvent.date != nil) ? [Common stringFromDate:_selectedEvent.date] : @"";
+            if ([cell.contentView.subviews count] == 0) {
+                [cell.contentView addSubview:label];
+                [cell.contentView addSubview:detailText];
+            }
+        } else if (indexPath.row == self.datePickerIndexPath.row && [self hasInlineDatePicker]) {
+            // Configure datePicker Cell
+            [cell.contentView addSubview:_pickerView];
+        } else if ([itemKey isEqualToString:@"priority"]) {
+            if ([cell.contentView.subviews count] == 0) {
+                [cell.contentView addSubview:label];
+                [cell.contentView addSubview:eventPriority]; // segmented control
+            }
+            eventPriority.selectedSegmentIndex = [eventPriorities indexOfObject:_selectedEvent.priority];
+
+        } else {
+            detailText.text = [_selectedEvent valueForKey:itemKey];
+            if ([cell.contentView.subviews count] == 0) {
+                [cell.contentView addSubview:label];
+                [cell.contentView addSubview:detailText];
+            }
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+
+    return cell;
+}
+
+
+
+- (void)tableView:(UITableView *)tblView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Navigation logic may go here. Create and push another view controller.
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    // store text ID of selected row for use when returning from child view
+    editedItemId = [eventKeys objectAtIndex:indexPath.row];
+    
+    if ([cell.reuseIdentifier isEqualToString:kDateCellID])
+    {
+        if (EMBEDDED_DATE_PICKER)
+            [self displayInlineDatePickerForRowAtIndexPath:indexPath];
+        else
+            [self displayExternalDatePickerForRowAtIndexPath:indexPath];
+    } else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        if ([cell.reuseIdentifier isEqualToString:@"type"]) {
+            
+            PickList *pickList = [[PickList alloc] init];
+            pickList.header = NSLocalizedString(@"STR_SEL_EVENT_TYPE", nil);
+            pickList.options = eventTypes;
+            UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
+            UILabel *tmpDetail = selectedCell.contentView.subviews[1];
+            pickList.selectedItem = tmpDetail.text;
+            pickList.delegate = self;
+            
+            [self.navigationController pushViewController:pickList animated:YES];
+            
+        } else {
+
+            EditItemVC *editItemVC = [[EditItemVC alloc] init];
+            UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
+            UILabel *tmpLabel = selectedCell.contentView.subviews[0];
+            editItemVC.labelText = tmpLabel.text;
+            UILabel *tmpDetail = selectedCell.contentView.subviews[1];
+            editItemVC.itemText = tmpDetail.text;
+            editItemVC.delegate = self;
+            
+            [self.navigationController pushViewController:editItemVC animated:YES];
+        }
+    }
 	
-    [del trackPV:@"Diary Activity"];
-
 }
 
-#pragma mark textField methods
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)adjustUILayout
 {
-    // the user pressed the "Done" button, so dismiss the keyboard
-    [textField resignFirstResponder];
-    return YES;
+    // now set the frame accordingly
+    CGRect tableFrame = self.tableView.frame;
+    
+    if (IS_OS_7_OR_LATER) {
+        tableFrame.size.height= [[UIScreen mainScreen] bounds].size.height - 115;
+        if ([[UIScreen mainScreen] bounds].size.height == 480) {
+            tableFrame.size.height += 30; // shim for 3.5" phones
+        }
+    } else {
+        tableFrame.size.height= [[UIScreen mainScreen] bounds].size.height - 105;
+    }
+    [tableView setFrame:tableFrame];
+    
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+#pragma mark - Protocol methods
+
+-(void)setItemText:(NSString *)editedItemText {
+    // on return from field-edit view...
+    NSString *itemKey = [editedItemId lowercaseString];
+    [_selectedEvent setValue:editedItemText forKey:itemKey];
+ 
+}
+
+-(void)pickItem:(NSString *)item {
+    // on return from pickList view...
+    NSString *itemKey = [editedItemId lowercaseString];
+    [_selectedEvent setValue:item forKey:itemKey];
+    
+}
+
+- (void)segmentAction:(id)sender
 {
-    activeField = textField;
-}
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+    [_selectedEvent setValue:[eventPriority titleForSegmentAtIndex:[sender selectedSegmentIndex]] forKey:@"priority"];
+		
+}	
+
+
+#pragma mark - Date picker methods
+
+/*! Responds to region format or locale changes.
+ */
+- (void)localeChanged:(NSNotification *)notif
 {
-    activeField = nil;
-	
+    // the user changed the locale (region format) in Settings, so we are notified here to
+    // update the date format in the table view cells
+    //
+    [self.tableView reloadData];
 }
 
-
-
-#pragma mark textView methods
-
-
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text { if([text isEqualToString:@"\n"]) [textView resignFirstResponder]; return YES; }
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    activeField = textView;
-    return YES;
-}
-
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
-	return YES;
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView {
-	self.selectedEvent.notes = description.text;
-	[textView resignFirstResponder];
-}
-
-- (void)textViewShouldReturn:(UITextView *)textView {
-	[textView resignFirstResponder];
-}
-
-#pragma mark -
-#pragma mark UIPickerViewDelegate
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+/*! Determines if the given indexPath has a cell below it with a UIDatePicker.
+ 
+ @param indexPath The indexPath to check if its cell has a UIDatePicker below it.
+ */
+- (BOOL)hasPickerForIndexPath:(NSIndexPath *)indexPath
 {
-	if (pickerView == myPickerView)	// don't show selection for the custom picker
-	{
-		if (btnCurrent == btnCompanies) { 
-			company.text = [self.aCompanies objectAtIndex:[pickerView selectedRowInComponent:0]];
-		}
-		else if (btnCurrent == btnActions) {
-			action.text = [self.aEvents objectAtIndex:[pickerView selectedRowInComponent:0]];
-		}
-		else if (btnCurrent == btnPeople) {
-			person.text = [self.aPeople objectAtIndex:[pickerView selectedRowInComponent:0]];
-		}
-		else if (btnCurrent == btnJobs) {
-			jobtitle.text = [self.aJobs objectAtIndex:[pickerView selectedRowInComponent:0]];
-		}
-		// report the selection to the UI label
-		pickerView.hidden = YES;
-		[self textFieldDidEndEditing:action];
-
-        // remove the "Done" button in the nav bar
-        self.navigationItem.rightBarButtonItem = nil;
-	}
+    BOOL hasDatePicker = NO;
+    
+    NSInteger targetedRow = indexPath.row;
+    targetedRow++;
+    
+    UITableViewCell *checkDatePickerCell =
+    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:targetedRow inSection:0]];
+    UIDatePicker *checkDatePicker = (UIDatePicker *)[checkDatePickerCell viewWithTag:kDatePickerTag];
+    
+    hasDatePicker = (checkDatePicker != nil);
+    return hasDatePicker;
 }
 
-
-#pragma mark -
-#pragma mark UIPickerViewDataSource
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+/*! Updates the UIDatePicker's value to match with the date of the cell above it.
+ */
+- (void)updateDatePicker
 {
-	NSString *returnStr = @"";
-	
-	// note: custom picker doesn't care about titles, it uses custom views
-	if (pickerView == myPickerView)
-	{
-		if (component == 0)
-		{
-			returnStr = [pickerViewArray objectAtIndex:row];
-		}
-		else
-		{
-			returnStr = [[NSNumber numberWithInteger:row] stringValue];
-		}
-	}
-	
-	return returnStr;
+    if (self.datePickerIndexPath != nil)
+    {
+        UITableViewCell *associatedDatePickerCell = [self.tableView cellForRowAtIndexPath:self.datePickerIndexPath];
+
+        UIDatePicker *targetedDatePicker = (UIDatePicker *)[associatedDatePickerCell viewWithTag:kDatePickerTag];
+
+        if (targetedDatePicker != nil)
+        {
+            // we found a UIDatePicker in this cell, so update it's date value
+            //
+            NSDate *tmpDate = (_selectedEvent.date != nil) ? _selectedEvent.date : [NSDate date];
+            [targetedDatePicker setDate:tmpDate animated:NO];
+        }
+
+    }
 }
 
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+/*! Determines if the UITableViewController has a UIDatePicker in any of its cells.
+ */
+- (BOOL)hasInlineDatePicker
 {
-	CGFloat componentWidth = 0.0;
-	
-	if (component == 0)
-		componentWidth = 240.0;	// first column size is wider to hold names
-	else
-		componentWidth = 40.0;	// second column is narrower to show numbers
-	
-	return componentWidth;
+    return (self.datePickerIndexPath != nil);
 }
 
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+/*! Determines if the given indexPath points to a cell that contains the UIDatePicker.
+ 
+ @param indexPath The indexPath to check if it represents a cell with the UIDatePicker.
+ */
+- (BOOL)indexPathHasPicker:(NSIndexPath *)indexPath
 {
-	return 40.0;
+    return ([self hasInlineDatePicker] && self.datePickerIndexPath.row == indexPath.row);
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+/*! Determines if the given indexPath points to a cell that contains the date values.
+ 
+ @param indexPath The indexPath to check if it represents a date cell.
+ */
+- (BOOL)indexPathHasDate:(NSIndexPath *)indexPath
 {
-	return [pickerViewArray count];
+    BOOL hasDate = NO;
+    if ([[eventKeys objectAtIndex:indexPath.row] isEqualToString:@"date"]) {
+        hasDate = YES;
+    }
+    return hasDate;
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 1;
+    return ([self indexPathHasPicker:indexPath] ? self.pickerCellRowHeight : self.tableView.rowHeight);
 }
+
+/*! Adds or removes a UIDatePicker cell below the given indexPath.
+ 
+ @param indexPath The indexPath to reveal the UIDatePicker.
+ */
+- (void)toggleDatePickerForSelectedIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView beginUpdates];
+    
+    NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]];
+    
+    // check if 'indexPath' has an attached date picker below it
+    if ([self hasPickerForIndexPath:indexPath])
+    {
+        // found a picker below it, so remove it
+        [self.tableView deleteRowsAtIndexPaths:indexPaths
+                              withRowAnimation:UITableViewRowAnimationFade];
+    }
+    else
+    {
+        // didn't find a picker below it, so we should insert it
+        [self.tableView insertRowsAtIndexPaths:indexPaths
+                              withRowAnimation:UITableViewRowAnimationFade];
+    }
+    
+    [self.tableView endUpdates];
+}
+
+/*! Reveals the date picker inline for the given indexPath, called by "didSelectRowAtIndexPath".
+ 
+ @param indexPath The indexPath to reveal the UIDatePicker.
+ */
+- (void)displayInlineDatePickerForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // display the date picker inline with the table content
+    [self.tableView beginUpdates];
+    BOOL before = NO;   // indicates if the date picker is below "indexPath", help us determine which row to reveal
+    if ([self hasInlineDatePicker])
+    {
+        before = self.datePickerIndexPath.row < indexPath.row;
+    }
+    
+    BOOL sameCellClicked = (self.datePickerIndexPath.row - 1 == indexPath.row);
+    
+    // remove any date picker cell if it exists
+    if ([self hasInlineDatePicker])
+    {
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.datePickerIndexPath.row inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationFade];
+        self.datePickerIndexPath = nil;
+        self.tableView.scrollEnabled = YES;
+
+    }
+    
+    if (!sameCellClicked)
+    {
+        // hide the old date picker and display the new one
+        NSInteger rowToReveal = (before ? indexPath.row - 1 : indexPath.row);
+        NSIndexPath *indexPathToReveal = [NSIndexPath indexPathForRow:rowToReveal inSection:0];
+        
+        [self toggleDatePickerForSelectedIndexPath:indexPathToReveal];
+        self.datePickerIndexPath = [NSIndexPath indexPathForRow:indexPathToReveal.row + 1 inSection:0];
+        // disable table scroll while picker is visible to avoid out-of-bounds error
+        self.tableView.scrollEnabled = NO;
+
+    }
+    
+    // always deselect the row containing date value
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [self.tableView endUpdates];
+    
+    // inform our date picker of the current date to match the current cell
+    [self updateDatePicker];
+}
+
+/*! Reveals the UIDatePicker as an external slide-in view, iOS 6.1.x and earlier, called by "didSelectRowAtIndexPath".
+ 
+ @param indexPath The indexPath used to display the UIDatePicker.
+ */
+- (void)displayExternalDatePickerForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // first update the date picker's date value according to our model
+    NSDate *tmpDate = ([_selectedEvent valueForKey:kDateKey] != nil) ? [_selectedEvent valueForKey:kDateKey]: [NSDate date];
+    [self.pickerView setDate:tmpDate animated:YES];
+    
+    // the date picker might already be showing, so don't add it to our view
+    if (self.pickerView.superview == nil)
+    {
+        CGRect startFrame = self.pickerView.frame;
+        CGRect endFrame = self.pickerView.frame;
+        
+        // the start position is below the bottom of the visible frame
+        startFrame.origin.y = self.view.frame.size.height;
+        
+        // the end position is slid up by the height of the view
+        endFrame.origin.y = startFrame.origin.y - endFrame.size.height;
+        
+        self.pickerView.frame = startFrame;
+        
+        [self.view addSubview:self.pickerView];
+        
+        // animate the date picker into view
+        [UIView animateWithDuration:kPickerAnimationDuration animations: ^{ self.pickerView.frame = endFrame; }
+                         completion:^(BOOL finished) {
+                             // add the "Done" button to the nav bar
+                             self.navigationItem.rightBarButtonItem = self.doneButton;
+                         }];
+    }
+}
+
+/*! User chose to change the date by changing the values inside the UIDatePicker.
+ 
+ @param sender The sender for this action: UIDatePicker.
+ */
+- (IBAction)dateAction:(id)sender
+{
+
+    NSIndexPath *targetedCellIndexPath = nil;
+    
+    if ([self hasInlineDatePicker])
+    {
+        // inline date picker: update the cell's date "above" the date picker cell
+        //
+        targetedCellIndexPath = [NSIndexPath indexPathForRow:self.datePickerIndexPath.row - 1 inSection:0];
+    }
+    else
+    {
+        // external date picker: update the current "selected" cell's date
+        targetedCellIndexPath = [self.tableView indexPathForSelectedRow];
+    }
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:targetedCellIndexPath];
+    UIDatePicker *targetedDatePicker = sender;
+    
+    // save selected date
+    [_selectedEvent setValue:targetedDatePicker.date forKey:kDateKey];
+    
+    // update the cell's date string
+    UILabel *detailText = [cell.contentView.subviews objectAtIndex:1];
+    detailText.text = [Common stringFromDate:targetedDatePicker.date];
+    
+}
+
+/*! User chose to finish using the UIDatePicker by pressing the "Done" button, (used only for non-inline date picker), iOS 6.1.x or earlier
+ 
+ @param sender The sender for this action: The "Done" UIBarButtonItem
+ */
+- (IBAction)doneAction:(id)sender
+{
+    CGRect pickerFrame = self.pickerView.frame;
+    pickerFrame.origin.y = self.view.frame.size.height;
+    
+    // animate the date picker out of view
+    [UIView animateWithDuration:kPickerAnimationDuration animations: ^{ self.pickerView.frame = pickerFrame; }
+                     completion:^(BOOL finished) {
+                         [self.pickerView removeFromSuperview];
+                     }];
+    
+    // remove the "Done" button in the navigation bar
+	self.navigationItem.rightBarButtonItem = nil;
+    
+    // deselect the current table cell
+	NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
+
+#pragma mark End date picker methods
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
 
-    if (action.text.length > 0) {
-        self.selectedEvent.action = action.text;
-        self.selectedEvent.company = company.text;
-        if ([company.text length] > 0) {
-            [del setCompany:company.text];
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1 && [viewControllers objectAtIndex:viewControllers.count-2] == self) {
+        // View is disappearing because a new view controller was pushed onto the stack
+        // Navigating to item editor
+    } else if ([viewControllers indexOfObject:self] == NSNotFound) {
+        // View is disappearing because it was popped from the stack (exiting to Leads)
+        if (_selectedEvent.title.length > 0) {
+            [self saveEvent];
+        } else {
+            // delete empty job lead record
+            [self.selectedEvent.managedObjectContext deleteObject:self.selectedEvent];
         }
-
-        self.selectedEvent.person = person.text;
-        if ([person.text length] > 0) {
-            [del setPerson:person.text withCo:company.text];
-        }
-
-        self.selectedEvent.jobtitle = jobtitle.text;
-        self.selectedEvent.jobid = jobid.text;
-        self.selectedEvent.date = [Common dateFromString:btnDate.currentTitle];
         
-        NSError *error = nil;
-        if (![self.selectedEvent.managedObjectContext save:&error]) {
-            // Handle the error...
-            NSLog(@"Error saving %@, %@", error, [error userInfo]);
-        }
-    } else {
-        // delete empty job lead record
-        [self.selectedEvent.managedObjectContext deleteObject:self.selectedEvent];
     }
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSCurrentLocaleDidChangeNotification
+                                                  object:nil];
+}
+
 - (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
+    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
+    // Release anything that's not essential, such as cached data
 }
-
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// release all the other objects
-	self.myPickerView = nil;
-	self.pickerViewArray = nil;
-}
-
 
 
 

@@ -18,8 +18,6 @@
 
 	IBOutlet UITextField *txtSearch;
 	IBOutlet UITextField *txtLocation;
-    NSString *curLocation;
-    NSString *curLocale;
     
 	IBOutlet UIButton *btnSearch;
 	IBOutlet UIButton *btnTips;
@@ -29,8 +27,8 @@
 	SearchJobs *_searchVC; // for linking to job details
 	Tips *_tipsVC; // for linking to tips screen
 	Cities *_citiesVC; // for linking to list of cities w/ zips
-
-	NSMutableArray *searches;
+    
+    NSMutableDictionary *userSettings;
     
     GADBannerView *bannerView_;
 }
@@ -41,8 +39,7 @@
 @property (nonatomic, strong) IBOutlet UITextField *txtSearch;
 @property (nonatomic, strong) IBOutlet UITextField *txtLocation;
 
-@property (nonatomic, strong) NSString *curLocation;
-@property (nonatomic, strong) NSString *curLocale;
+@property (nonatomic, strong) NSMutableDictionary *curLocation;
 
 @property (nonatomic, strong) IBOutlet UIButton *btnSearch;
 @property (nonatomic, strong) IBOutlet UIButton *btnTips;
@@ -57,8 +54,7 @@
 
 - (GADRequest *)request;
 - (IBAction)searchJobs:(id)sender;
-- (IBAction)checkZip:(id)sender;
-- (IBAction)recentSearches:(id)sender;
+- (IBAction)checkEnteredLocation:(id)sender;
 - (IBAction)backgroundTouched:(id)sender;
 - (IBAction)readTips:(id)sender;
 

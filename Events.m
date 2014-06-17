@@ -26,12 +26,16 @@
 
 static NSString *kTitleNewItem = @"";
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)awakeFromNib
+{
+    // set title here so it applies to both view and tab bar item
+    self.title = NSLocalizedString(@"STR_TITLE_DIARY", nil);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = @"Diary";
-	if (managedObjectContext == nil) 
+	if (managedObjectContext == nil)
 	{ 
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
 	}
@@ -96,7 +100,7 @@ static NSString *kTitleNewItem = @"";
 	[self.fetchedResultsController.fetchRequest entity];
 	Event *event = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
 											   inManagedObjectContext:context];
-	[event setValue:kTitleNewItem forKey:@"action"];
+	[event setValue:kTitleNewItem forKey:@"title"];
 
 
 	if(self.eventDetailVC == nil)
@@ -120,12 +124,14 @@ static NSString *kTitleNewItem = @"";
 }
 
 - (void)configureCell:(UITableViewCell *)cell withEvent:(Event *)event {
-	
-	NSString *subtitle = (event.date) ? [Common getShortDate:[NSString stringWithFormat:@"%@",event.date]] : @"";
-	if ([event.company length] > 0) {
-		subtitle = [NSString stringWithFormat:@"%@ - %@",subtitle, event.company];
+	NSString *subtitle = (event.date != nil) ? [Common getShortDate:[NSString stringWithFormat:@"%@",event.date]] : @"";
+	if ([event.priority length] > 0) {
+		subtitle = [NSString stringWithFormat:@"%@ ~ %@",subtitle, event.priority];
 	}
-	cell.textLabel.text = event.action;
+	if ([event.company length] > 0) {
+		subtitle = [NSString stringWithFormat:@"%@ ~ %@",subtitle, event.company];
+	}
+	cell.textLabel.text = event.title;
 	cell.detailTextLabel.text = subtitle;
 }
 

@@ -36,7 +36,8 @@
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *jobActions;
-@property (nonatomic, strong) NSArray *jobFields;
+@property (nonatomic, strong) NSArray *jobLabels;
+@property (nonatomic, strong) NSArray *jobKeys;
 @property (nonatomic, strong) NSArray *jobTypes;
 @property (nonatomic, strong) NSString *editedItemId;
 

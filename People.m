@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = @"Contacts";
+	self.title = NSLocalizedString(@"STR_TITLE_CONTACTS", nil);
 	if (managedObjectContext == nil) 
 	{ 
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 

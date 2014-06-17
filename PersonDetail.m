@@ -139,7 +139,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = @"Person";
+	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
 
     // allow user to dismiss keyboard by tapping background screen
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTouched)];
@@ -158,7 +158,7 @@
 	
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = @"Back";
+	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 	
 	// set border around notes field

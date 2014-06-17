@@ -1,0 +1,33 @@
+
+/* Class = "IBUITextField"; placeholder = "person"; ObjectID = "4"; */
+"4.placeholder" = "kontakt";
+
+/* Class = "IBUITextField"; placeholder = "actionA"; ObjectID = "12"; */
+"12.placeholder" = "aktivität";
+
+/* Class = "IBUITextField"; placeholder = "company"; ObjectID = "14"; */
+"14.placeholder" = "firma";
+
+/* Class = "IBUITextField"; placeholder = "job "; ObjectID = "15"; */
+"15.placeholder" = "job ";
+
+/* Class = "IBUILabel"; text = "What"; ObjectID = "37"; */
+"37.text" = "Was";
+
+/* Class = "IBUILabel"; text = "When"; ObjectID = "38"; */
+"38.text" = "Termin";
+
+/* Class = "IBUILabel"; text = "Who"; ObjectID = "39"; */
+"39.text" = "Wer";
+
+/* Class = "IBUILabel"; text = "Co."; ObjectID = "40"; */
+"40.text" = "Firma";
+
+/* Class = "IBUILabel"; text = "Job"; ObjectID = "41"; */
+"41.text" = "Job";
+
+/* Class = "IBUIButton"; normalTitle = "mm/dd/yy"; ObjectID = "42"; */
+"42.normalTitle" = "mm/dd/yy";
+
+/* Class = "IBUILabel"; text = "Notes"; ObjectID = "63"; */
+"63.text" = "Jotting";

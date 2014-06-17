@@ -1,87 +1,54 @@
 //
-//  EventDetail.h
+//  JobDetail.h
 //  jobagent
 //
-//  Created by mac on 3/25/10.
-//  Copyright 2010 __MyComeventpanyName__. All rights reserved.
+//  Created by mac on 3/9/10.
+//  Copyright 2014 Brisk Software LLC. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
+#import <CoreData/CoreData.h>
+#import "EditItemVC.h"
+#import "PickList.h"
 
-@class Event, AppDelegate;
+@class AppDelegate, Event;
 
-@interface EventDetail : UIViewController <UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
+@interface EventDetail : UIViewController <EditItemDelegate, PickListDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
 	
-	AppDelegate *del;
-    IBOutlet UIScrollView *scrollView;
+	AppDelegate *appDelegate;
+	UITableView	*tableView;
 
-	UITextField	*action;
-	UITextField	*company;
-	UITextField	*person;
-	UITextField	*jobtitle;
-	UITextField	*jobid;
-    UIView *activeField;
-
-	UIButton *btnDate;
-	UIButton *btnCurrent;
-	UIButton *btnCompanies;
-	UIButton *btnActions;
-	UIButton *btnPeople;
-	UIButton *btnJobs;
-	UIButton *btnCompany;
-	UIButton *btnPerson;
-	UIButton *btnJob;
-	
-	UITextView *description;
+	NSManagedObjectContext *managedObjectContext;
 	Event *_selectedEvent;
-
-	UIDatePicker *datePickerView;
-	UIPickerView	*myPickerView;
-	NSMutableArray	*pickerViewArray;
-
-	NSMutableArray *aCompanies;
-	NSMutableArray *aJobs;
-	NSMutableArray *aPeople;
-	NSMutableArray *aEvents;
-
-	NSDateFormatter *dateFormatter; 	
 
 }
 
-@property (nonatomic, strong) AppDelegate *del;
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) AppDelegate *appDelegate;
 
-@property (nonatomic, strong) IBOutlet UITextField *action;
-@property (nonatomic, strong) IBOutlet UITextField *person;
-@property (nonatomic, strong) IBOutlet UITextField *jobtitle;
-@property (nonatomic, strong) IBOutlet UITextField *jobid;
-@property (nonatomic, strong) IBOutlet UITextField *company;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UISegmentedControl *jobActions;
+@property (nonatomic, strong) NSArray *eventLabels;
+@property (nonatomic, strong) NSArray *eventKeys;
+@property (nonatomic, strong) NSArray *eventTypes;
+@property (nonatomic, strong) NSArray *eventPriorities;
+@property (nonatomic, strong) NSString *editedItemId;
 
-@property (nonatomic, strong) IBOutlet UIButton *btnDate;
-@property (nonatomic, strong) UIButton *btnCurrent;
-@property (nonatomic, strong) IBOutlet UIButton *btnCompanies;
-@property (nonatomic, strong) IBOutlet UIButton *btnActions;
-@property (nonatomic, strong) IBOutlet UIButton *btnPeople;
-@property (nonatomic, strong) IBOutlet UIButton *btnJobs;
 
-@property (nonatomic, strong) IBOutlet UITextView *description;
-
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) Event *selectedEvent;
 
-@property (nonatomic, strong) UIDatePicker *datePickerView;
-@property (nonatomic, strong) UIPickerView *myPickerView;
-@property (nonatomic, strong) NSMutableArray *pickerViewArray;
-@property (nonatomic, strong) NSMutableArray *aEvents;
-@property (nonatomic, strong) NSMutableArray *aCompanies;
-@property (nonatomic, strong) NSMutableArray *aPeople;
-@property (nonatomic, strong) NSMutableArray *aJobs;
+@property (nonatomic, strong) UISegmentedControl *eventPriority;
 
-@property double scrollUp;
-@property double scrollDown;
+// Date Picker properties
+// keep track which indexPath points to the cell with UIDatePicker
+@property (nonatomic, strong) NSIndexPath *datePickerIndexPath;
 
-@property (nonatomic, strong) NSDateFormatter *dateFormatter; 
+@property (assign) NSInteger pickerCellRowHeight;
 
-- (IBAction)showPicker:(id)sender;		// for showing action selector
-- (IBAction)switchView:(id)sender;		// for showing action selector
+@property (nonatomic, strong) IBOutlet UIDatePicker *pickerView;
+
+// this button appears only when the date picker is shown (iOS 6.1.x or earlier)
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
+
 
 @end
+

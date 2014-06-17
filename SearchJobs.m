@@ -29,30 +29,16 @@
     if ([self.jobsAll count] > 0) {
         [self.tableView reloadData]; 
     } else {
-		UIAlertView *noJobs = [[UIAlertView alloc] initWithTitle:@"No Listings" message:@"No listings for this site" delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+		UIAlertView *noJobs = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"STR_NO_LISTINGS", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
 		[noJobs show];        
     }
 }
     
-- (void)viewDidAppear:(BOOL)animated {
-    NSString *newSearch = [NSString stringWithFormat:@"%@+%@",txtSearch, curLocation];
-    if (txtSearch && ![newSearch isEqualToString:prevSearch]) {
-        prevSearch = newSearch;
-		[self requestJobs:nil];
-	} else {
-        [uiLoading stopAnimating];
-    }
-
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	    
-	self.title = @"Search Results";
-	tableView.hidden = YES;
-    btnJobSite.hidden = YES;
-    uiLoading.hidden = NO;
-    [uiLoading startAnimating];
+	self.title = NSLocalizedString(@"STR_TITLE_SEARCH", nil);
 
     if (IS_OS_7_OR_LATER) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -74,7 +60,7 @@
 	
 	// create a custom navigation bar button and set it to always say "Back"
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_BTN_BACK", nil) style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backButton;
      
 
@@ -85,7 +71,11 @@
 
 - (void)requestJobs:(id)sender
 {
-	NSString *query = [txtSearch stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+	NSString *query = txtSearch;
+    if (![query integerValue]) {
+        query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    }
+
     NSString *locationEncoded = [curLocation stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
@@ -103,7 +93,9 @@
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<distance>" withString:[settings stringForKey:@"distanceResults"]];
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<country>" withString:curLocale];
     
+ 
     NSURL *url = [NSURL URLWithString:searchUrl];
+//    NSLog(@"requested url = %@",url);
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //AFNetworking asynchronous url request
@@ -117,6 +109,8 @@
         [self switchJobSite:nil];
 
         tableView.hidden = NO;
+        [btnJobSite setEnabled:[curLocale isEqualToString:@"US"] forSegmentAtIndex:2];
+        [btnJobSite setEnabled:[curLocale isEqualToString:@"US"] forSegmentAtIndex:3];
         btnJobSite.hidden = NO;
         [uiLoading stopAnimating];
      
@@ -174,7 +168,6 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return [[self.jobsAll objectAtIndex:btnJobSite.selectedSegmentIndex] count];
     return [jobsForSite count];
     
 }
@@ -228,7 +221,23 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-    lblSearch.text = [NSString stringWithFormat:@"Job listings for '%@' in %@",txtSearch,curLocation];
+    
+    NSString *newSearch = [NSString stringWithFormat:@"%@+%@",txtSearch, curLocation];
+    if (txtSearch && ![newSearch isEqualToString:prevSearch]) {
+        // new search requested.
+        tableView.hidden = YES;
+        btnJobSite.hidden = YES;
+        uiLoading.hidden = NO;
+        [uiLoading startAnimating];
+        prevSearch = newSearch;
+		[self requestJobs:nil];
+    } else {
+        [uiLoading stopAnimating];
+    }
+
+    
+    lblSearch.text = [NSString stringWithFormat:NSLocalizedString(@"STR_RESULTS_FOR", nil),txtSearch,curLocation];
+    
 
     // Google ads
     // Create a view of the standard size at the bottom of the screen.
@@ -240,7 +249,7 @@
                                             GAD_SIZE_320x50.height)];
     
     // Specify the ad's "unit identifier." This is your AdMob Publisher ID.
-    bannerView_.adUnitID = @"a14f6e8f0c6d11b";
+    bannerView_.adUnitID = [appDelegate.configuration objectForKey:@"adUnitID"];
     
     // Let the runtime know which UIViewController to restore after taking
     // the user wherever the ad goes and add it to the view hierarchy.
@@ -254,13 +263,18 @@
                            nil];
     
     // pass current location info on ad request
-    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ US",[[NSUserDefaults standardUserDefaults] stringForKey:@"postalcode"]]];
+    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ %@",[[NSUserDefaults standardUserDefaults] stringForKey:@"postalcode"], curLocale]];
     
     // Initiate a generic request to load it with an ad.
     [bannerView_ loadRequest:request]; 
 
     // Log pageview w/ Google Analytics
     [appDelegate trackPVFull:@"SearchJobs" :@"search term" :@"search" :txtSearch];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+    
 }
 
 

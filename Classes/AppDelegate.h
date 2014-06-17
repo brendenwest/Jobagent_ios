@@ -9,9 +9,16 @@
 #import <CoreData/CoreData.h>
 #import "GAI.h"
 
-// Other
+// define value for determining pre-iOS 7 devices
 #define IS_OS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-#define DEVMODE
+
+// define value
+//#define DEVMODE
+
+// define value to bypass reverse geocoding and minimize Google api requests when testing search results
+//#define DEVLOCATION
+
+// define value to use local job-search API
 //#define DEVAPI
 
 
@@ -22,6 +29,7 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     NSManagedObjectModel *managedObjectModel;
     NSManagedObjectContext *managedObjectContext; 
+	NSMutableDictionary *userSettings;
 	
     UIWindow *window;
     UITabBarController *tabBarController;
@@ -37,6 +45,7 @@
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong, readonly) NSString *applicationDocumentsDirectory;
+@property (nonatomic, strong) NSMutableDictionary *userSettings;
 @property (nonatomic, strong) NSString *prevSearch;
 @property(nonatomic, strong) id<GAITracker> tracker;
 @property (strong, nonatomic, readonly) NSDictionary *configuration;
@@ -56,7 +65,6 @@
 - (void)setPerson:(NSString*)personName withCo:(NSString*)companyName;
 
 - (NSArray*)getEvents:(NSString*)eventName;
-- (NSMutableDictionary*)getUserSettings;
 
 
 @end

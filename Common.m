@@ -77,7 +77,7 @@
     [shortDateFormatter setLocale:[NSLocale currentLocale]];
 	[shortDateFormatter setDateStyle:NSDateFormatterShortStyle];
 	if (!tmpDate) { tmpDate = [NSDate date]; }
-    
+        
     NSString *dateString = [shortDateFormatter stringFromDate:tmpDate];
     return dateString;
     

@@ -115,7 +115,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = @"Task";
+	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
 
 	description.delegate = self;
 	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -141,7 +141,7 @@
     
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = @"Back";
+	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 
 }

@@ -24,7 +24,7 @@ static NSString *kDatePickerID = @"datePicker"; // the cell containing the date 
 
 @implementation JobDetail
 
-@synthesize  jobFields, jobTypes, jobActions, appDelegate, tableView, aJob, editedItemId;
+@synthesize  jobLabels, jobKeys, jobTypes, jobActions, appDelegate, tableView, aJob, editedItemId;
 @synthesize datePickerIndexPath, pickerCellRowHeight, doneButton;
 @synthesize managedObjectContext;
 @synthesize webVC = _webVC;
@@ -37,7 +37,7 @@ BOOL isSavedJob;
 // Implement viewDidLoad to do additional setup after loading the view.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = @"Job Detail";
+	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
 
     if (IS_OS_7_OR_LATER) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -52,13 +52,38 @@ BOOL isSavedJob;
 	tableView.dataSource = self;
     [self adjustUILayout];
     
-    // Use this array to display field labels and map data to Job object keys
-    jobFields = [NSArray arrayWithObjects:@"Title", @"Company", @"Location", @"Type", @"Date", @"Contact", @"Notes",  @"Pay", @"Link", nil];
-    jobTypes = [NSArray arrayWithObjects:
-                     @"Full-time", @"Part-time", @"Contract - W2",
-                     @"Contract - 1099", @"Intern", @"Volunteer", @"Other",
-                     nil];
+    // Use this dictionary to display field labels and map data to Job object keys
 
+    jobLabels = [NSArray arrayWithObjects:
+                 NSLocalizedString(@"STR_TITLE", nil),
+                 NSLocalizedString(@"STR_COMPANY", nil),
+                 NSLocalizedString(@"STR_LOCATION", nil),
+                 NSLocalizedString(@"STR_TYPE", nil),
+                 NSLocalizedString(@"STR_DATE", nil),
+                 NSLocalizedString(@"STR_CONTACT", nil),
+                 NSLocalizedString(@"STR_NOTES", nil),
+                 NSLocalizedString(@"STR_PAY", nil),
+                 NSLocalizedString(@"STR_LINK", nil), nil];
+
+    jobKeys = [NSArray arrayWithObjects:
+               @"title",
+               @"company",
+               @"location",
+               @"type",
+               @"date",
+               @"contact",
+               @"notes",
+               @"pay",
+               @"link", nil];
+    
+    jobTypes = [NSArray arrayWithObjects:
+                NSLocalizedString(@"STR_JOB_TYPE_FT", nil),
+                NSLocalizedString(@"STR_JOB_TYPE_PT", nil),
+                NSLocalizedString(@"STR_JOB_TYPE_CON", nil),
+                NSLocalizedString(@"STR_JOB_TYPE_C2C", nil),
+                NSLocalizedString(@"STR_JOB_TYPE_INTERN", nil),
+                NSLocalizedString(@"STR_JOB_TYPE_VOL", nil),
+                NSLocalizedString(@"STR_OTHER", nil), nil];
 	
     // Date picker setup
 
@@ -74,7 +99,7 @@ BOOL isSavedJob;
     
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = @"Back";
+	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 	
     [jobActions addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
@@ -207,7 +232,7 @@ BOOL isSavedJob;
 	}
 
     if (clickedSaveBtn) {
-        UIAlertView *saveLeadAlert = [[UIAlertView alloc] initWithTitle:@"Saved to Leads" message:nil delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *saveLeadAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"STR_SAVED", nil) message:nil delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [saveLeadAlert show];
     }
  
@@ -247,18 +272,18 @@ BOOL isSavedJob;
     if ([self hasInlineDatePicker])
     {
         // we have a date picker, so allow for it in the number of rows in this section
-        NSInteger numRows = self.jobFields.count;
+        NSInteger numRows = self.jobKeys.count;
         return ++numRows;
     }
     
-    return self.jobFields.count;
+    return self.jobKeys.count;
 }
 
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSString *itemKey = [[jobFields objectAtIndex:indexPath.row] lowercaseString];
+    NSString *itemKey = [jobKeys objectAtIndex:indexPath.row];
     
     UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:itemKey];
     if (cell == nil) {
@@ -288,8 +313,8 @@ BOOL isSavedJob;
         
         // Configure cell for different content types
         if ([itemKey isEqualToString:@"date"]) {
-            label.text = [jobFields objectAtIndex:indexPath.row];
-            detailText.text = [Common stringFromDate:[aJob objectForKey:kDateKey]];
+            label.text = [jobLabels objectAtIndex:indexPath.row];
+            detailText.text = ([aJob objectForKey:kDateKey] != nil) ? [Common stringFromDate:[aJob objectForKey:kDateKey]] : @"";
             if ([cell.contentView.subviews count] == 0) {
                 [cell.contentView addSubview:label];
                 [cell.contentView addSubview:detailText];
@@ -298,7 +323,7 @@ BOOL isSavedJob;
             // Configure datePicker Cell
             [cell.contentView addSubview:_pickerView];
         } else {
-            label.text = [jobFields objectAtIndex:indexPath.row];
+            label.text = [jobLabels objectAtIndex:indexPath.row];
             detailText.text = [aJob objectForKey:itemKey];
             if ([cell.contentView.subviews count] == 0) {
                 [cell.contentView addSubview:label];
@@ -317,7 +342,7 @@ BOOL isSavedJob;
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     // store text ID of selected row for use when returning from child view
-    editedItemId = [jobFields objectAtIndex:indexPath.row];
+    editedItemId = [jobKeys objectAtIndex:indexPath.row];
     
     if ([cell.reuseIdentifier isEqualToString:kDateCellID])
     {
@@ -330,7 +355,7 @@ BOOL isSavedJob;
         if ([cell.reuseIdentifier isEqualToString:@"type"]) {
             
             PickList *pickList = [[PickList alloc] init];
-            pickList.header = @"Select job type";
+            pickList.header = NSLocalizedString(@"STR_SEL_JOB_TYPE", nil);
             pickList.options = jobTypes;
             UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
             UILabel *tmpDetail = selectedCell.contentView.subviews[1];
@@ -470,7 +495,7 @@ BOOL isSavedJob;
 - (BOOL)indexPathHasDate:(NSIndexPath *)indexPath
 {
     BOOL hasDate = NO;
-    if ([[jobFields objectAtIndex:indexPath.row] isEqualToString:@"Date"]) {
+    if ([[jobKeys objectAtIndex:indexPath.row] isEqualToString:@"date"]) {
         hasDate = YES;
     }
     return hasDate;

@@ -36,6 +36,8 @@
 @property (nonatomic, strong) Company *selectedCompany;
 
 @property (nonatomic, strong) NSArray *coTypes;
+@property (nonatomic, strong) NSString *textViewPlaceholder;
+
 
 @property (nonatomic, strong) SearchJobs *searchVC; // for linking to job search
 @property (nonatomic, strong) Leads *leadsVC; // for linking to job search

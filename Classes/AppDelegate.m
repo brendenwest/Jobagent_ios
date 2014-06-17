@@ -16,7 +16,6 @@
 #import "People.h"
 #import "Leads.h"
 #import "Companies.h"
-#import "Tasks.h"
 #import "Events.h"
 #import "Tips.h"
 #import "Job.h"
@@ -32,7 +31,7 @@ static BOOL *const kGaDryRun = YES;
 @synthesize tabBarController=_tabBarController;
 @synthesize navigationController =_navigationController;
 
-@synthesize prevSearch;
+@synthesize prevSearch, userSettings;
 @synthesize managedObjectModel;
 @synthesize managedObjectContext;
 @synthesize persistentStoreCoordinator;
@@ -54,7 +53,7 @@ static BOOL *const kGaDryRun = YES;
     NSUserDefaults *newDefaults = [NSUserDefaults standardUserDefaults];
 
     // get system default country code
-    [newDefaults setObject:[[NSLocale currentLocale] objectForKey:NSLocaleCountryCode] forKey:@"countryCode"];
+    [newDefaults setObject:[[NSLocale autoupdatingCurrentLocale] objectForKey:NSLocaleCountryCode] forKey:@"countryCode"];
 
     // add values from legacy settings.xml if found
     NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
@@ -263,10 +262,6 @@ static BOOL *const kGaDryRun = YES;
     Events *eventsVC = [[Events alloc] initWithNibName:nil bundle:nil];
     eventsVC.managedObjectContext = context;
 	
-    Tasks *tasksVC = [[Tasks alloc] initWithNibName:nil bundle:nil];
-    tasksVC.managedObjectContext = context;
-
-
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 }
 
@@ -296,6 +291,13 @@ static BOOL *const kGaDryRun = YES;
     // Store user settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
+    NSLog(@"saving on Terminate");
+    // store recent searches
+    NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
+	NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
+																 format:NSPropertyListXMLFormat_v1_0
+													   errorDescription:nil];
+	[xmlData writeToFile:settingsFile atomically:YES];
 
 }
 
@@ -312,6 +314,17 @@ static BOOL *const kGaDryRun = YES;
     // Store user settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
+    
+    NSLog(@"saving on background");
+    NSLog(@"userSettings = %@",userSettings);
+
+    // store recent searches
+    NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
+	NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
+																 format:NSPropertyListXMLFormat_v1_0
+													   errorDescription:nil];
+	[xmlData writeToFile:settingsFile atomically:YES];
+
 
 }
 
@@ -343,6 +356,7 @@ static BOOL *const kGaDryRun = YES;
         
         // init configuration map
         NSDictionary *configMap = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"jobagentUrlAppStore",     @"jobagentUrlAppStore",
                                    @"kGaPropertyId",           @"kGaPropertyId",
                                    @"kGaDispatchPeriod",       @"kGaDispatchPeriod",
                                    @"kAllowTracking",          @"kAllowTracking",
@@ -399,15 +413,21 @@ static BOOL *const kGaDryRun = YES;
 /**
  Returns userSettings dictionary. Now used only for storing recent searches
  */
-- (NSMutableDictionary *) getUserSettings {
+- (NSMutableDictionary *) userSettings {
 	
+    if (userSettings != nil) {
+        return userSettings;
+    }
+    
     NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
 	
 	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
 		return [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
 	} else {
-        return nil;
+		userSettings = [[NSMutableDictionary alloc] init];
     }
+    return userSettings;
+
 }
 
 

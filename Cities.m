@@ -17,13 +17,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = @"Locations";
+	self.title = NSLocalizedString(@"STR_TITLE_LOCATIONS", nil);
 
     appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = @"Back";
+	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 }
 

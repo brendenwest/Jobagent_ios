@@ -1,0 +1,24 @@
+
+/* Class = "IBUILabel"; text = "Name"; ObjectID = "16"; */
+"16.text" = "Name";
+
+/* Class = "IBUITextField"; placeholder = "co name"; ObjectID = "17"; */
+"17.placeholder" = "name";
+
+/* Class = "IBUILabel"; text = "Art"; ObjectID = "67"; */
+"67.text" = "Art";
+
+/* Class = "IBUISegmentedControl"; LFD-37-5F0.segmentTitles[0] = "Map"; ObjectID = "LFD-37-5F0"; */
+"LFD-37-5F0.segmentTitles[0]" = "Karte";
+
+/* Class = "IBUISegmentedControl"; LFD-37-5F0.segmentTitles[1] = "LinkedIn"; ObjectID = "LFD-37-5F0"; */
+"LFD-37-5F0.segmentTitles[1]" = "LinkedIn";
+
+/* Class = "IBUISegmentedControl"; LFD-37-5F0.segmentTitles[2] = "Jobs"; ObjectID = "LFD-37-5F0"; */
+"LFD-37-5F0.segmentTitles[2]" = "Jobs";
+
+/* Class = "IBUISegmentedControl"; LFD-37-5F0.segmentTitles[3] = "Contacts"; ObjectID = "LFD-37-5F0"; */
+"LFD-37-5F0.segmentTitles[3]" = "Kontakte";
+
+/* Class = "IBUISegmentedControl"; LFD-37-5F0.segmentTitles[4] = "Search"; ObjectID = "LFD-37-5F0"; */
+"LFD-37-5F0.segmentTitles[4]" = "Suchen";

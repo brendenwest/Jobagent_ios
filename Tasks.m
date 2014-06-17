@@ -25,11 +25,16 @@
 
 static NSString *kTitleNewItem = @"";
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)awakeFromNib
+{
+    // set title here so it applies to both view and tab bar item
+    self.title = NSLocalizedString(@"STR_TITLE_TASKS", nil);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	self.title = @"Tasks";
+	self.title = NSLocalizedString(@"STR_TITLE_TASKS", nil);
 	if (managedObjectContext == nil) 
 	{ 
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 

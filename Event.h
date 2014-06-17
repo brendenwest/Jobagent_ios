@@ -20,9 +20,12 @@
 @property (nonatomic, strong) NSString * jobtitle;
 @property (nonatomic, strong) NSString * jobid;
 @property (nonatomic, strong) NSDate * date;
-@property (nonatomic, strong) NSString * action;
+@property (nonatomic, strong) NSString * title;
+@property (nonatomic, strong) NSString * type;
+@property (nonatomic, strong) NSString * priority;
 @property (nonatomic, strong) NSString * company;
 @property (nonatomic, strong) NSString * notes;
+
 @property (nonatomic, strong) Person * toPerson;
 @property (nonatomic, strong) Job * toJob;
 @property (nonatomic, strong) Company * toCompany;

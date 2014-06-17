@@ -13,23 +13,27 @@
 #import "GADBannerView.h"
 #import "GADRequest.h"
 
-#define kSampleAdUnitID @"a14f6e8f0c6d11b"
-
 @implementation Tips
 
-@synthesize tableView, btnTips, lblAbout;
+@synthesize tableView, btnTips, lblAbout, appDelegate;
 
+- (void)awakeFromNib
+{
+    // set title here so it applies to both view and tab bar item
+    self.title = NSLocalizedString(@"STR_TITLE_TIPS", nil);
+}
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	self.title = @"Tips";
-    lblAbout.text = [NSString stringWithFormat:@"Share your story or check latest news."];
+	self.title = NSLocalizedString(@"STR_TITLE_TIPS", nil);
+    lblAbout.text = NSLocalizedString(@"STR_SHARE", nil);
 
     if (IS_OS_7_OR_LATER) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
+    appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
 	tableView.dataSource = self;
     
@@ -46,15 +50,12 @@
                                  [[UIScreen mainScreen] bounds].size.height -
                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height - self.navigationController.navigationBar.frame.size.height -self.tabBarController.tabBar.frame.size.height - statusBarOffset);
     
-    NSLog(@"frame height = %f",[[UIScreen mainScreen] bounds].size.height);
-    
-    NSLog(@"ad origin = %f",origin.y);
 
     // Use predefined GADAdSize constants to define the GADBannerView.
     bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner origin:origin];
     
     // Specify the ad unit ID.
-    bannerView_.adUnitID = kSampleAdUnitID;
+    bannerView_.adUnitID = [appDelegate.configuration objectForKey:@"adUnitID"];
     
     // Let the runtime know which UIViewController to restore after taking
     // the user wherever the ad goes and add it to the view hierarchy.
@@ -100,7 +101,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [(AppDelegate *)[UIApplication sharedApplication].delegate trackPV:self.title];
+    [appDelegate trackPV:self.title];
 
 }
 
@@ -108,7 +109,7 @@
 
 -(void)requestTips
 {
-    NSURL *url = [NSURL URLWithString:@"http://brisksoft.us/jobagent/tips.json"];
+    NSURL *url = [NSURL URLWithString:[appDelegate.configuration objectForKey:@"tipsUrl"]];
     NSLog(@"url = %@", url);
 
     
@@ -150,7 +151,7 @@
 
 - (IBAction)shareJobAgent:(id)sender {
     
-    NSString *tinyUrl1 = [NSString stringWithFormat:@"http://tinyurl.com/api-create.php?url=%@",NSLocalizedString(@"URL_JOBAGENT_IOS", nil)];
+    NSString *tinyUrl1 = [NSString stringWithFormat:@"http://tinyurl.com/api-create.php?url=%@",[appDelegate.configuration objectForKey:@"jobagentUrlAppStore"]];
     NSString *shortURLforJobAgent = [NSString stringWithContentsOfURL:[NSURL URLWithString:tinyUrl1]
                                                              encoding:NSASCIIStringEncoding
                                                                 error:nil];

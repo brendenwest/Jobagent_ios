@@ -32,14 +32,12 @@
     
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = @"Back";
+	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"selectedItem = %@",selectedItem);
-    NSLog(@"options %@",options);
 
     [self.tableView reloadData];
         
@@ -77,9 +75,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-	
-    NSLog(@"index of selectedItem = %i",[options indexOfObject:selectedItem]);
-    
+	   
 	cell.textLabel.text = [options objectAtIndex:indexPath.row];
     // mark the row matching user's previous selection
     if (indexPath.row == [options indexOfObject:selectedItem]) {

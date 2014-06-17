@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>jobagentUrlAppStore</key>
+	<string>https://itunes.apple.com/ag/app/job-agent/id517622797?mt=8</string>
 	<key>kAllowTracking</key>
 	<true/>
 	<key>kGaDispatchPeriod</key>

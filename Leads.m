@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	self.title = @"Leads";
+	self.title = NSLocalizedString(@"STR_TITLE_FAVORITES", nil);
     
 	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	if (managedObjectContext == nil)

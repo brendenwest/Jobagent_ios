@@ -15,11 +15,10 @@
 #import "AppDelegate.h"
 
 NSInteger currentType = 0;
-NSString *textViewPlaceholder = @"notes";
 
 @implementation CompanyDetail
 
-@synthesize coName, tableCoType, notes, btnExternalLinks, coTypes;
+@synthesize coName, tableCoType, notes, btnExternalLinks, coTypes, textViewPlaceholder;
 @synthesize selectedCompany = _selectedCompany;
 @synthesize searchVC = searchVC;
 @synthesize leadsVC = leadsVC;
@@ -140,7 +139,8 @@ NSString *textViewPlaceholder = @"notes";
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = @"Company";
+	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
+	textViewPlaceholder = NSLocalizedString(@"STR_NOTES", nil);
 
     if (IS_OS_7_OR_LATER) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -151,13 +151,17 @@ NSString *textViewPlaceholder = @"notes";
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
 	}
 
-    coTypes = [NSArray arrayWithObjects:@"Default",@"Agency",@"Govt",@"Training", nil];
+    coTypes = [NSArray arrayWithObjects:
+               NSLocalizedString(@"STR_CO_TYPE_DEFAULT", nil),
+               NSLocalizedString(@"STR_CO_TYPE_AGENCY", nil),
+               NSLocalizedString(@"STR_CO_TYPE_GOVT", nil),
+               NSLocalizedString(@"STR_CO_TYPE_EDUC", nil), nil];
     
     tableCoType.dataSource = self;
     
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = @"Back";
+	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     
     // configure link controls
@@ -170,7 +174,6 @@ NSString *textViewPlaceholder = @"notes";
 	[super viewWillAppear:animated];
     
     [Common formatTextView:notes:textViewPlaceholder];
-    NSLog(@"company name - %@",self.selectedCompany.coName);
     
     coName.text = _selectedCompany.coName;
     if (_selectedCompany.coType != NULL) {
