@@ -214,6 +214,7 @@
 		CE1EB5EE191C6E330000901C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CE1EB5F0191C6E330000901C /* jobagent_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jobagent_Tests.m; sourceTree = "<group>"; };
 		CE1EB5F2191C6E330000901C /* jobagent Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "jobagent Tests-Prefix.pch"; sourceTree = "<group>"; };
+		CE328087195226F000B1ECA4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PersonDetail.strings; sourceTree = "<group>"; };
 		CE3ADF7B18EA5A1500259F05 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "/Users/brenden/workspace/GoogleMobileAdsSdkiOS-6.9.2/libGoogleAdMobAds.a"; sourceTree = "<absolute>"; };
 		CE3ADF7D18EA5ADC00259F05 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = /Users/brenden/workspace/GoogleAnalyticsServicesiOS_3.06/libGoogleAnalyticsServices.a; sourceTree = "<absolute>"; };
 		CE3CAE3E194B99C100CF93DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
@@ -403,7 +404,6 @@
 		CEF5221E191BDD8500844450 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		CEF5221F191BDD8500844450 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
 		CEF52223191C188900844450 /* Tips.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Tips.xib; sourceTree = "<group>"; };
-		CEFC6963194C1599003D6299 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PersonDetail.strings; sourceTree = "<group>"; };
 		CEFC6967194C17C3003D6299 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EventDetail.xib; sourceTree = "<group>"; };
 		CEFC696A194C17CE003D6299 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EventDetail.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1271,7 +1271,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				CE3CAE4F194BE50A00CF93DE /* Base */,
-				CEFC6963194C1599003D6299 /* de */,
+				CE328087195226F000B1ECA4 /* de */,
 			);
 			name = PersonDetail.xib;
 			sourceTree = "<group>";

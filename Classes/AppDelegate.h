@@ -12,11 +12,11 @@
 // define value for determining pre-iOS 7 devices
 #define IS_OS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
-// define value
-//#define DEVMODE
+// define value to set analytics 'dryRun' and exclude dev traffic from reports
+#define DRYRUN
 
 // define value to bypass reverse geocoding and minimize Google api requests when testing search results
-//#define DEVLOCATION
+#define DEVLOCATION
 
 // define value to use local job-search API
 //#define DEVAPI

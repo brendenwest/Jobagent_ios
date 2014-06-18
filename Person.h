@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSString * lastName;
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, strong) NSString * company;
+@property (nonatomic, strong) NSString * type;
+@property (nonatomic, strong) NSString * notes;
 @property (nonatomic, strong) NSNumber * distance;
 @property (nonatomic, strong) NSString * link;
 @property (nonatomic, strong) NSString * phone;

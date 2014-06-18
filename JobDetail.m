@@ -58,8 +58,8 @@ BOOL isSavedJob;
                  NSLocalizedString(@"STR_TITLE", nil),
                  NSLocalizedString(@"STR_COMPANY", nil),
                  NSLocalizedString(@"STR_LOCATION", nil),
-                 NSLocalizedString(@"STR_TYPE", nil),
                  NSLocalizedString(@"STR_DATE", nil),
+                 NSLocalizedString(@"STR_TYPE", nil),
                  NSLocalizedString(@"STR_CONTACT", nil),
                  NSLocalizedString(@"STR_NOTES", nil),
                  NSLocalizedString(@"STR_PAY", nil),
@@ -69,8 +69,8 @@ BOOL isSavedJob;
                @"title",
                @"company",
                @"location",
-               @"type",
                @"date",
+               @"type",
                @"contact",
                @"notes",
                @"pay",
@@ -83,7 +83,7 @@ BOOL isSavedJob;
                 NSLocalizedString(@"STR_JOB_TYPE_C2C", nil),
                 NSLocalizedString(@"STR_JOB_TYPE_INTERN", nil),
                 NSLocalizedString(@"STR_JOB_TYPE_VOL", nil),
-                NSLocalizedString(@"STR_JOB_TYPE_OTHER", nil), nil];
+                NSLocalizedString(@"STR_OTHER", nil), nil];
 	
     // Date picker setup
 
@@ -355,7 +355,7 @@ BOOL isSavedJob;
         if ([cell.reuseIdentifier isEqualToString:@"type"]) {
             
             PickList *pickList = [[PickList alloc] init];
-            pickList.header = NSLocalizedString(@"STR_SEL_JOB_TYPE", nil);
+            pickList.header = NSLocalizedString(@"STR_SEL_TYPE", nil);
             pickList.options = jobTypes;
             UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
             UILabel *tmpDetail = selectedCell.contentView.subviews[1];

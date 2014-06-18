@@ -7,18 +7,16 @@
 //
 
 #import "CompanyDetail.h"
+#import "Company.h"
 #import "SearchJobs.h"
 #import "Leads.h"
 #import "People.h"
-#import "Company.h"
 #import "Common.h"
 #import "AppDelegate.h"
 
-NSInteger currentType = 0;
-
 @implementation CompanyDetail
 
-@synthesize coName, tableCoType, notes, btnExternalLinks, coTypes, textViewPlaceholder;
+@synthesize appDelegate, tableView, btnExternalLinks, coTypes, coKeys, coLabels, notes, editedItemId;
 @synthesize selectedCompany = _selectedCompany;
 @synthesize searchVC = searchVC;
 @synthesize leadsVC = leadsVC;
@@ -39,28 +37,27 @@ NSInteger currentType = 0;
     NSInteger tmpSegment = [sender selectedSegmentIndex];
     NSString *url;
     NSString *curZip = [[NSUserDefaults standardUserDefaults]  stringForKey:@"postalcode"];
-    NSLog(@"loading # %i", tmpSegment);
-    
-    if ([coName.text length] > 0) {
+
+    if ([_selectedCompany.name length] > 0) {
 
         if (tmpSegment == 0 ) { // link to map
-                url = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@&near=%@", [coName.text stringByReplacingOccurrencesOfString:@" " withString:@"+"], curZip];
+                url = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@&near=%@", [_selectedCompany.name stringByReplacingOccurrencesOfString:@" " withString:@"+"], curZip];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 
         } else if (tmpSegment == 1 ) { // link to LinkedIn
-            url = [NSString stringWithFormat:@"https://www.linkedin.com/company/%@", [coName.text stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+            url = [NSString stringWithFormat:@"https://www.linkedin.com/company/%@", [_selectedCompany.name stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
         } else if (tmpSegment == 2) {
             if(self.leadsVC == nil)
                 self.leadsVC = [[Leads alloc] initWithNibName:nil bundle:nil];
             
-            self.leadsVC.selectedCompany = coName.text;
+            self.leadsVC.selectedCompany = _selectedCompany.name;
             [self.navigationController pushViewController:self.leadsVC animated:YES];
         } else if (tmpSegment == 3) {
             if(_contactsVC == nil)
                 _contactsVC = [[People alloc] initWithNibName:nil bundle:nil];
             
-            _contactsVC.selectedCompany = coName.text;
+            _contactsVC.selectedCompany = _selectedCompany.name;
             [self.navigationController pushViewController:_contactsVC animated:YES];
 
         } else if (tmpSegment == 4) {
@@ -71,8 +68,9 @@ NSInteger currentType = 0;
                 if(self.searchVC == nil)
                     self.searchVC = [[SearchJobs alloc] initWithNibName:@"SearchJobs" bundle:nil];
                 
-                self.searchVC.txtSearch = coName.text;
-                self.searchVC.curLocation = curZip;
+                self.searchVC.txtSearch = _selectedCompany.name;
+                self.searchVC.curLocation = ([_selectedCompany.location length] > 0) ? _selectedCompany.location : curZip;
+                self.searchVC.curLocale = [[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"];
                 
                 [self.navigationController pushViewController:self.searchVC animated:YES];
             }
@@ -81,7 +79,6 @@ NSInteger currentType = 0;
         // show alert about company name
     }
     btnExternalLinks.selectedSegmentIndex = nil;
-
 }
 
 
@@ -94,71 +91,153 @@ NSInteger currentType = 0;
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [coTypes count];
+    return self.coKeys.count;
 }
 
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    static NSString *CellIdentifier = @"Cell";    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *itemKey = [coKeys objectAtIndex:indexPath.row];
+    
+    UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:itemKey];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:itemKey];
     }
     
-	cell.textLabel.text = [coTypes objectAtIndex:indexPath.row];
-	cell.textLabel.font = [UIFont systemFontOfSize:14];
-    if (indexPath.row == currentType) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-	} else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+    UILabel *label, *detailText;
+    
+    // if cell has rendered previously, re-use existing subviews
+    if ([cell.contentView.subviews count] == 0) {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 10.0, 60.0, 25.0)];
+        label.font = [UIFont systemFontOfSize:10.0];
+        label.textAlignment = NSTextAlignmentLeft ;
+        label.textColor = [UIColor grayColor];
+        label.text = [coLabels objectAtIndex:indexPath.row];
+        
+        
+        detailText = [[UILabel alloc] initWithFrame:CGRectMake(65.0, 0.0, [[UIScreen mainScreen] bounds].size.width-80, 44.0)];
+        detailText.font = [UIFont systemFontOfSize:14.0];
+        detailText.textAlignment = NSTextAlignmentLeft;
+        detailText.textColor = [UIColor blackColor];
+    } else if ([cell.contentView.subviews count] > 1) {
+        // don't modify datePicker cell
+        label = cell.contentView.subviews[0];
+        label.text = [coLabels objectAtIndex:indexPath.row];
+        detailText = cell.contentView.subviews[1];
+    }
+    
+    
+    // Configure cell for different content types
+    if ([itemKey isEqualToString:@"name"]) {
+        // add text field for manual edit of Name field
+        if ([cell.contentView.subviews count] == 0) {
+            [cell.contentView addSubview:label];
+            [cell.contentView addSubview:[[UITextField alloc] initWithFrame:CGRectMake(65.0, 0.0, [[UIScreen mainScreen] bounds].size.width-80, 44.0)]];
+        }
+        UITextField *detailTextField = cell.contentView.subviews[1];
+        detailTextField.delegate = self;
+        detailTextField.returnKeyType = UIReturnKeyDone;
+        detailTextField.text = [_selectedCompany valueForKey:itemKey];
+    } else {
+        detailText.text = [_selectedCompany valueForKey:itemKey];
+        if ([cell.contentView.subviews count] == 0) {
+            [cell.contentView addSubview:label];
+            [cell.contentView addSubview:detailText];
+        }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return cell;
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+- (void)tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Navigation logic may go here. Create and push another view controller.
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    // store text ID of selected row for use when returning from child view
+    editedItemId = [coKeys objectAtIndex:indexPath.row];
 
-    NSIndexPath *oldIndexPath = [NSIndexPath indexPathForRow:currentType inSection:0];
-    
-    UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
-    if (newCell.accessoryType == UITableViewCellAccessoryNone) {
-        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        currentType = indexPath.row;
-    }
-    
-    UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
-    if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
-        oldCell.accessoryType = UITableViewCellAccessoryNone;
+    [tView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([cell.reuseIdentifier isEqualToString:@"type"]) {
+        
+        PickList *pickList = [[PickList alloc] init];
+        pickList.header = NSLocalizedString(@"STR_SEL_TYPE", nil);
+        pickList.options = coTypes;
+        UITableViewCell *selectedCell = [tView cellForRowAtIndexPath:indexPath];
+        UILabel *tmpDetail = selectedCell.contentView.subviews[1];
+        pickList.selectedItem = tmpDetail.text;
+        pickList.delegate = self;
+        
+        [self.navigationController pushViewController:pickList animated:YES];
+        
+    } else {
+        
+        EditItemVC *editItemVC = [[EditItemVC alloc] init];
+        UITableViewCell *selectedCell = [tView cellForRowAtIndexPath:indexPath];
+        UILabel *tmpLabel = selectedCell.contentView.subviews[0];
+        editItemVC.labelText = tmpLabel.text;
+        UILabel *tmpDetail = selectedCell.contentView.subviews[1];
+        editItemVC.itemText = tmpDetail.text;
+        editItemVC.delegate = self;
+        
+        [self.navigationController pushViewController:editItemVC animated:YES];
     }
 }
 
+#pragma mark - Protocol methods
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+-(void)setItemText:(NSString *)editedItemText {
+    // on return from field-edit view...
+    NSString *itemKey = [editedItemId lowercaseString];
+    [_selectedCompany setValue:editedItemText forKey:itemKey];
+    
+}
+
+-(void)pickItem:(NSString *)item {
+    // on return from pickList view...
+    NSString *itemKey = [editedItemId lowercaseString];
+    [_selectedCompany setValue:item forKey:itemKey];
+    
+}
+
+#pragma View methods
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
-	textViewPlaceholder = NSLocalizedString(@"STR_NOTES", nil);
 
     if (IS_OS_7_OR_LATER) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
 
+	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	if (managedObjectContext == nil)
 	{ 
-		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
+		managedObjectContext = [appDelegate managedObjectContext];
 	}
+    
+    coLabels = [NSArray arrayWithObjects:
+                NSLocalizedString(@"STR_COMPANY", nil),
+                NSLocalizedString(@"STR_LOCATION", nil),
+                NSLocalizedString(@"STR_TYPE", nil),
+                NSLocalizedString(@"STR_NOTES", nil), nil];
+
+    coKeys = [NSArray arrayWithObjects:
+                 @"name",
+                 @"location",
+                 @"type",
+                 @"notes", nil];
 
     coTypes = [NSArray arrayWithObjects:
                NSLocalizedString(@"STR_CO_TYPE_DEFAULT", nil),
                NSLocalizedString(@"STR_CO_TYPE_AGENCY", nil),
                NSLocalizedString(@"STR_CO_TYPE_GOVT", nil),
                NSLocalizedString(@"STR_CO_TYPE_EDUC", nil),
-               NSLocalizedString(@"STR_CO_TYPE_OTHER", nil), nil];
+               NSLocalizedString(@"STR_OTHER", nil), nil];
     
-    tableCoType.dataSource = self;
+    tableView.dataSource = self;
+    [self adjustUILayout];
     
 	// create a custom navigation bar button and set it to always say "Back"
 	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
@@ -174,76 +253,65 @@ NSInteger currentType = 0;
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     
-    [Common formatTextView:notes:textViewPlaceholder];
-    
-    coName.text = _selectedCompany.coName;
-    if (_selectedCompany.coType != NULL) {
-        currentType = [coTypes indexOfObject:_selectedCompany.coType];
-    }
-    if (_selectedCompany.notes != NULL) {
-        notes.text = _selectedCompany.notes;
-    }
-
-    // populate table of company types
-    [self.tableCoType reloadData];
+    // populate table of company data
+    [self.tableView reloadData];
 
     // Log pageview w/ Google Analytics
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] trackPVFull:@"Company" :@"Co name" :@"detail" :_selectedCompany.coName];
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] trackPVFull:@"Company" :@"Co name" :@"detail" :_selectedCompany.name];
 
 }
 
+- (void)adjustUILayout
+{
+    // now set the frame accordingly
+    CGRect btnFrame = self.btnExternalLinks.frame;
+    
+    btnFrame.origin.y = [[UIScreen mainScreen] bounds].size.height - 154;
+    [btnExternalLinks setFrame:btnFrame];
+    
+}
+
+
+
+#pragma mark textView methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     // the user pressed the "Done" button, so dismiss the keyboard
     [textField resignFirstResponder];
+    NSLog(@"done editing for %@",textField.text);
+    _selectedCompany.name = textField.text;
     return YES;
 }
 
 
-#pragma mark textView methods
-
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text { if([text isEqualToString:@"\n"]) [textView resignFirstResponder]; return YES; }
-
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    if ([textView.text isEqualToString:textViewPlaceholder]) {
-        textView.text = @"";
-    }
-    [textView becomeFirstResponder];
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if ([textView.text isEqualToString:@""]) {
-        textView.text = textViewPlaceholder;
-        textView.textColor = [UIColor lightGrayColor]; //optional
-    }
-    [textView resignFirstResponder];
+- (void)saveCompany {
+    
+	NSError *error = nil;
+	if (![_selectedCompany.managedObjectContext save:&error]) {
+        // Handle the error...
+	}
+    
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated {
-    // save entries only if name is entered
-	if ([coName.text length] > 0) {
+	[super viewWillDisappear:animated];
 
-        // save any user edits
-        self.selectedCompany.coName = coName.text;
-        self.selectedCompany.coType = [coTypes objectAtIndex:currentType];
-        self.selectedCompany.notes = notes.text;
-        currentType = 0;
-
-        NSError *error = nil;
-        if (![self.selectedCompany.managedObjectContext save:&error]) {
-            // Handle the error...
-            NSLog(@"Error saving %@, %@", error, [error userInfo]);
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1 && [viewControllers objectAtIndex:viewControllers.count-2] == self) {
+        // View is disappearing because a new view controller was pushed onto the stack
+        // Navigating to item editor
+    } else if ([viewControllers indexOfObject:self] == NSNotFound) {
+        // View is disappearing because it was popped from the stack (exiting to Leads)
+        if (_selectedCompany.name.length > 0) {
+            [self saveCompany];
+        } else {
+            // delete empty record
+            [self.selectedCompany.managedObjectContext deleteObject:self.selectedCompany];
         }
         
-    } else if (managedObjectContext) {
-        // delete record with no company name
-        [self.selectedCompany.managedObjectContext deleteObject:self.selectedCompany];
     }
-
 }
 
 - (void)didReceiveMemoryWarning {

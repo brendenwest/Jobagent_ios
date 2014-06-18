@@ -98,7 +98,7 @@ static NSString *kTitleNewItem = @"";
 	[self.fetchedResultsController.fetchRequest entity];
 	Company *company = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
 												 inManagedObjectContext:context];
-	[company setValue:kTitleNewItem forKey:@"coName"];
+	[company setValue:kTitleNewItem forKey:@"name"];
 	
 	
 	if(self.companyDetailVC == nil)
@@ -122,9 +122,9 @@ static NSString *kTitleNewItem = @"";
 }
 
 - (void)configureCell:(UITableViewCell *)cell withCompany:(Company *)company {
-//  NSLog(@"companies: company name - %@",company.coName);
+//  NSLog(@"companies: company name - %@",company.name);
 
-	cell.textLabel.text = company.coName;
+	cell.textLabel.text = company.name;
 	cell.detailTextLabel.text = company.notes;
 }
 
@@ -219,7 +219,7 @@ static NSString *kTitleNewItem = @"";
 	[fetchRequest setEntity:entity];
 	
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] 
-										initWithKey:@"coName" ascending:YES];
+										initWithKey:@"name" ascending:YES];
 	[fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 	
 	NSFetchedResultsController *aFetchedResultsController = 

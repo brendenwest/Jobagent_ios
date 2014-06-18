@@ -1,33 +1,9 @@
 
-/* Class = "IBUITextField"; placeholder = "name"; ObjectID = "4"; */
-"4.placeholder" = "name";
+/* Class = "IBUISegmentedControl"; LFD-37-5F0.segmentTitles[0] = "Phone"; ObjectID = "LFD-37-5F0"; */
+"LFD-37-5F0.segmentTitles[0]" = "Telefon";
 
-/* Class = "IBUITextField"; placeholder = "company"; ObjectID = "5"; */
-"5.placeholder" = "firma";
+/* Class = "IBUISegmentedControl"; LFD-37-5F0.segmentTitles[1] = "Mail"; ObjectID = "LFD-37-5F0"; */
+"LFD-37-5F0.segmentTitles[1]" = "E-Mail";
 
-/* Class = "IBUITextField"; placeholder = "phone"; ObjectID = "8"; */
-"8.placeholder" = "telefon";
-
-/* Class = "IBUITextField"; placeholder = "e-mail"; ObjectID = "9"; */
-"9.placeholder" = "e-mail";
-
-/* Class = "IBUILabel"; text = "Name"; ObjectID = "26"; */
-"26.text" = "Name";
-
-/* Class = "IBUILabel"; text = "Co."; ObjectID = "28"; */
-"28.text" = "Firma";
-
-/* Class = "IBUILabel"; text = "Phone"; ObjectID = "30"; */
-"30.text" = "Telefon";
-
-/* Class = "IBUILabel"; text = "E-mail"; ObjectID = "31"; */
-"31.text" = "E-mail";
-
-/* Class = "IBUILabel"; text = "Notes"; ObjectID = "60"; */
-"60.text" = "Jotting";
-
-/* Class = "IBUILabel"; text = "Title"; ObjectID = "109"; */
-"109.text" = "Titel";
-
-/* Class = "IBUITextField"; placeholder = "title"; ObjectID = "110"; */
-"110.placeholder" = "titel";
+/* Class = "IBUISegmentedControl"; LFD-37-5F0.segmentTitles[2] = "LinkedIn"; ObjectID = "LFD-37-5F0"; */
+"LFD-37-5F0.segmentTitles[2]" = "LinkedIn";

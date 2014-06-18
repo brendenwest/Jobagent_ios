@@ -22,7 +22,11 @@
 
 /** Google Analytics configuration constants **/
 /** Other settings in appconfig.plist **/
-static BOOL *const kGaDryRun = YES;
+#ifdef DRYRUN
+    static BOOL *const kGaDryRun = YES;
+#else
+    static BOOL *const kGaDryRun = NO;
+#endif
 
 
 @implementation AppDelegate
@@ -57,9 +61,10 @@ static BOOL *const kGaDryRun = YES;
 
     // add values from legacy settings.xml if found
     NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
-	
+
 	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
 		NSDictionary *oldSettings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
+        NSLog(@"old settings = %@",oldSettings);
         
         [newDefaults setObject:[oldSettings objectForKey:@"city"] forKey:@"city"];
         [newDefaults setObject:[oldSettings objectForKey:@"state"] forKey:@"state"];
@@ -104,6 +109,10 @@ static BOOL *const kGaDryRun = YES;
         NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (dictionary != nil)
             [self handleRemoteNotification:dictionary];
+    } else {
+        // clear notification badge
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+
     }
     
     return TRUE;
@@ -159,7 +168,7 @@ static BOOL *const kGaDryRun = YES;
 
 -(void)handleRemoteNotification:(NSDictionary*)payload
 {
-    
+    NSLog(@"handleRemoteNotification");
     NSString *message = [[payload valueForKey:@"aps"] valueForKey:@"alert"];
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"News"
@@ -539,7 +548,7 @@ static BOOL *const kGaDryRun = YES;
 	[fetchRequest setEntity: [NSEntityDescription entityForName:@"Company" inManagedObjectContext:managedObjectContext]];
 	[fetchRequest setResultType:NSDictionaryResultType];
 	if (companyName.length > 0) {
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"coName LIKE %@", companyName];
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE %@", companyName];
 		[fetchRequest setPredicate:predicate];	
 	}
 	
@@ -554,7 +563,7 @@ static BOOL *const kGaDryRun = YES;
 	if ([companyName length] > 0) {
 		NSFetchRequest *companyFetchRequest = [[NSFetchRequest alloc] init];
 		[companyFetchRequest setEntity: [NSEntityDescription entityForName:@"Company" inManagedObjectContext:managedObjectContext]];
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"coName LIKE[cd] %@", companyName];
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE[cd] %@", companyName];
 		[companyFetchRequest setPredicate:predicate];	
 		
 		NSError *error = nil;
@@ -563,7 +572,7 @@ static BOOL *const kGaDryRun = YES;
 		if ([companies count] == 0) {
 			// insert new company
 			NSManagedObject *company = [NSEntityDescription insertNewObjectForEntityForName: @"Company" inManagedObjectContext: managedObjectContext];
-			[company setValue:companyName forKey:@"coName"];	
+			[company setValue:companyName forKey:@"name"];	
 		} else {
 			// company already exists
 		}

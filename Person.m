@@ -14,6 +14,8 @@
 @dynamic lastName;
 @dynamic title;
 @dynamic company;
+@dynamic type;
+@dynamic notes;
 @dynamic distance;
 @dynamic link;
 @dynamic phone;

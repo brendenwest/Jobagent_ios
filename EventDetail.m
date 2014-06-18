@@ -78,9 +78,12 @@ BOOL isSavedEvent;
                 NSLocalizedString(@"STR_EVENT_TYPE_INPERSON", nil),
                 NSLocalizedString(@"STR_EVENT_TYPE_INFORM", nil),
                 NSLocalizedString(@"STR_EVENT_TYPE_FAIR", nil),
-                NSLocalizedString(@"STR_JOB_TYPE_OTHER", nil), nil];
+                NSLocalizedString(@"STR_OTHER", nil), nil];
 	
-    eventPriorities = [NSArray arrayWithObjects:@"low",@"med",@"high",nil];
+    eventPriorities = [NSArray arrayWithObjects:
+                       NSLocalizedString(@"STR_BTN_LOW", nil),
+                       NSLocalizedString(@"STR_BTN_MED", nil),
+                       NSLocalizedString(@"STR_BTN_HIGH", nil), nil];
     
     // configure segmented control for priority selector
     CGRect tmpFrame = CGRectMake(65.0, 6.0, [[UIScreen mainScreen] bounds].size.width-80, 28.0);
@@ -128,7 +131,6 @@ BOOL isSavedEvent;
 
 
 - (void)saveEvent {
-    NSLog(@"saved date = %@",_selectedEvent.date);
     // save Company and Contact records if user has entered values
     if ([_selectedEvent.company length] > 0) {
         [appDelegate setCompany:_selectedEvent.company]; // save company

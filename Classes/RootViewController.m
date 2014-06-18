@@ -25,6 +25,7 @@
 
 @synthesize txtSearch, txtLocation, curLocation, tblRecent, btnSearch, btnTips, lblCityState;
 @synthesize searches, userSettings, appDelegate;
+@synthesize startLocation = _startLocation;
 
 // 98052 = 47.615471,-122.207221
 
@@ -135,7 +136,7 @@
         
     } else {
         _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
         [_locationManager startUpdatingLocation];
         _startLocation = nil;
     }
@@ -252,7 +253,7 @@
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation
 		   fromLocation:(CLLocation *)oldLocation {
-    
+
     if (_startLocation == nil || _startLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
         _startLocation = newLocation;
         

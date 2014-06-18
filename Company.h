@@ -17,8 +17,9 @@
 }
 
 @property (nonatomic, strong) NSString * notes;
-@property (nonatomic, strong) NSString * coType;
-@property (nonatomic, strong) NSString * coName;
+@property (nonatomic, strong) NSString * type;
+@property (nonatomic, strong) NSString * location;
+@property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSSet* toJobs;
 @property (nonatomic, strong) NSSet* toPerson;
 @property (nonatomic, strong) NSSet* toEvent;

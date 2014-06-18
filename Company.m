@@ -15,8 +15,9 @@
 @implementation Company 
 
 @dynamic notes;
-@dynamic coType;
-@dynamic coName;
+@dynamic type;
+@dynamic location;
+@dynamic name;
 @dynamic toJobs;
 @dynamic toPerson;
 @dynamic toEvent;

@@ -7,53 +7,37 @@
 //
 
 #import <CoreData/CoreData.h>
-#import <QuartzCore/QuartzCore.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "EditItemVC.h"
+#import "PickList.h"
 
-@class AppDelegate, Person, CompanyDetail;
+@class AppDelegate, Person;
 
-@interface PersonDetail : UIViewController <UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, MFMailComposeViewControllerDelegate > {
+@interface PersonDetail : UIViewController <UITableViewDelegate, UITableViewDataSource,  UITextFieldDelegate,  MFMailComposeViewControllerDelegate, EditItemDelegate, PickListDelegate > {
 
 	AppDelegate *appDelegate;
-    IBOutlet UIScrollView *scrollView;
-
-	UITextField	*name;
-	UITextField	*phone;
-	UITextField	*email;
-	UITextField	*company;
-	UITextField	*pTitle;
-    UIView *activeField;
-	UITextView	*description;
-	UIButton *btnTitles;
-	UIButton *btnCompany;
-	UIButton *btnPhone;
-	UIButton *btnMail;
-	
+	UITableView *tableView;
+    
+    NSManagedObjectContext *managedObjectContext;
 	Person *_selectedPerson;
-	CompanyDetail *_companyVC;
+
+    UISegmentedControl *btnContactActions;
+
+    
 }
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic, strong) IBOutlet UITextField *name;
-@property (nonatomic, strong) IBOutlet UITextField *company;
-@property (nonatomic, strong) IBOutlet UITextField *phone;
-@property (nonatomic, strong) IBOutlet UITextField *email;
-@property (nonatomic, strong) IBOutlet UITextField *pTitle;
-@property (nonatomic, strong) IBOutlet UIView *activeField;
-@property double scrollUp;
-@property double scrollDown;
-
-@property (nonatomic, strong) IBOutlet UITextView *description;
-@property (nonatomic, strong) IBOutlet UIButton *btnCompany;
-@property (nonatomic, strong) IBOutlet UIButton *btnPhone;
-@property (nonatomic, strong) IBOutlet UIButton *btnMail;
+@property (nonatomic, strong) NSArray *contactTypes;
+@property (nonatomic, strong) NSArray *contactLabels;
+@property (nonatomic, strong) NSArray *contactKeys;
+@property (nonatomic, strong) NSString *editedItemId;
 
 @property (nonatomic, strong) Person *selectedPerson;
-@property (nonatomic, strong) CompanyDetail *companyVC; // for linking to company details
 
-- (IBAction)btnPushed:(id)sender;
+@property (nonatomic, strong) IBOutlet UISegmentedControl *btnContactActions;
 
 @end

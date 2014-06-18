@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Company" representedClassName="Company">
-        <attribute name="coName" attributeType="String" indexed="YES">
-            <userInfo/>
-        </attribute>
-        <attribute name="coType" optional="YES" attributeType="String">
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" indexed="YES" elementID="coName">
             <userInfo/>
         </attribute>
         <attribute name="notes" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="type" optional="YES" attributeType="String" elementID="coType">
             <userInfo/>
         </attribute>
         <relationship name="toEvent" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="toCompany" inverseEntity="Event" indexed="YES">
@@ -95,9 +96,6 @@
         <attribute name="company" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
-        <attribute name="distance" optional="YES" attributeType="Integer 16" defaultValueString="0">
-            <userInfo/>
-        </attribute>
         <attribute name="email" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
@@ -110,12 +108,14 @@
         <attribute name="link" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
         <attribute name="title" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="toCompany" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="toPerson" inverseEntity="Company" indexed="YES">
             <userInfo/>
         </relationship>
@@ -146,10 +146,10 @@
         <userInfo/>
     </entity>
     <elements>
-        <element name="Company" positionX="216" positionY="-45" width="128" height="135"/>
+        <element name="Company" positionX="216" positionY="-45" width="128" height="150"/>
         <element name="Event" positionX="270" positionY="147" width="128" height="210"/>
         <element name="Job" positionX="36" positionY="162" width="128" height="225"/>
-        <element name="Person" positionX="27" positionY="-54" width="128" height="195"/>
+        <element name="Person" positionX="27" positionY="-54" width="128" height="210"/>
         <element name="Task" positionX="448" positionY="-54" width="128" height="135"/>
     </elements>
 </model>

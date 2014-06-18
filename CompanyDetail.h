@@ -8,36 +8,38 @@
 
 #import <CoreData/CoreData.h>
 #import <QuartzCore/QuartzCore.h>
+#import "EditItemVC.h"
+#import "PickList.h"
 
-@class Company, LeadDetail, PersonDetail, SearchJobs, Leads, People;
+@class AppDelegate, Company, LeadDetail, PersonDetail, SearchJobs, Leads, People;
 
-@interface CompanyDetail : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate> {
+@interface CompanyDetail : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, EditItemDelegate, PickListDelegate> {
 	
-	UITextField	*coName;
-	UITableView *tableCoType;
-	UITextView	*notes;
+	AppDelegate *appDelegate;
+	UITableView *tableView;
     
 	NSManagedObjectContext *managedObjectContext;
 	Company *_selectedCompany;
+    
 	SearchJobs *_searchVC;
 	Leads *_leadsVC;
 	People *_contactsVC;
 	
 	IBOutlet UISegmentedControl *btnInternalLinks;
-	IBOutlet UISegmentedControl *btnExternalLinks;
 	
 }
+@property (nonatomic, strong) AppDelegate *appDelegate;
 
-@property (nonatomic, strong) IBOutlet UITextField *coName;
-@property (nonatomic, strong) IBOutlet UITableView *tableCoType;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UITextView *notes;
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) Company *selectedCompany;
 
 @property (nonatomic, strong) NSArray *coTypes;
-@property (nonatomic, strong) NSString *textViewPlaceholder;
-
+@property (nonatomic, strong) NSArray *coLabels;
+@property (nonatomic, strong) NSArray *coKeys;
+@property (nonatomic, strong) NSString *editedItemId;
 
 @property (nonatomic, strong) SearchJobs *searchVC; // for linking to job search
 @property (nonatomic, strong) Leads *leadsVC; // for linking to job search
