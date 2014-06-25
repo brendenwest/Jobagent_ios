@@ -43,36 +43,35 @@
 @synthesize configuration = _configuration;
 
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-
-
-}
-
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
-    
+
     // get bundle defaults
     [self registerDefaultsFromSettingsBundle];
     
     // get user defaults object
     NSUserDefaults *newDefaults = [NSUserDefaults standardUserDefaults];
-
+    
     // get system default country code
     [newDefaults setObject:[[NSLocale autoupdatingCurrentLocale] objectForKey:NSLocaleCountryCode] forKey:@"countryCode"];
-
+    
     // add values from legacy settings.xml if found
     NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
-
+    
 	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
 		NSDictionary *oldSettings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
-        NSLog(@"old settings = %@",oldSettings);
         
-        [newDefaults setObject:[oldSettings objectForKey:@"city"] forKey:@"city"];
-        [newDefaults setObject:[oldSettings objectForKey:@"state"] forKey:@"state"];
+        if ([oldSettings objectForKey:@"city"] != nil) {
+            [newDefaults setObject:[oldSettings objectForKey:@"city"] forKey:@"city"];
+        }
+        if ([oldSettings objectForKey:@"state"] != nil) {
+            [newDefaults setObject:[oldSettings objectForKey:@"state"] forKey:@"state"];
+        }
         if ([oldSettings objectForKey:@"postalcode"] != nil) {
             [newDefaults setObject:[oldSettings objectForKey:@"postalcode"] forKey:@"postalcode"];
         }
-        [newDefaults setObject:[oldSettings objectForKey:@"country"] forKey:@"countryCode"];
-
+        if ([oldSettings objectForKey:@"country"] != nil) {
+            [newDefaults setObject:[oldSettings objectForKey:@"country"] forKey:@"countryCode"];
+        }
     }
     [newDefaults synchronize];
     
@@ -89,6 +88,7 @@
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [[GAI sharedInstance] setDryRun:kGaDryRun];
     // Set the log level to verbose.
+//    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
     self.tracker = [[GAI sharedInstance] trackerWithTrackingId:[_configuration objectForKey:@"kGaPropertyId"]];
     
     // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
@@ -121,7 +121,6 @@
 
 - (void)registerDefaultsFromSettingsBundle
 {
-    NSLog(@"Registering default values from Settings.bundle");
     NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
     [defs synchronize];
     
@@ -168,7 +167,6 @@
 
 -(void)handleRemoteNotification:(NSDictionary*)payload
 {
-    NSLog(@"handleRemoteNotification");
     NSString *message = [[payload valueForKey:@"aps"] valueForKey:@"alert"];
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"News"
@@ -300,7 +298,6 @@
     // Store user settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
-    NSLog(@"saving on Terminate");
     // store recent searches
     NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
 	NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
@@ -324,9 +321,6 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
-    NSLog(@"saving on background");
-    NSLog(@"userSettings = %@",userSettings);
-
     // store recent searches
     NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
 	NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
@@ -378,7 +372,6 @@
         
 
         // loading configuration from stored plist
-            NSLog(@"load stored configuration ...");
             for (NSString *key in configMap.allKeys)
             {
                 id object = [userDefaults objectForKey:key];
@@ -393,7 +386,6 @@
         // loading the rest of configuration from default plist
         if (configuration.allKeys.count < configMap.allKeys.count)
         {
-            NSLog(@"load default configuration ...");
             NSString *defaultConfFile = [[NSBundle mainBundle] pathForResource:@"appconfig" ofType:@"plist"];
             NSDictionary *defaultConfig = [NSDictionary dictionaryWithContentsOfFile:defaultConfFile];
             
@@ -466,15 +458,19 @@
  Returns the managed object model for the application.
  If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
  */
+
 - (NSManagedObjectModel *)managedObjectModel {
     
     if (managedObjectModel != nil) {
         return managedObjectModel;
     }
-    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];    
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"jobagent" ofType:@"momd"];
+    NSURL *momURL = [NSURL fileURLWithPath:path];
+    managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:momURL];
+    
     return managedObjectModel;
 }
-
 
 /**
  Returns the persistent store coordinator for the application.

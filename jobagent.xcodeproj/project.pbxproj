@@ -23,7 +23,6 @@
 		0479869C114A183100096236 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479869B114A183100096236 /* AppDelegate.m */; };
 		04836E6E115887FD00F61102 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 04836E6B115887FD00F61102 /* Person.m */; };
 		04836E6F115887FD00F61102 /* Job.m in Sources */ = {isa = PBXBuildFile; fileRef = 04836E6D115887FD00F61102 /* Job.m */; };
-		049AE0F81159E56E008BFEF2 /* jobagent.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 04E0373A11571C75006FEFE2 /* jobagent.xcdatamodel */; };
 		049B09351147086F0055B02D /* JobDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 049B09341147086F0055B02D /* JobDetail.m */; };
 		04AB64991173BDFA00070D76 /* SearchJobs.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AB64981173BDFA00070D76 /* SearchJobs.m */; };
 		04BB0C90115ED4AF0005B400 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB0C8F115ED4AF0005B400 /* CoreLocation.framework */; };
@@ -89,6 +88,7 @@
 		CEB1A209190394410008F0A2 /* jobagent_icon_80.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A205190394410008F0A2 /* jobagent_icon_80.png */; };
 		CEB1A20A190394410008F0A2 /* jobagent_icon_120.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A206190394410008F0A2 /* jobagent_icon_120.png */; };
 		CEB27814193F81770071EC32 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CEB27813193F81770071EC32 /* Settings.bundle */; };
+		CEDD6BBE19555C310062485F /* jobagent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */; };
 		CEE831281905ACD0004EA382 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE831271905ACD0004EA382 /* StoreKit.framework */; };
 		CEF52220191BDD8500844450 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF5221F191BDD8500844450 /* Common.m */; };
 		CEF52224191C188900844450 /* Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF52223191C188900844450 /* Tips.xib */; };
@@ -164,7 +164,6 @@
 		04DCD95B1182208F0033DEC9 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		04E036EB1157081A006FEFE2 /* Leads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leads.h; sourceTree = "<group>"; };
 		04E036EC1157081A006FEFE2 /* Leads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Leads.m; sourceTree = "<group>"; };
-		04E0373A11571C75006FEFE2 /* jobagent.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; name = jobagent.xcdatamodel; path = Resources/jobagent.xcdatamodel; sourceTree = "<group>"; };
 		04E03784115727E6006FEFE2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		04F4FD83175B161200FED540 /* jobagent_icon_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_57.png; path = Resources/jobagent_icon_57.png; sourceTree = "<group>"; };
 		04F4FD85175B165100FED540 /* jobagent_icon_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_114.png; path = Resources/jobagent_icon_114.png; sourceTree = "<group>"; };
@@ -400,6 +399,8 @@
 		CEB1A205190394410008F0A2 /* jobagent_icon_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_80.png; path = Resources/jobagent_icon_80.png; sourceTree = "<group>"; };
 		CEB1A206190394410008F0A2 /* jobagent_icon_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_120.png; path = Resources/jobagent_icon_120.png; sourceTree = "<group>"; };
 		CEB27813193F81770071EC32 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		CEDD6BBC19555C310062485F /* jobagent 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "jobagent 2.xcdatamodel"; sourceTree = "<group>"; };
+		CEDD6BBD19555C310062485F /* jobagent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = jobagent.xcdatamodel; sourceTree = "<group>"; };
 		CEE831271905ACD0004EA382 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CEF5221E191BDD8500844450 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		CEF5221F191BDD8500844450 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
@@ -617,6 +618,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */,
 				CE3CAE4C194B9FA500CF93DE /* de */,
 				CE3CAE49194B9F9900CF93DE /* Localizable.strings */,
 				CE3CAE24194B8A8700CF93DE /* en */,
@@ -634,7 +636,6 @@
 				04F985A115315696000CE69A /* Default.png */,
 				5A64C2DB151C17E700CA8876 /* icon_companies2.png */,
 				04F93725116BDF6C0056B473 /* constants.h */,
-				04E0373A11571C75006FEFE2 /* jobagent.xcdatamodel */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1207,7 +1208,6 @@
 				040E0295115966440020C333 /* Task.m in Sources */,
 				CE49DD77191AB87A00AC18A2 /* AFSecurityPolicy.m in Sources */,
 				CE49DD7A191AB87A00AC18A2 /* AFURLResponseSerialization.m in Sources */,
-				049AE0F81159E56E008BFEF2 /* jobagent.xcdatamodel in Sources */,
 				0428F4C3115C5D02000554B9 /* Company.m in Sources */,
 				0428F4C4115C5D02000554B9 /* Event.m in Sources */,
 				CE49DD78191AB87A00AC18A2 /* AFURLConnectionOperation.m in Sources */,
@@ -1216,6 +1216,7 @@
 				0428F4E1115C6085000554B9 /* EventDetail.m in Sources */,
 				0431984D116194E80005206D /* Cities.m in Sources */,
 				0476C99A1161CD82001DE264 /* Companies.m in Sources */,
+				CEDD6BBE19555C310062485F /* jobagent.xcdatamodeld in Sources */,
 				CEF52220191BDD8500844450 /* Common.m in Sources */,
 				CE49DD74191AB87A00AC18A2 /* AFHTTPRequestOperationManager.m in Sources */,
 				0476C9B01161D07D001DE264 /* CompanyDetail.m in Sources */,
@@ -1609,6 +1610,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CEDD6BBC19555C310062485F /* jobagent 2.xcdatamodel */,
+				CEDD6BBD19555C310062485F /* jobagent.xcdatamodel */,
+			);
+			currentVersion = CEDD6BBC19555C310062485F /* jobagent 2.xcdatamodel */;
+			path = jobagent.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
 }

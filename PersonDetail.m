@@ -56,7 +56,6 @@
         [self sendMail];
         
     } else if (tmpSegment == 2 && [_selectedPerson.firstName length] > 0) {
-        NSLog(@"should open linkedin");
         NSString *urlString = [NSString stringWithFormat:@"https://www.linkedin.com/vsearch/p?keywords=%@+%@+%@",_selectedPerson.firstName,_selectedPerson.lastName,_selectedPerson.company];
         NSString *escaped = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:escaped]];
@@ -129,7 +128,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear first name= %@",_selectedPerson.firstName);
 
     NSArray *viewControllers = self.navigationController.viewControllers;
     if (viewControllers.count > 1 && [viewControllers objectAtIndex:viewControllers.count-2] == self) {
@@ -138,8 +136,6 @@
     } else if ([viewControllers indexOfObject:self] == NSNotFound) {
         // View is disappearing because it was popped from the stack (exiting to Leads)
         if (_selectedPerson.firstName.length > 0) {
-            NSLog(@"saving");
-
             [self saveContact];
         } else {
             // delete empty record
@@ -147,44 +143,6 @@
         }
         
     }
-/*
-    // save entries only if name is entered
-	if ([name.text length] > 0) {
-        
-        if ([name.text rangeOfString:@" "].location != NSNotFound) {
-            self.selectedPerson.firstName = [name.text substringToIndex:[name.text rangeOfString:@" "].location];
-            self.selectedPerson.lastName = [name.text substringFromIndex:[name.text rangeOfString:@" "].location+1];
-            
-        } else {
-            self.selectedPerson.lastName = name.text;
-            self.selectedPerson.firstName = @"";
-        }
-        
-        if ([pTitle.text length] > 0) {
-            self.selectedPerson.title = pTitle.text;
-        }
-        if ([company.text length] > 0) {
-            self.selectedPerson.company = company.text;
-            [appDelegate setCompany:company.text];
-        }
-        if ([phone.text length] > 0) {
-            self.selectedPerson.phone = phone.text;
-        }
-        if ([email.text length] > 0) {
-            self.selectedPerson.email = email.text;
-        }
-        
-        NSError *error = nil;
-        if (![self.selectedPerson.managedObjectContext save:&error]) {
-            // Handle the error...
-            NSLog(@"Error saving %@, %@", error, [error userInfo]);
-        }
-	} else {
-        // delete empty person record
-        [self.selectedPerson.managedObjectContext deleteObject:self.selectedPerson];
-        
-    }
- */
 }
 
 #pragma mark Table view methods
@@ -337,7 +295,6 @@
         namePart = [NSString stringWithFormat:@"%@",[fullName substringFromIndex:range.location+1]];
     } else {
     }
-    NSLog(@"getNamePart %@, %@",part,namePart);
     return namePart;
     
 }
@@ -365,13 +322,28 @@
 }
 
 - (void)saveContact {
-    NSLog(@"saveContact");
 
 	NSError *error = nil;
 	if (![_selectedPerson.managedObjectContext save:&error]) {
         // Handle the error...
 	}
     
+}
+
+-(void)scrollTable:(UITextField*)textField :(BOOL)keyboardIsShown {
+
+    NSIndexPath *indexPath;
+    CGRect tableFrame = self.tableView.frame;
+    if (keyboardIsShown) {
+        tableFrame.size.height -= 110;
+        indexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
+    } else {
+        tableFrame.size.height += 110;
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    }
+    [tableView setFrame:tableFrame];
+    [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
 }
 
 
@@ -388,13 +360,18 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    NSLog(@"textFieldDidBeginEditing - %i",textField.tag);
+    if (textField.tag > 3) {
+        [self scrollTable:textField :YES]; // scroll up so textfield is visible
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSLog(@"textFieldDidEndEditing - %i",textField.tag);
     [textField resignFirstResponder];
+    
+    if (textField.tag > 3) {
+        [self scrollTable:textField :NO]; // scroll down to original position
+    }
     
     switch (textField.tag)
     

@@ -279,11 +279,14 @@
 {
     // the user pressed the "Done" button, so dismiss the keyboard
     [textField resignFirstResponder];
-    NSLog(@"done editing for %@",textField.text);
-    _selectedCompany.name = textField.text;
     return YES;
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    _selectedCompany.name = textField.text;
+}
 
 - (void)saveCompany {
     
