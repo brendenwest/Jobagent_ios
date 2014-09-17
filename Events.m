@@ -291,6 +291,7 @@ static NSString *kTitleNewItem = @"";
 }
 
 - (void)viewDidUnload {
+    [super viewDidUnload];
 	// Release any retained subviews of the main view.
 	self.fetchedResultsController = nil;
 	self.eventDetailVC = nil;

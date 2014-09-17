@@ -50,9 +50,9 @@
 		5A64C2DC151C17E700CA8876 /* icon_companies2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A64C2DB151C17E700CA8876 /* icon_companies2.png */; };
 		5A894CEF15368B33002E3D57 /* indeed_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5A894CEE15368B33002E3D57 /* indeed_logo.gif */; };
 		5AA09E9314FF3554001A96A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA09E9214FF3554001A96A5 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		72744E01ADC04B639C6D0D78 /* libPods-jobagent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBECC9B07574475F86F58E79 /* libPods-jobagent.a */; };
 		CE10EC7B18FB569D00BA4B01 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3ADF7D18EA5ADC00259F05 /* libGoogleAnalyticsServices.a */; };
 		CE10EC7F18FBACD700BA4B01 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE10EC7E18FBACD700BA4B01 /* libz.dylib */; };
-		CE1B83CF193E4C8700058D22 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1B83CD193E4C1B00058D22 /* libGoogleAdMobAds.a */; };
 		CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1B83D2193E917A00058D22 /* appconfig.plist */; };
 		CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1E6DA41947FB0D00C9437A /* PickList.m */; };
 		CE1EB5E7191C6E330000901C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1EB5E6191C6E330000901C /* XCTest.framework */; };
@@ -68,21 +68,12 @@
 		CE3CAE4E194BB48400CF93DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE3CAE49194B9F9900CF93DE /* Localizable.strings */; };
 		CE3CAE56194BE6F600CF93DE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3CAE58194BE6F600CF93DE /* MainWindow.xib */; };
 		CE3CAE5D194C0EA000CF93DE /* CompanyDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3CAE30194B8F8C00CF93DE /* CompanyDetail.xib */; };
-		CE49DD73191AB87A00AC18A2 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD61191AB87A00AC18A2 /* AFHTTPRequestOperation.m */; };
-		CE49DD74191AB87A00AC18A2 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD63191AB87A00AC18A2 /* AFHTTPRequestOperationManager.m */; };
-		CE49DD75191AB87A00AC18A2 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD65191AB87A00AC18A2 /* AFHTTPSessionManager.m */; };
-		CE49DD76191AB87A00AC18A2 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD68191AB87A00AC18A2 /* AFNetworkReachabilityManager.m */; };
-		CE49DD77191AB87A00AC18A2 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD6A191AB87A00AC18A2 /* AFSecurityPolicy.m */; };
-		CE49DD78191AB87A00AC18A2 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD6C191AB87A00AC18A2 /* AFURLConnectionOperation.m */; };
-		CE49DD79191AB87A00AC18A2 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD6E191AB87A00AC18A2 /* AFURLRequestSerialization.m */; };
-		CE49DD7A191AB87A00AC18A2 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD70191AB87A00AC18A2 /* AFURLResponseSerialization.m */; };
-		CE49DD7B191AB87A00AC18A2 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE49DD72191AB87A00AC18A2 /* AFURLSessionManager.m */; };
-		CE5AB1A91919D435008146A1 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE5AB1A81919D435008146A1 /* AirshipConfig.plist */; };
-		CE5AB1AB1919D5CE008146A1 /* libUAirship-4.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5AB1AA1919D5CE008146A1 /* libUAirship-4.0.0.a */; };
 		CE5AB1BA191A0690008146A1 /* Tips.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5AB1B9191A0690008146A1 /* Tips.m */; };
 		CE68CA0A190032480044CA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE68CA09190032480044CA66 /* AVFoundation.framework */; };
 		CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74D8B81946CAD3006C9ACE /* EditItemVC.m */; };
 		CE74D8BB1946CAD3006C9ACE /* EditItemVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE74D8B91946CAD3006C9ACE /* EditItemVC.xib */; };
+		CE8CED6C19C94D2C008217C8 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE8CED6B19C94D2C008217C8 /* AirshipConfig.plist */; };
+		CEA4FADF196A534000B3F823 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA4FADE196A534000B3F823 /* iPhone.storyboard */; };
 		CEB1A207190394410008F0A2 /* jobagent_icon_29.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A203190394410008F0A2 /* jobagent_icon_29.png */; };
 		CEB1A208190394410008F0A2 /* jobagent_icon_58.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A204190394410008F0A2 /* jobagent_icon_58.png */; };
 		CEB1A209190394410008F0A2 /* jobagent_icon_80.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A205190394410008F0A2 /* jobagent_icon_80.png */; };
@@ -93,6 +84,7 @@
 		CEF52220191BDD8500844450 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF5221F191BDD8500844450 /* Common.m */; };
 		CEF52224191C188900844450 /* Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF52223191C188900844450 /* Tips.xib */; };
 		CEFC6966194C17C3003D6299 /* EventDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFC6968194C17C3003D6299 /* EventDetail.xib */; };
+		CEFF4EC219C94969007B5C44 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFF4EC119C94969007B5C44 /* libGoogleAdMobAds.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +171,7 @@
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28C286DF0D94DF7D0034E888 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
+		2A0F71210D3C4585ADE21B59 /* Pods-jobagent.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jobagent.xcconfig"; path = "Pods/Pods-jobagent.xcconfig"; sourceTree = "<group>"; };
 		5A1EA1B3130E60E8008A0FA8 /* XMLParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParse.h; sourceTree = "<group>"; };
 		5A1EA1B4130E60E9008A0FA8 /* XMLParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParse.m; sourceTree = "<group>"; };
 		5A226F3F151EC81C00880C6B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -189,21 +182,8 @@
 		5AF99D64175A978000713946 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		5AF99D66175A978900713946 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* jobagent-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "jobagent-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		CE10EC7C18FBA56B00BA4B01 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = ../../GoogleAnalyticsServicesiOS_3.06/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		BBECC9B07574475F86F58E79 /* libPods-jobagent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jobagent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE10EC7E18FBACD700BA4B01 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		CE1B83C1193E4AA400058D22 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdMobExtras.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdMobExtras.h"; sourceTree = "<group>"; };
-		CE1B83C2193E4AA400058D22 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdNetworkExtras.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdNetworkExtras.h"; sourceTree = "<group>"; };
-		CE1B83C3193E4AA400058D22 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdSize.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdSize.h"; sourceTree = "<group>"; };
-		CE1B83C4193E4AA400058D22 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerView.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADBannerView.h"; sourceTree = "<group>"; };
-		CE1B83C5193E4AA400058D22 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerViewDelegate.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADBannerViewDelegate.h"; sourceTree = "<group>"; };
-		CE1B83C6193E4AA400058D22 /* GADInAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInAppPurchase.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADInAppPurchase.h"; sourceTree = "<group>"; };
-		CE1B83C7193E4AA400058D22 /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInAppPurchaseDelegate.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADInAppPurchaseDelegate.h"; sourceTree = "<group>"; };
-		CE1B83C8193E4AA400058D22 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitial.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADInterstitial.h"; sourceTree = "<group>"; };
-		CE1B83C9193E4AA400058D22 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADInterstitialDelegate.h"; sourceTree = "<group>"; };
-		CE1B83CA193E4AA400058D22 /* GADModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADModules.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADModules.h"; sourceTree = "<group>"; };
-		CE1B83CB193E4AA400058D22 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequest.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADRequest.h"; sourceTree = "<group>"; };
-		CE1B83CC193E4AA400058D22 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequestError.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADRequestError.h"; sourceTree = "<group>"; };
-		CE1B83CD193E4C1B00058D22 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../../GoogleMobileAdsSdkiOS-6.9.2/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
 		CE1B83D2193E917A00058D22 /* appconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appconfig.plist; sourceTree = "<group>"; };
 		CE1E6DA31947FB0D00C9437A /* PickList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickList.h; sourceTree = "<group>"; };
 		CE1E6DA41947FB0D00C9437A /* PickList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickList.m; sourceTree = "<group>"; };
@@ -229,40 +209,16 @@
 		CE3CAE57194BE6F600CF93DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		CE3CAE5A194BE6FE00CF93DE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainWindow.strings; sourceTree = "<group>"; };
 		CE3CAE5B194C0C6500CF93DE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CompanyDetail.strings; sourceTree = "<group>"; };
-		CE49DD60191AB87A00AC18A2 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperation.h"; sourceTree = "<group>"; };
-		CE49DD61191AB87A00AC18A2 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperation.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperation.m"; sourceTree = "<group>"; };
-		CE49DD62191AB87A00AC18A2 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperationManager.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperationManager.h"; sourceTree = "<group>"; };
-		CE49DD63191AB87A00AC18A2 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperationManager.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPRequestOperationManager.m"; sourceTree = "<group>"; };
-		CE49DD64191AB87A00AC18A2 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPSessionManager.h"; sourceTree = "<group>"; };
-		CE49DD65191AB87A00AC18A2 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFHTTPSessionManager.m"; sourceTree = "<group>"; };
-		CE49DD66191AB87A00AC18A2 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworking.h"; sourceTree = "<group>"; };
-		CE49DD67191AB87A00AC18A2 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworkReachabilityManager.h"; sourceTree = "<group>"; };
-		CE49DD68191AB87A00AC18A2 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFNetworkReachabilityManager.m"; sourceTree = "<group>"; };
-		CE49DD69191AB87A00AC18A2 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFSecurityPolicy.h"; sourceTree = "<group>"; };
-		CE49DD6A191AB87A00AC18A2 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFSecurityPolicy.m"; sourceTree = "<group>"; };
-		CE49DD6B191AB87A00AC18A2 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLConnectionOperation.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLConnectionOperation.h"; sourceTree = "<group>"; };
-		CE49DD6C191AB87A00AC18A2 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLConnectionOperation.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLConnectionOperation.m"; sourceTree = "<group>"; };
-		CE49DD6D191AB87A00AC18A2 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLRequestSerialization.h"; sourceTree = "<group>"; };
-		CE49DD6E191AB87A00AC18A2 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLRequestSerialization.m"; sourceTree = "<group>"; };
-		CE49DD6F191AB87A00AC18A2 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLResponseSerialization.h"; sourceTree = "<group>"; };
-		CE49DD70191AB87A00AC18A2 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLResponseSerialization.m"; sourceTree = "<group>"; };
-		CE49DD71191AB87A00AC18A2 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLSessionManager.h"; sourceTree = "<group>"; };
-		CE49DD72191AB87A00AC18A2 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = "../../AFNetworking-AFNetworking-20f22fe/AFNetworking/AFURLSessionManager.m"; sourceTree = "<group>"; };
-		CE5AB1A81919D435008146A1 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		CE5AB1AA1919D5CE008146A1 /* libUAirship-4.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-4.0.0.a"; path = "/Users/brenden/workspace/libUAirship-latest/Airship/libUAirship-4.0.0.a"; sourceTree = "<absolute>"; };
 		CE5AB1B8191A0690008146A1 /* Tips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tips.h; sourceTree = "<group>"; };
 		CE5AB1B9191A0690008146A1 /* Tips.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tips.m; sourceTree = "<group>"; };
 		CE68CA09190032480044CA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		CE6E365F18E93430000240F6 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAI.h; sourceTree = "<group>"; };
-		CE6E366018E93430000240F6 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
-		CE6E366118E93430000240F6 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAIFields.h; sourceTree = "<group>"; };
-		CE6E366218E93430000240F6 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAILogger.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAILogger.h; sourceTree = "<group>"; };
-		CE6E366318E93430000240F6 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAITrackedViewController.h; sourceTree = "<group>"; };
-		CE6E366418E93430000240F6 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = ../../GoogleAnalyticsServicesiOS_3.06/GoogleAnalytics/Library/GAITracker.h; sourceTree = "<group>"; };
 		CE74D8B71946CAD3006C9ACE /* EditItemVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditItemVC.h; sourceTree = "<group>"; };
 		CE74D8B81946CAD3006C9ACE /* EditItemVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditItemVC.m; sourceTree = "<group>"; };
 		CE74D8B91946CAD3006C9ACE /* EditItemVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditItemVC.xib; sourceTree = "<group>"; };
 		CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobagent_Prefix.pch; sourceTree = "<group>"; };
+		CE8CED6B19C94D2C008217C8 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
+		CEA4FADE196A534000B3F823 /* iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPhone.storyboard; sourceTree = "<group>"; };
 		CEABD63118F0F7800027C366 /* DFPBannerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
 		CEABD63218F0F7800027C366 /* DFPExtras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
 		CEABD63318F0F7800027C366 /* DFPInterstitial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFPInterstitial.h; sourceTree = "<group>"; };
@@ -407,6 +363,7 @@
 		CEF52223191C188900844450 /* Tips.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Tips.xib; sourceTree = "<group>"; };
 		CEFC6967194C17C3003D6299 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EventDetail.xib; sourceTree = "<group>"; };
 		CEFC696A194C17CE003D6299 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EventDetail.strings; sourceTree = "<group>"; };
+		CEFF4EC119C94969007B5C44 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "Pods/Google-Mobile-Ads-SDK/GoogleMobileAdsSdkiOS-6.11.1/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,8 +371,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE1B83CF193E4C8700058D22 /* libGoogleAdMobAds.a in Frameworks */,
-				CE5AB1AB1919D5CE008146A1 /* libUAirship-4.0.0.a in Frameworks */,
+				CEFF4EC219C94969007B5C44 /* libGoogleAdMobAds.a in Frameworks */,
 				CE68CA0A190032480044CA66 /* AVFoundation.framework in Frameworks */,
 				CE10EC7B18FB569D00BA4B01 /* libGoogleAnalyticsServices.a in Frameworks */,
 				04CBCE8216A39657007A41E9 /* AdSupport.framework in Frameworks */,
@@ -436,6 +392,7 @@
 				04E03785115727E6006FEFE2 /* CoreData.framework in Frameworks */,
 				04BB0C90115ED4AF0005B400 /* CoreLocation.framework in Frameworks */,
 				04BB0D5B115F0AD50005B400 /* MapKit.framework in Frameworks */,
+				72744E01ADC04B639C6D0D78 /* libPods-jobagent.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,20 +409,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0445965F1533D3ED0078698D /* GoogleAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				CE10EC7C18FBA56B00BA4B01 /* libGoogleAnalyticsServices.a */,
-				CE6E365F18E93430000240F6 /* GAI.h */,
-				CE6E366018E93430000240F6 /* GAIDictionaryBuilder.h */,
-				CE6E366118E93430000240F6 /* GAIFields.h */,
-				CE6E366218E93430000240F6 /* GAILogger.h */,
-				CE6E366318E93430000240F6 /* GAITrackedViewController.h */,
-				CE6E366418E93430000240F6 /* GAITracker.h */,
-			);
-			name = GoogleAnalytics;
-			sourceTree = "<group>";
-		};
 		04836E651158873100F61102 /* Object classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -581,13 +524,11 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				CE49DD5D191AB84D00AC18A2 /* AFNetworking */,
-				CE5AB1A51919D416008146A1 /* Airship */,
+				CE8CED6B19C94D2C008217C8 /* AirshipConfig.plist */,
+				CEA4FADE196A534000B3F823 /* iPhone.storyboard */,
 				CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */,
 				8D1107310486CEB800E47090 /* jobagent-Info.plist */,
 				CE1B83D2193E917A00058D22 /* appconfig.plist */,
-				0445965F1533D3ED0078698D /* GoogleAnalytics */,
-				5A226F43151EC88300880C6B /* GoogleAds */,
 				04B36748126BFE0900249902 /* Helpers */,
 				04AFE9CB11ED604F00DA706D /* Tasks */,
 				04AFE9CA11ED600D00DA706D /* People */,
@@ -600,6 +541,7 @@
 				CE1EB5EA191C6E330000901C /* jobagent Tests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				2A0F71210D3C4585ADE21B59 /* Pods-jobagent.xcconfig */,
 			);
 			comments = "
 ";
@@ -643,6 +585,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEFF4EC119C94969007B5C44 /* libGoogleAdMobAds.a */,
 				CE5AB1AA1919D5CE008146A1 /* libUAirship-4.0.0.a */,
 				CE10EC7E18FBACD700BA4B01 /* libz.dylib */,
 				CEE831271905ACD0004EA382 /* StoreKit.framework */,
@@ -670,28 +613,9 @@
 				04BB0C8F115ED4AF0005B400 /* CoreLocation.framework */,
 				04BB0D5A115F0AD50005B400 /* MapKit.framework */,
 				CE1EB5E6191C6E330000901C /* XCTest.framework */,
+				BBECC9B07574475F86F58E79 /* libPods-jobagent.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5A226F43151EC88300880C6B /* GoogleAds */ = {
-			isa = PBXGroup;
-			children = (
-				CE1B83CD193E4C1B00058D22 /* libGoogleAdMobAds.a */,
-				CE1B83C1193E4AA400058D22 /* GADAdMobExtras.h */,
-				CE1B83C2193E4AA400058D22 /* GADAdNetworkExtras.h */,
-				CE1B83C3193E4AA400058D22 /* GADAdSize.h */,
-				CE1B83C4193E4AA400058D22 /* GADBannerView.h */,
-				CE1B83C5193E4AA400058D22 /* GADBannerViewDelegate.h */,
-				CE1B83C6193E4AA400058D22 /* GADInAppPurchase.h */,
-				CE1B83C7193E4AA400058D22 /* GADInAppPurchaseDelegate.h */,
-				CE1B83C8193E4AA400058D22 /* GADInterstitial.h */,
-				CE1B83C9193E4AA400058D22 /* GADInterstitialDelegate.h */,
-				CE1B83CA193E4AA400058D22 /* GADModules.h */,
-				CE1B83CB193E4AA400058D22 /* GADRequest.h */,
-				CE1B83CC193E4AA400058D22 /* GADRequestError.h */,
-			);
-			name = GoogleAds;
 			sourceTree = "<group>";
 		};
 		CE1EB5EA191C6E330000901C /* jobagent Tests */ = {
@@ -727,40 +651,6 @@
 			children = (
 			);
 			name = de;
-			sourceTree = "<group>";
-		};
-		CE49DD5D191AB84D00AC18A2 /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				CE49DD60191AB87A00AC18A2 /* AFHTTPRequestOperation.h */,
-				CE49DD61191AB87A00AC18A2 /* AFHTTPRequestOperation.m */,
-				CE49DD62191AB87A00AC18A2 /* AFHTTPRequestOperationManager.h */,
-				CE49DD63191AB87A00AC18A2 /* AFHTTPRequestOperationManager.m */,
-				CE49DD64191AB87A00AC18A2 /* AFHTTPSessionManager.h */,
-				CE49DD65191AB87A00AC18A2 /* AFHTTPSessionManager.m */,
-				CE49DD66191AB87A00AC18A2 /* AFNetworking.h */,
-				CE49DD67191AB87A00AC18A2 /* AFNetworkReachabilityManager.h */,
-				CE49DD68191AB87A00AC18A2 /* AFNetworkReachabilityManager.m */,
-				CE49DD69191AB87A00AC18A2 /* AFSecurityPolicy.h */,
-				CE49DD6A191AB87A00AC18A2 /* AFSecurityPolicy.m */,
-				CE49DD6B191AB87A00AC18A2 /* AFURLConnectionOperation.h */,
-				CE49DD6C191AB87A00AC18A2 /* AFURLConnectionOperation.m */,
-				CE49DD6D191AB87A00AC18A2 /* AFURLRequestSerialization.h */,
-				CE49DD6E191AB87A00AC18A2 /* AFURLRequestSerialization.m */,
-				CE49DD6F191AB87A00AC18A2 /* AFURLResponseSerialization.h */,
-				CE49DD70191AB87A00AC18A2 /* AFURLResponseSerialization.m */,
-				CE49DD71191AB87A00AC18A2 /* AFURLSessionManager.h */,
-				CE49DD72191AB87A00AC18A2 /* AFURLSessionManager.m */,
-			);
-			name = AFNetworking;
-			sourceTree = "<group>";
-		};
-		CE5AB1A51919D416008146A1 /* Airship */ = {
-			isa = PBXGroup;
-			children = (
-				CE5AB1A81919D435008146A1 /* AirshipConfig.plist */,
-			);
-			name = Airship;
 			sourceTree = "<group>";
 		};
 		CEABD62E18F0F7800027C366 /* GoogleAdMobAdsSdkiOS-6.8.0 */ = {
@@ -1045,9 +935,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "jobagent" */;
 			buildPhases = (
+				881B46763DF74D1C92435FD5 /* Check Pods Manifest.lock */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
+				68BF4ABE094146C6B5A6774D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1082,7 +974,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = H5973LM3UE;
@@ -1155,6 +1047,7 @@
 				CE3CAE5D194C0EA000CF93DE /* CompanyDetail.xib in Resources */,
 				CE3CAE40194B9B2400CF93DE /* Localizable.strings in Resources */,
 				CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */,
+				CE8CED6C19C94D2C008217C8 /* AirshipConfig.plist in Resources */,
 				CEF52224191C188900844450 /* Tips.xib in Resources */,
 				CE3CAE34194B8F9A00CF93DE /* JobDetail.xib in Resources */,
 				CE3CAE31194B8F9200CF93DE /* SearchJobs.xib in Resources */,
@@ -1167,9 +1060,9 @@
 				CEB1A20A190394410008F0A2 /* jobagent_icon_120.png in Resources */,
 				5A64C2DC151C17E700CA8876 /* icon_companies2.png in Resources */,
 				CEB1A209190394410008F0A2 /* jobagent_icon_80.png in Resources */,
+				CEA4FADF196A534000B3F823 /* iPhone.storyboard in Resources */,
 				04F985A215315696000CE69A /* Default.png in Resources */,
 				5A894CEF15368B33002E3D57 /* indeed_logo.gif in Resources */,
-				CE5AB1A91919D435008146A1 /* AirshipConfig.plist in Resources */,
 				CEB1A207190394410008F0A2 /* jobagent_icon_29.png in Resources */,
 				04F4FD84175B161200FED540 /* jobagent_icon_57.png in Resources */,
 				04F4FD86175B165100FED540 /* jobagent_icon_114.png in Resources */,
@@ -1190,38 +1083,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		68BF4ABE094146C6B5A6774D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-jobagent-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		881B46763DF74D1C92435FD5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE49DD73191AB87A00AC18A2 /* AFHTTPRequestOperation.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				049B09351147086F0055B02D /* JobDetail.m in Sources */,
 				0479869C114A183100096236 /* AppDelegate.m in Sources */,
 				04E036EE1157081A006FEFE2 /* Leads.m in Sources */,
-				CE49DD75191AB87A00AC18A2 /* AFHTTPSessionManager.m in Sources */,
 				04836E6E115887FD00F61102 /* Person.m in Sources */,
 				04836E6F115887FD00F61102 /* Job.m in Sources */,
 				CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */,
-				CE49DD7B191AB87A00AC18A2 /* AFURLSessionManager.m in Sources */,
 				040E0295115966440020C333 /* Task.m in Sources */,
-				CE49DD77191AB87A00AC18A2 /* AFSecurityPolicy.m in Sources */,
-				CE49DD7A191AB87A00AC18A2 /* AFURLResponseSerialization.m in Sources */,
 				0428F4C3115C5D02000554B9 /* Company.m in Sources */,
 				0428F4C4115C5D02000554B9 /* Event.m in Sources */,
-				CE49DD78191AB87A00AC18A2 /* AFURLConnectionOperation.m in Sources */,
 				0428F4D9115C5E43000554B9 /* Events.m in Sources */,
-				CE49DD79191AB87A00AC18A2 /* AFURLRequestSerialization.m in Sources */,
 				0428F4E1115C6085000554B9 /* EventDetail.m in Sources */,
 				0431984D116194E80005206D /* Cities.m in Sources */,
 				0476C99A1161CD82001DE264 /* Companies.m in Sources */,
 				CEDD6BBE19555C310062485F /* jobagent.xcdatamodeld in Sources */,
 				CEF52220191BDD8500844450 /* Common.m in Sources */,
-				CE49DD74191AB87A00AC18A2 /* AFHTTPRequestOperationManager.m in Sources */,
 				0476C9B01161D07D001DE264 /* CompanyDetail.m in Sources */,
 				0477EF201165133F00D9C69C /* People.m in Sources */,
-				CE49DD76191AB87A00AC18A2 /* AFNetworkReachabilityManager.m in Sources */,
 				CE5AB1BA191A0690008146A1 /* Tips.m in Sources */,
 				CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */,
 				0477EF33116515AF00D9C69C /* PersonDetail.m in Sources */,
@@ -1343,6 +1260,7 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A0F71210D3C4585ADE21B59 /* Pods-jobagent.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1359,16 +1277,14 @@
 				GCC_PREFIX_HEADER = jobagent_Prefix.pch;
 				GCC_VERSION = "";
 				GENERATE_MASTER_OBJECT_FILE = NO;
-				HEADER_SEARCH_PATHS = "/Users/brenden/workspace/libUAirship-latest/Airship/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "jobagent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_GENERATE_MAP_FILE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/brenden/workspace/GoogleAnalyticsServicesiOS_3.06,
-					"/Users/brenden/workspace/libUAirship-latest/Airship",
-					"/Users/brenden/workspace/GoogleMobileAdsSdkiOS-6.9.2",
+					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/GoogleMobileAdsSdkiOS-6.11.1",
 				);
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = "";
@@ -1385,6 +1301,7 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A0F71210D3C4585ADE21B59 /* Pods-jobagent.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1400,16 +1317,14 @@
 				GCC_PREFIX_HEADER = jobagent_Prefix.pch;
 				GCC_VERSION = "";
 				GENERATE_MASTER_OBJECT_FILE = NO;
-				HEADER_SEARCH_PATHS = "/Users/brenden/workspace/libUAirship-latest/Airship/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "jobagent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_GENERATE_MAP_FILE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/brenden/workspace/GoogleAnalyticsServicesiOS_3.06,
-					"/Users/brenden/workspace/libUAirship-latest/Airship",
-					"/Users/brenden/workspace/GoogleMobileAdsSdkiOS-6.9.2",
+					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/GoogleMobileAdsSdkiOS-6.11.1",
 				);
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = "";
@@ -1449,7 +1364,7 @@
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = "";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PROVISIONING_PROFILE = "";

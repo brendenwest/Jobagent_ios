@@ -122,12 +122,14 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:(BOOL)animated];
 	self.myWebView.delegate = self;	// setup the delegate as the web view is shown
 
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:(BOOL)animated];
     [self.myWebView stopLoading];	// in case the web view is still loading its content
 	self.myWebView.delegate = nil;	// disconnect the delegate as the webview is hidden
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

@@ -19,7 +19,7 @@
 //#define DEVLOCATION
 
 // define value to use local job-search API
-#define DEVAPI
+//#define DEVAPI
 
 
 @class RootViewController;

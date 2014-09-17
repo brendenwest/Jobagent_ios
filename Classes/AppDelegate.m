@@ -23,9 +23,9 @@
 /** Google Analytics configuration constants **/
 /** Other settings in appconfig.plist **/
 #ifdef DRYRUN
-    static BOOL *const kGaDryRun = YES;
+    static BOOL const kGaDryRun = YES;
 #else
-    static BOOL *const kGaDryRun = NO;
+    static BOOL const kGaDryRun = NO;
 #endif
 
 

@@ -285,6 +285,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:(BOOL)animated];
     [self.tableView reloadData];
 
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] trackPV:self.title];
@@ -292,6 +293,7 @@
 }
 
 - (void)viewDidUnload {
+    [super viewDidUnload];
 	// Release any retained subviews of the main view.
 	self.fetchedResultsController = nil;
 	self.personDetailVC = nil;

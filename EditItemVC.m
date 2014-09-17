@@ -61,6 +61,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     // save edits back to calling VC
+    [super viewWillDisappear:(BOOL)animated];
     
     itemText = itemTextView.text;
     [[self delegate]setItemText:itemText];

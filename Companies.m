@@ -50,6 +50,7 @@ static NSString *kTitleNewItem = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:(BOOL)animated];
     [self.tableView reloadData];
     
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] trackPV:self.title];
@@ -283,6 +284,7 @@ static NSString *kTitleNewItem = @"";
 
 
 - (void)viewDidUnload {
+    [super viewDidUnload];
 	// Release any retained subviews of the main view.
 	self.fetchedResultsController = nil;
 	self.companyDetailVC = nil;

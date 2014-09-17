@@ -108,7 +108,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     // save edits back to calling VC
-    
+    [super viewWillDisappear:(BOOL)animated];
     [[self delegate]pickItem:selectedItem];
     
 }

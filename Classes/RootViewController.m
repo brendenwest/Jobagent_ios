@@ -192,6 +192,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:(BOOL)animated];
 
     self.title = @"Job Agent";
     [self updateLocationFields];
@@ -206,6 +207,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:(BOOL)animated];
     
     [appDelegate trackPV:@"Home"]; // Google Analytics call needs to happen here, or initial launch event not recorded
 }
@@ -469,6 +471,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:(BOOL)animated];
 
     // store current location to User Defaults
     
@@ -490,6 +493,7 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+    [super viewDidUnload];
 }
 
 

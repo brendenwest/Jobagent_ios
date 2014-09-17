@@ -6,13 +6,9 @@
 //  Copyright 2014 Brisk Software LLC. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
 #import "GADBannerView.h"
 
 @interface Tips : UIViewController < UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate> {
-
-	IBOutlet UITableView	*tableView;
 	
     // Google ad instance
 	GADBannerView *bannerView_;

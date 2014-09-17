@@ -327,6 +327,7 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// release all the other objects
+    [super viewDidUnload];
 }
 
 

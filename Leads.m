@@ -121,8 +121,10 @@
 }
 
 - (void)viewDidUnload {
+    [super viewDidLoad];
 	// Release any retained subviews of the main view.
 	self.fetchedResultsController = nil;
+    [super viewDidUnload];
 }
 
 
