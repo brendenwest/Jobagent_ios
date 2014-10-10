@@ -1,5 +1,5 @@
 //
-//  task.m
+//  Tips.m
 //  jobagent
 //
 //  Created by mac on 2/24/10.
@@ -9,61 +9,20 @@
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "Tips.h"
-
-#import "GADBannerView.h"
-#import "GADRequest.h"
+#import "Ads.h"
 
 @implementation Tips
 
-@synthesize tableView, btnTips, lblAbout, appDelegate;
-
-- (void)awakeFromNib
-{
-    // set title here so it applies to both view and tab bar item
-    self.title = NSLocalizedString(@"STR_TITLE_TIPS", nil);
-}
+@synthesize tableView, btnTips, lblAbout;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-	self.title = NSLocalizedString(@"STR_TITLE_TIPS", nil);
-    lblAbout.text = NSLocalizedString(@"STR_SHARE", nil);
-
-    if (IS_OS_7_OR_LATER) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
     
     appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-
-	tableView.dataSource = self;
     
-	// create a custom navigation bar button and set it to always say "Back"
-    
-    self.allItems = [[NSArray alloc] init];
+    allItems = [[NSArray alloc] init];
     [self requestTips];
 
-    // Create ad view of the standard size at the bottom of the screen. Account for nav bar & tab bar heights
-    // Available AdSize constants are explained in GADAdSize.h.
-    
-    double statusBarOffset = (IS_OS_7_OR_LATER) ? 20.0 : 0;
-    CGPoint origin = CGPointMake(0.0,
-                                 [[UIScreen mainScreen] bounds].size.height -
-                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height - self.navigationController.navigationBar.frame.size.height -self.tabBarController.tabBar.frame.size.height - statusBarOffset);
-    
-
-    // Use predefined GADAdSize constants to define the GADBannerView.
-    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner origin:origin];
-    
-    // Specify the ad unit ID.
-    bannerView_.adUnitID = [appDelegate.configuration objectForKey:@"adUnitID"];
-    
-    // Let the runtime know which UIViewController to restore after taking
-    // the user wherever the ad goes and add it to the view hierarchy.
-    bannerView_.rootViewController = self;
-    [self.view addSubview:bannerView_];
-    
-    // Initiate a generic request to load it with an ad.
-    [bannerView_ loadRequest:[GADRequest request]];
     
     // create a custom navigation bar button and set it to always say "Back"
     
@@ -72,36 +31,10 @@
                            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(shareJobAgent:)];
     self.navigationItem.rightBarButtonItem = bi;
 
+    [Ads getAd:self];
     
 }
 
-- (void)adView:(GADBannerView *)bannerView didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSLog(@"adView:didFailToReceiveAdWithError:%@", [error localizedDescription]);
-}
-
-#pragma mark GADRequest generation
-
-- (GADRequest *)request {
-    GADRequest *request = [GADRequest request];
-    
-    // Make the request for a test ad if on the simulator as well as any test devices
-    request.testDevices = @[ GAD_SIMULATOR_ID ];
-
-    NSString* postalCode = [[NSUserDefaults standardUserDefaults]  stringForKey:@"postalcode"];
-    NSString* countryCode = [[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"];
-    
-    // pass current location info on ad request
-    [request setLocationWithDescription:[NSString stringWithFormat:@"%@ %@",postalCode, countryCode]];
-    
-    return request;
-}
-
-#pragma mark GADBannerViewDelegate implementation
-
-// We've received an ad successfully.
-- (void)adViewDidReceiveAd:(GADBannerView *)adView {
-    NSLog(@"Received ad successfully");
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -115,7 +48,6 @@
 -(void)requestTips
 {
     NSURL *url = [NSURL URLWithString:[appDelegate.configuration objectForKey:@"tipsUrl"]];
-    NSLog(@"url = %@", url);
 
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -125,7 +57,7 @@
                                          initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.allItems = [responseObject objectForKey:@"Tips"];
+        allItems = [responseObject objectForKey:@"Tips"];
         [self.tableView reloadData];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -201,11 +133,11 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.allItems count];
+    return [allItems count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Recent";
+    return @"Latest news & tips";
 }
 
 #pragma mark UITableViewDelegate
@@ -214,7 +146,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller
 
-    NSArray *aItem = [self.allItems objectAtIndex:indexPath.row];
+    NSArray *aItem = [allItems objectAtIndex:indexPath.row];
     if ([[aItem valueForKey:@"link"] length] > 0) {
         // item has a link
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[aItem valueForKey:@"link"]]];
@@ -236,7 +168,7 @@
 
 	}
 
-    NSArray *item = [self.allItems objectAtIndex:indexPath.row];
+    NSArray *item = [allItems objectAtIndex:indexPath.row];
 	cell.textLabel.text = [item valueForKey:@"title"];
     cell.detailTextLabel.text = [item valueForKey:@"description"];
 	cell.textLabel.font = [UIFont systemFontOfSize:14];

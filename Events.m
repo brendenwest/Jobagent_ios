@@ -13,24 +13,17 @@
 #import "Common.h"
 
 @interface Events()
-@property(nonatomic, assign) BOOL firstInsert;
+    @property(nonatomic, assign) BOOL firstInsert;
 @end
 
 
 @implementation Events
 
-@synthesize fetchedResultsController, del;
+@synthesize fetchedResultsController;
 @synthesize managedObjectContext;
-@synthesize eventDetailVC = _eventDetailVC;
-@synthesize firstInsert = _firstInsert;
 
 static NSString *kTitleNewItem = @"";
 
-- (void)awakeFromNib
-{
-    // set title here so it applies to both view and tab bar item
-    self.title = NSLocalizedString(@"STR_TITLE_DIARY", nil);
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +33,7 @@ static NSString *kTitleNewItem = @"";
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
 	}
 	
-	del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error]) {
@@ -54,7 +47,7 @@ static NSString *kTitleNewItem = @"";
     [super viewWillAppear:animated];
     [self.tableView reloadData];
 
-    [del trackPV:self.title];
+    [appDelegate trackPV:self.title];
 
 }
 
@@ -92,22 +85,8 @@ static NSString *kTitleNewItem = @"";
 
 // Insert new item
 - (void)insertItem {
-	self.firstInsert = [self.fetchedResultsController.sections count] == 0;
-	
-	NSManagedObjectContext *context = 
-	[self.fetchedResultsController managedObjectContext];
-	NSEntityDescription *entity = 
-	[self.fetchedResultsController.fetchRequest entity];
-	Event *event = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-											   inManagedObjectContext:context];
-	[event setValue:kTitleNewItem forKey:@"title"];
-
-
-	if(self.eventDetailVC == nil)
-		self.eventDetailVC = [[EventDetail alloc] initWithNibName:@"EventDetail" bundle:nil];
-	
-	self.eventDetailVC.selectedEvent = event;
-	[self.navigationController pushViewController:self.eventDetailVC animated:YES];
+	_firstInsert = [self.fetchedResultsController.sections count] == 0;
+    [self performSegueWithIdentifier: @"showEventDetail" sender: nil];
 }
 
 #pragma mark Table view methods
@@ -142,12 +121,31 @@ static NSString *kTitleNewItem = @"";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller
 	
-	Event *event = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-	if(self.eventDetailVC == nil)
-		self.eventDetailVC = [[EventDetail alloc] initWithNibName:@"EventDetail" bundle:nil];
-	
-	self.eventDetailVC.selectedEvent = event;
-	[self.navigationController pushViewController:self.eventDetailVC animated:YES];
+    [self performSegueWithIdentifier: @"showEventDetail" sender: tableView];
+
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if ([[segue identifier] isEqualToString:@"showEventDetail"]) {
+        Event *event;
+        if (sender == self.tableView) {
+            NSIndexPath *indexPath = [sender indexPathForSelectedRow];
+            event = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        } else {
+            NSManagedObjectContext *context =
+            [self.fetchedResultsController managedObjectContext];
+            NSEntityDescription *entity =
+            [self.fetchedResultsController.fetchRequest entity];
+            event = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
+                                                         inManagedObjectContext:context];
+            [event setValue:kTitleNewItem forKey:@"title"];
+            
+        }
+        [[segue destinationViewController] setSelectedEvent:event];
+        
+    }
 }
 
 
@@ -168,14 +166,6 @@ static NSString *kTitleNewItem = @"";
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
 	return cell;
-}
-
-- (BOOL)tableView:(UITableView *)tableview canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;	
-}
-
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-	
 }
 
 
@@ -204,10 +194,6 @@ static NSString *kTitleNewItem = @"";
     }   
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
-}
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -294,7 +280,6 @@ static NSString *kTitleNewItem = @"";
     [super viewDidUnload];
 	// Release any retained subviews of the main view.
 	self.fetchedResultsController = nil;
-	self.eventDetailVC = nil;
 }
 
 

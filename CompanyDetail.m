@@ -16,12 +16,7 @@
 
 @implementation CompanyDetail
 
-@synthesize appDelegate, tableView, btnExternalLinks, coTypes, coKeys, coLabels, notes, editedItemId;
-@synthesize selectedCompany = _selectedCompany;
-@synthesize searchVC = searchVC;
-@synthesize leadsVC = leadsVC;
-@synthesize contactsVC = contactsVC;
-@synthesize managedObjectContext;
+@synthesize btnExternalLinks, coTypes, coKeys, coLabels, notes, editedItemId;
 
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -48,11 +43,11 @@
             url = [NSString stringWithFormat:@"https://www.linkedin.com/company/%@", [_selectedCompany.name stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
         } else if (tmpSegment == 2) {
-            if(self.leadsVC == nil)
-                self.leadsVC = [[Leads alloc] initWithNibName:nil bundle:nil];
+            if(_leadsVC == nil)
+                _leadsVC = [[Leads alloc] initWithNibName:nil bundle:nil];
             
-            self.leadsVC.selectedCompany = _selectedCompany.name;
-            [self.navigationController pushViewController:self.leadsVC animated:YES];
+            _leadsVC.selectedCompany = _selectedCompany.name;
+            [self.navigationController pushViewController:_leadsVC animated:YES];
         } else if (tmpSegment == 3) {
             if(_contactsVC == nil)
                 _contactsVC = [[People alloc] initWithNibName:nil bundle:nil];
@@ -61,18 +56,18 @@
             [self.navigationController pushViewController:_contactsVC animated:YES];
 
         } else if (tmpSegment == 4) {
-            if (![(AppDelegate *)[[UIApplication sharedApplication] delegate] connectedToNetwork]) {
+            if (![Common connectedToNetwork]) {
                 UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_NO_NETWORK", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
                 [noNetworkAlert show];
             } else {
-                if(self.searchVC == nil)
-                    self.searchVC = [[SearchJobs alloc] initWithNibName:@"SearchJobs" bundle:nil];
+                if(_searchVC == nil)
+                    _searchVC = [[SearchJobs alloc] initWithNibName:@"SearchJobs" bundle:nil];
                 
-                self.searchVC.txtSearch = _selectedCompany.name;
-                self.searchVC.curLocation = ([_selectedCompany.location length] > 0) ? _selectedCompany.location : curZip;
-                self.searchVC.curLocale = [[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"];
+                _searchVC.keyword = _selectedCompany.name;
+                _searchVC.curLocation = ([_selectedCompany.location length] > 0) ? _selectedCompany.location : curZip;
+                _searchVC.curLocale = [[NSUserDefaults standardUserDefaults]  stringForKey:@"countryCode"];
                 
-                [self.navigationController pushViewController:self.searchVC animated:YES];
+                [self.navigationController pushViewController:_searchVC animated:YES];
             }
         }
     } else {
@@ -96,11 +91,11 @@
 
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSString *itemKey = [coKeys objectAtIndex:indexPath.row];
     
-    UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:itemKey];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemKey];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:itemKey];
     }
@@ -151,20 +146,20 @@
 }
 
 
-- (void)tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     // store text ID of selected row for use when returning from child view
     editedItemId = [coKeys objectAtIndex:indexPath.row];
 
-    [tView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([cell.reuseIdentifier isEqualToString:@"type"]) {
         
         PickList *pickList = [[PickList alloc] init];
         pickList.header = NSLocalizedString(@"STR_SEL_TYPE", nil);
         pickList.options = coTypes;
-        UITableViewCell *selectedCell = [tView cellForRowAtIndexPath:indexPath];
+        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
         UILabel *tmpDetail = selectedCell.contentView.subviews[1];
         pickList.selectedItem = tmpDetail.text;
         pickList.delegate = self;
@@ -173,15 +168,24 @@
         
     } else {
         
-        EditItemVC *editItemVC = [[EditItemVC alloc] init];
-        UITableViewCell *selectedCell = [tView cellForRowAtIndexPath:indexPath];
+        [self performSegueWithIdentifier: @"showItem" sender: cell];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if ([[segue identifier] isEqualToString:@"showItem"]) {
+        UITableViewCell *selectedCell = sender;
         UILabel *tmpLabel = selectedCell.contentView.subviews[0];
-        editItemVC.labelText = tmpLabel.text;
         UILabel *tmpDetail = selectedCell.contentView.subviews[1];
-        editItemVC.itemText = tmpDetail.text;
-        editItemVC.delegate = self;
         
-        [self.navigationController pushViewController:editItemVC animated:YES];
+        EditItemVC *vc = segue.destinationViewController;
+        vc.delegate = self;
+        
+        [[segue destinationViewController] setLabelText:tmpLabel.text];
+        [[segue destinationViewController] setItemText:tmpDetail.text];
+        
     }
 }
 
@@ -206,10 +210,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
-
-    if (IS_OS_7_OR_LATER) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
 
 	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	if (managedObjectContext == nil)
@@ -236,13 +236,6 @@
                NSLocalizedString(@"STR_CO_TYPE_EDUC", nil),
                NSLocalizedString(@"STR_OTHER", nil), nil];
     
-    tableView.dataSource = self;
-    [self adjustUILayout];
-    
-	// create a custom navigation bar button and set it to always say "Back"
-	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
-	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     
     // configure link controls
     [btnExternalLinks addTarget:self action:@selector(loadExternalLink:) forControlEvents:UIControlEventValueChanged];
@@ -257,20 +250,9 @@
     [self.tableView reloadData];
 
     // Log pageview w/ Google Analytics
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] trackPVFull:@"Company" :@"Co name" :@"detail" :_selectedCompany.name];
+    [appDelegate trackPVFull:@"Company" :@"Co name" :@"detail" :_selectedCompany.name];
 
 }
-
-- (void)adjustUILayout
-{
-    // now set the frame accordingly
-    CGRect btnFrame = self.btnExternalLinks.frame;
-    
-    btnFrame.origin.y = [[UIScreen mainScreen] bounds].size.height - 154;
-    [btnExternalLinks setFrame:btnFrame];
-    
-}
-
 
 
 #pragma mark textView methods
@@ -311,7 +293,7 @@
             [self saveCompany];
         } else {
             // delete empty record
-            [self.selectedCompany.managedObjectContext deleteObject:self.selectedCompany];
+            [_selectedCompany.managedObjectContext deleteObject:_selectedCompany];
         }
         
     }

@@ -21,36 +21,28 @@
 @interface JobDetail : UIViewController <EditItemDelegate, PickListDelegate, MFMailComposeViewControllerDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
 	
 	AppDelegate *appDelegate;
-	UITableView	*tableView;
-	UISegmentedControl *jobActions;
 
 	NSManagedObjectContext *managedObjectContext;
-	NSMutableDictionary *aJob; // used by search results VC
-	Job *_selectedLead; // used by favorites VC
-	WebVC *_webVC;
+    
+    NSArray *jobLabels;
+    NSArray *jobKeys;
+    NSArray *jobTypes;
+    NSString *editedItemId;
+
+    // Date Picker properties
+    // keep track which indexPath points to the cell with UIDatePicker
+    NSIndexPath *datePickerIndexPath;
+    NSInteger pickerCellRowHeight;
 
 }
 
-@property (nonatomic, strong) AppDelegate *appDelegate;
-@property (nonatomic, strong) WebVC *webVC;
-
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *jobActions;
-@property (nonatomic, strong) NSArray *jobLabels;
-@property (nonatomic, strong) NSArray *jobKeys;
-@property (nonatomic, strong) NSArray *jobTypes;
-@property (nonatomic, strong) NSString *editedItemId;
 
 
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSMutableDictionary *aJob;
-@property (nonatomic, strong) Job *selectedLead;
+@property (nonatomic, strong) NSMutableDictionary *aJob; // set by SearchJobs
+@property (nonatomic, strong) Job *selectedLead; // set by Leads
 
-// Date Picker properties
-// keep track which indexPath points to the cell with UIDatePicker
-@property (nonatomic, strong) NSIndexPath *datePickerIndexPath;
-
-@property (assign) NSInteger pickerCellRowHeight;
 
 @property (nonatomic, strong) IBOutlet UIDatePicker *pickerView;
 

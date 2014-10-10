@@ -23,10 +23,8 @@ static NSString *kDatePickerID = @"datePicker"; // the cell containing the date 
 
 @implementation EventDetail
 
-@synthesize  eventLabels, eventKeys, eventTypes, eventPriority, eventPriorities, appDelegate, tableView, editedItemId;
+@synthesize  eventLabels, eventKeys, eventTypes, eventPriority, eventPriorities, editedItemId;
 @synthesize datePickerIndexPath, pickerCellRowHeight, doneButton;
-@synthesize managedObjectContext;
-@synthesize selectedEvent = _selectedEvent;
 
 BOOL isSavedEvent;
 #define EMBEDDED_DATE_PICKER (IS_OS_7_OR_LATER)
@@ -35,20 +33,13 @@ BOOL isSavedEvent;
 // Implement viewDidLoad to do additional setup after loading the view.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
-
-    if (IS_OS_7_OR_LATER) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
 
 	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	if (managedObjectContext == nil)
 	{ 
 		managedObjectContext = [appDelegate managedObjectContext];
 	}
-	
-	tableView.dataSource = self;
-    [self adjustUILayout];
+    
     
     // Use this dictionary to display field labels and map data to Job object keys
 
@@ -110,11 +101,6 @@ BOOL isSavedEvent;
                                                  name:NSCurrentLocaleDidChangeNotification
                                                object:nil];
     
-	// create a custom navigation bar button and set it to always say "Back"
-	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
-	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-		
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -140,7 +126,6 @@ BOOL isSavedEvent;
         [appDelegate setPerson:_selectedEvent.person withCo:_selectedEvent.company];	// save person to SQL
     }
 
-    
 	NSError *error = nil;
 	if (![_selectedEvent.managedObjectContext save:&error]) {
 									  // Handle the error...
@@ -170,11 +155,11 @@ BOOL isSavedEvent;
 
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSString *itemKey = [eventKeys objectAtIndex:indexPath.row];
     
-    UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:itemKey];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemKey];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:itemKey];
     }
@@ -220,6 +205,7 @@ BOOL isSavedEvent;
             }
             UITextField *detailTextField = cell.contentView.subviews[1];
             detailTextField.delegate = self;
+            detailTextField.tag = indexPath.row;
             detailTextField.returnKeyType = UIReturnKeyDone;
             detailTextField.text = [_selectedEvent valueForKey:itemKey];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -244,8 +230,8 @@ BOOL isSavedEvent;
 
 
 
-- (void)tableView:(UITableView *)tblView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     // store text ID of selected row for use when returning from child view
@@ -264,7 +250,7 @@ BOOL isSavedEvent;
             PickList *pickList = [[PickList alloc] init];
             pickList.header = NSLocalizedString(@"STR_SEL_EVENT_TYPE", nil);
             pickList.options = eventTypes;
-            UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
+            UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
             UILabel *tmpDetail = selectedCell.contentView.subviews[1];
             pickList.selectedItem = tmpDetail.text;
             pickList.delegate = self;
@@ -273,35 +259,27 @@ BOOL isSavedEvent;
             
         } else {
 
-            EditItemVC *editItemVC = [[EditItemVC alloc] init];
-            UITableViewCell *selectedCell = [tblView cellForRowAtIndexPath:indexPath];
-            UILabel *tmpLabel = selectedCell.contentView.subviews[0];
-            editItemVC.labelText = tmpLabel.text;
-            UILabel *tmpDetail = selectedCell.contentView.subviews[1];
-            editItemVC.itemText = tmpDetail.text;
-            editItemVC.delegate = self;
-            
-            [self.navigationController pushViewController:editItemVC animated:YES];
+            [self performSegueWithIdentifier: @"showItem" sender: cell];
         }
     }
 	
 }
 
-- (void)adjustUILayout
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // now set the frame accordingly
-    CGRect tableFrame = self.tableView.frame;
     
-    if (IS_OS_7_OR_LATER) {
-        tableFrame.size.height= [[UIScreen mainScreen] bounds].size.height - 115;
-        if ([[UIScreen mainScreen] bounds].size.height == 480) {
-            tableFrame.size.height += 30; // shim for 3.5" phones
-        }
-    } else {
-        tableFrame.size.height= [[UIScreen mainScreen] bounds].size.height - 105;
+    if ([[segue identifier] isEqualToString:@"showItem"]) {
+        UITableViewCell *selectedCell = sender;
+        UILabel *tmpLabel = selectedCell.contentView.subviews[0];
+        UILabel *tmpDetail = selectedCell.contentView.subviews[1];
+        
+        EditItemVC *vc = segue.destinationViewController;
+        vc.delegate = self;
+        
+        [[segue destinationViewController] setLabelText:tmpLabel.text];
+        [[segue destinationViewController] setItemText:tmpDetail.text];
+        
     }
-    [tableView setFrame:tableFrame];
-    
 }
 
 #pragma mark - Protocol methods
@@ -585,6 +563,16 @@ BOOL isSavedEvent;
         [textField resignFirstResponder];
     return YES;
 }
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self setItemText:textField.text];
+
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    editedItemId = [eventKeys objectAtIndex:textField.tag];
+
+}
+
 
 #pragma mark End date picker methods
 

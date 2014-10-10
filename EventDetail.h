@@ -15,14 +15,10 @@
 @interface EventDetail : UIViewController <EditItemDelegate, UITextFieldDelegate, PickListDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
 	
 	AppDelegate *appDelegate;
-	UITableView	*tableView;
-
 	NSManagedObjectContext *managedObjectContext;
-	Event *_selectedEvent;
+    EditItemVC *editItemVC;
 
 }
-
-@property (nonatomic, strong) AppDelegate *appDelegate;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *jobActions;
@@ -32,8 +28,6 @@
 @property (nonatomic, strong) NSArray *eventPriorities;
 @property (nonatomic, strong) NSString *editedItemId;
 
-
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) Event *selectedEvent;
 
 @property (nonatomic, strong) UISegmentedControl *eventPriority;

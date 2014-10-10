@@ -20,22 +20,13 @@
 
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
-@synthesize companyDetailVC = _companyDetailVC;
-@synthesize firstInsert = _firstInsert;
 
 static NSString *kTitleNewItem = @"";
 
-- (void)awakeFromNib
-{
-    // set title here so it applies to both view and tab bar item
-    self.title = NSLocalizedString(@"STR_TITLE_COMPANIES", nil);
-}
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    
 	if (managedObjectContext == nil) 
 	{ 
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
@@ -91,22 +82,8 @@ static NSString *kTitleNewItem = @"";
 
 // Insert new item
 - (void)insertItem {
-	self.firstInsert = [self.fetchedResultsController.sections count] == 0;
-
-	NSManagedObjectContext *context = 
-	[self.fetchedResultsController managedObjectContext];
-	NSEntityDescription *entity = 
-	[self.fetchedResultsController.fetchRequest entity];
-	Company *company = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-												 inManagedObjectContext:context];
-	[company setValue:kTitleNewItem forKey:@"name"];
-	
-	
-	if(self.companyDetailVC == nil)
-		self.companyDetailVC = [[CompanyDetail alloc] initWithNibName:@"CompanyDetail" bundle:nil];
-	
-	self.companyDetailVC.selectedCompany = company;
-	[self.navigationController pushViewController:self.companyDetailVC animated:YES];
+	_firstInsert = [self.fetchedResultsController.sections count] == 0;
+    [self performSegueWithIdentifier: @"showCompanyDetail" sender: fetchedResultsController];
 }
 
 #pragma mark Table view methods
@@ -134,17 +111,34 @@ static NSString *kTitleNewItem = @"";
 
 // the table's selection has changed, switch to that item's UIViewController
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller
-	
-	Company *company = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-	if(self.companyDetailVC == nil)
-		self.companyDetailVC = [[CompanyDetail alloc] initWithNibName:@"CompanyDetail" bundle:nil];
-	
-	self.companyDetailVC.selectedCompany = company;
-	[self.navigationController pushViewController:self.companyDetailVC animated:YES];
+    
+    [self performSegueWithIdentifier: @"showCompanyDetail" sender: tableView];
 
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if ([[segue identifier] isEqualToString:@"showCompanyDetail"]) {
+        
+        Company *company;
+        if (sender == self.tableView) {
+            NSIndexPath *indexPath = [sender indexPathForSelectedRow];
+            company = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        } else { // creating new record
+            NSManagedObjectContext *context =
+            [self.fetchedResultsController managedObjectContext];
+            NSEntityDescription *entity =
+            [self.fetchedResultsController.fetchRequest entity];
+            company = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
+                                                             inManagedObjectContext:context];
+            [company setValue:kTitleNewItem forKey:@"name"];
+        }
+        
+        [[segue destinationViewController] setSelectedCompany:company];
+        
+    }
+}
 
 #pragma mark UITableViewDataSource
 
@@ -164,15 +158,6 @@ static NSString *kTitleNewItem = @"";
 	
 	return cell;
 }
-
-- (BOOL)tableView:(UITableView *)tableview canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;	
-}
-
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-	
-}
-
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
@@ -287,7 +272,6 @@ static NSString *kTitleNewItem = @"";
     [super viewDidUnload];
 	// Release any retained subviews of the main view.
 	self.fetchedResultsController = nil;
-	self.companyDetailVC = nil;
 }
 
 

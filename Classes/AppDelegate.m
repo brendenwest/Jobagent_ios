@@ -1,9 +1,6 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
-#include <netinet/in.h>
-#import <SystemConfiguration/SCNetworkReachability.h>
-
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAITracker.h"
@@ -74,10 +71,9 @@
         }
     }
     [newDefaults synchronize];
-    
+        
     // load values from appconfig.plist
     _configuration = [self configuration];
-
     
     // User must be able to opt out of tracking
     [GAI sharedInstance].optOut = ![_configuration objectForKey:@"kAllowTracking"];
@@ -91,11 +87,12 @@
 //    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
     self.tracker = [[GAI sharedInstance] trackerWithTrackingId:[_configuration objectForKey:@"kGaPropertyId"]];
     
+    
+#ifdef IS_SIMULATOR
+#else
     // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
     // or set runtime properties here.
     UAConfig *config = [UAConfig defaultConfig];
-    
-    
     // Call takeOff (which creates the UAirship singleton)
     [UAirship takeOff:config];
 
@@ -103,6 +100,7 @@
     [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
                                          UIRemoteNotificationTypeSound |
                                          UIRemoteNotificationTypeAlert );
+#endif
     
     if (launchOptions != nil)
     {
@@ -179,26 +177,6 @@
 }
 
 
-- (BOOL)connectedToNetwork  {
-    // Create zero addy
-    struct sockaddr_in zeroAddress;
-    bzero(&zeroAddress, sizeof(zeroAddress));
-    zeroAddress.sin_len = sizeof(zeroAddress);
-    zeroAddress.sin_family = AF_INET;
-    // Recover reachability flags
-    SCNetworkReachabilityRef defaultRouteReachability = SCNetworkReachabilityCreateWithAddress(NULL, (struct sockaddr*)&zeroAddress);
-    SCNetworkReachabilityFlags flags;
-    BOOL didRetrieveFlags = SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags);
-    CFRelease(defaultRouteReachability);
-    if (!didRetrieveFlags)
-    {
-        NSLog(@"Error. Could not recover network reachability flags");
-        return 0;
-    }
-    BOOL isReachable = flags & kSCNetworkFlagsReachable;
-    BOOL needsConnection = flags & kSCNetworkFlagsConnectionRequired;
-    return (isReachable && !needsConnection) ? YES : NO;
-}
 
 #pragma mark log data to Google Analytics
 
@@ -228,7 +206,6 @@
 
 - (void)trackPV:(NSString*)screenName
 {
-    
     // Google Analytics v3
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     
@@ -269,7 +246,11 @@
     Events *eventsVC = [[Events alloc] initWithNibName:nil bundle:nil];
     eventsVC.managedObjectContext = context;
 	
+#ifdef IS_SIMULATOR
+#else
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+#endif
+
 }
 
 

@@ -13,9 +13,7 @@
 
 @implementation PersonDetail
 
-@synthesize appDelegate, tableView, btnContactActions, contactTypes, contactKeys, contactLabels, editedItemId;
-@synthesize selectedPerson = _selectedPerson;
-@synthesize managedObjectContext;
+@synthesize btnContactActions;
 
 #pragma Mail methods
 
@@ -69,10 +67,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
-    if (IS_OS_7_OR_LATER) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
     
 	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	if (managedObjectContext == nil)
@@ -103,14 +97,7 @@
                NSLocalizedString(@"STR_CONTACT_TYPE_REF", nil),
                NSLocalizedString(@"STR_OTHER", nil), nil];
     
-    tableView.dataSource = self;
-    [self adjustUILayout];
-	
-	// create a custom navigation bar button and set it to always say "Back"
-	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
-	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-	   
+    
     [btnContactActions addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
 }
 
@@ -120,7 +107,6 @@
     
     // populate table data
     [self.tableView reloadData];
-
 
     [appDelegate trackPV:self.title];
 
@@ -154,16 +140,16 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.contactKeys.count;
+    return contactKeys.count;
 }
 
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString *itemKey = [contactKeys objectAtIndex:indexPath.row];
     
-    UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:itemKey];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemKey];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:itemKey];
     }
@@ -225,20 +211,20 @@
 }
 
 
-- (void)tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     // store text ID of selected row for use when returning from child view
     editedItemId = [contactKeys objectAtIndex:indexPath.row];
     
-    [tView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([cell.reuseIdentifier isEqualToString:@"type"]) {
         
         PickList *pickList = [[PickList alloc] init];
         pickList.header = NSLocalizedString(@"STR_SEL_TYPE", nil);
         pickList.options = contactTypes;
-        UITableViewCell *selectedCell = [tView cellForRowAtIndexPath:indexPath];
+        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
         UILabel *tmpDetail = selectedCell.contentView.subviews[1];
         pickList.selectedItem = tmpDetail.text;
         pickList.delegate = self;
@@ -246,16 +232,25 @@
         [self.navigationController pushViewController:pickList animated:YES];
         
     } else {
+        [self performSegueWithIdentifier: @"showItem" sender: cell];
         
-        EditItemVC *editItemVC = [[EditItemVC alloc] init];
-        UITableViewCell *selectedCell = [tView cellForRowAtIndexPath:indexPath];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if ([[segue identifier] isEqualToString:@"showItem"]) {
+        UITableViewCell *selectedCell = sender;
         UILabel *tmpLabel = selectedCell.contentView.subviews[0];
-        editItemVC.labelText = tmpLabel.text;
         UILabel *tmpDetail = selectedCell.contentView.subviews[1];
-        editItemVC.itemText = tmpDetail.text;
-        editItemVC.delegate = self;
         
-        [self.navigationController pushViewController:editItemVC animated:YES];
+        EditItemVC *vc = segue.destinationViewController;
+        vc.delegate = self;
+        
+        [[segue destinationViewController] setLabelText:tmpLabel.text];
+        [[segue destinationViewController] setItemText:tmpDetail.text];
+        
     }
 }
 
@@ -300,27 +295,6 @@
 }
 
 
-- (void)adjustUILayout
-{
-    // Position segmented control at bottom of screen
-    CGRect tableFrame = self.tableView.frame;
-    
-    if (IS_OS_7_OR_LATER) {
-        tableFrame.size.height= [[UIScreen mainScreen] bounds].size.height - 105;
-        if ([[UIScreen mainScreen] bounds].size.height == 480) {
-            tableFrame.size.height += 30; // shim for 3.5" phones
-        }
-    } else {
-        tableFrame.size.height= [[UIScreen mainScreen] bounds].size.height - 95;
-    }
-    [tableView setFrame:tableFrame];
-    
-    CGRect btnFrame = self.btnContactActions.frame;
-    btnFrame.origin.y = [[UIScreen mainScreen] bounds].size.height - 154;
-    [btnContactActions setFrame:btnFrame];
-    
-}
-
 - (void)saveContact {
 
 	NSError *error = nil;
@@ -331,7 +305,7 @@
 }
 
 -(void)scrollTable:(UITextField*)textField :(BOOL)keyboardIsShown {
-
+/*
     NSIndexPath *indexPath;
     CGRect tableFrame = self.tableView.frame;
     if (keyboardIsShown) {
@@ -341,9 +315,9 @@
         tableFrame.size.height += 110;
         indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     }
-    [tableView setFrame:tableFrame];
-    [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-
+    [_tableView setFrame:tableFrame];
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+*/
 }
 
 

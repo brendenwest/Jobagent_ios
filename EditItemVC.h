@@ -20,11 +20,10 @@
 
 }
 
-@property (nonatomic, strong) AppDelegate *appDelegate;
-@property(retain) id <EditItemDelegate> delegate;
+@property (retain) id <EditItemDelegate> delegate;
 
-@property (nonatomic, weak) IBOutlet UILabel *itemLabel;
-@property (nonatomic, weak) IBOutlet UITextView *itemTextView;
+@property (nonatomic, strong) IBOutlet UILabel *itemLabel;
+@property (nonatomic, strong) IBOutlet UITextView *itemTextView;
 
 @property (nonatomic, strong) NSString *labelText;
 @property (nonatomic, strong) NSString *itemText;

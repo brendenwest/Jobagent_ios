@@ -20,15 +20,11 @@
 
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
-@synthesize personDetailVC = _personDetailVC;
-@synthesize firstInsert = _firstInsert;
-@synthesize selectedCompany = _selectedCompany;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = NSLocalizedString(@"STR_TITLE_CONTACTS", nil);
 	if (managedObjectContext == nil) 
 	{ 
 		managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
@@ -76,20 +72,8 @@
 
 // Insert new item
 - (void)insertItem {
-	self.firstInsert = [self.fetchedResultsController.sections count] == 0;
-
-	NSManagedObjectContext *context = 
-	[self.fetchedResultsController managedObjectContext];
-	NSEntityDescription *entity = 
-	[self.fetchedResultsController.fetchRequest entity];
-	Person *person = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-													 inManagedObjectContext:context];	
-
-	if(self.personDetailVC == nil)
-		self.personDetailVC = [[PersonDetail alloc] initWithNibName:@"PersonDetail" bundle:nil];
-	
-	self.personDetailVC.selectedPerson = person;
-	[self.navigationController pushViewController:self.personDetailVC animated:YES];
+	_firstInsert = [self.fetchedResultsController.sections count] == 0;
+    [self performSegueWithIdentifier: @"showPersonDetail" sender: self.fetchedResultsController];
 }
 
 #pragma mark Table view methods
@@ -133,12 +117,29 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller
 	
-	Person *person = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-	if(self.personDetailVC == nil)
-		self.personDetailVC = [[PersonDetail alloc] initWithNibName:@"PersonDetail" bundle:nil];
-	
-	self.personDetailVC.selectedPerson = person;
-	[self.navigationController pushViewController:self.personDetailVC animated:YES];
+    [self performSegueWithIdentifier: @"showPersonDetail" sender: tableView];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if ([[segue identifier] isEqualToString:@"showPersonDetail"]) {
+        Person *person;
+        if (sender == self.tableView) {
+            NSIndexPath *indexPath = [sender indexPathForSelectedRow];
+            person = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        } else {
+            NSManagedObjectContext *context =
+            [self.fetchedResultsController managedObjectContext];
+            NSEntityDescription *entity =
+            [self.fetchedResultsController.fetchRequest entity];
+            person = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
+                                                           inManagedObjectContext:context];
+        }
+
+        [[segue destinationViewController] setSelectedPerson:person];
+        
+    }
 }
 
 
@@ -296,7 +297,6 @@
     [super viewDidUnload];
 	// Release any retained subviews of the main view.
 	self.fetchedResultsController = nil;
-	self.personDetailVC = nil;
     self.selectedCompany = nil;
 
 }

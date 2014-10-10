@@ -10,7 +10,7 @@
 
 @class AppDelegate;
 
-@interface Cities : UITableViewController <NSXMLParserDelegate> {
+@interface Cities : UITableViewController {
 
     AppDelegate *appDelegate;
 

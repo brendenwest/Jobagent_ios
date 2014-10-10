@@ -12,26 +12,16 @@
 
 @implementation EditItemVC
 
-@synthesize appDelegate, labelText, itemLabel, itemTextView, itemText;
+@synthesize labelText, itemLabel, itemTextView, itemText;
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	self.title = NSLocalizedString(@"STR_TITLE_EDIT", nil);
     
     appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
-    if (IS_OS_7_OR_LATER) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-
     [Common formatTextView:itemTextView:nil];
 
-	// create a custom navigation bar button and set it to always say "Back"
-	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-	temporaryBarButtonItem.title = NSLocalizedString(@"STR_BTN_BACK", nil);
-	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 }
 
 
@@ -59,12 +49,17 @@
     [textView resignFirstResponder];
 }
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesEnded:touches withEvent:event];
+    [itemTextView resignFirstResponder];
+    
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     // save edits back to calling VC
     [super viewWillDisappear:(BOOL)animated];
-    
-    itemText = itemTextView.text;
-    [[self delegate]setItemText:itemText];
+    [[self delegate] setItemText:itemTextView.text];
         
 }
 

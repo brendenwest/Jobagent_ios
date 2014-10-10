@@ -7,6 +7,21 @@
  #import <Foundation/Foundation.h>
 #endif
 
+// value for determining pre-iOS 7 devices
+#define IS_OS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+
+// detect if app running in simulator
+#define IS_SIMULATOR    (arch(i386) || arch(x86_64)) && os(iOS)
+
+// define value to set analytics 'dryRun' and exclude dev traffic from reports
+#define DRYRUN YES
+
+// bypass reverse geocoding and minimize Google api requests when testing search results
+#define DEVLOCATION
+
+// define value to use local job-search API
+//#define DEVAPI
+
 // Disable logs for performance
  #define LOGGING_ENABLED
 
@@ -15,9 +30,3 @@
 #define NSLog(args...)
 #endif
 
-// Analytics
-// Enable/Disable reporting to Google Analytics
-#define ANALYTICS_ENABLED
-
-// Ads
-#define ADS_ENABLED

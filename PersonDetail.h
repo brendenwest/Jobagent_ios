@@ -17,24 +17,20 @@
 @interface PersonDetail : UIViewController <UITableViewDelegate, UITableViewDataSource,  UITextFieldDelegate,  MFMailComposeViewControllerDelegate, EditItemDelegate, PickListDelegate > {
 
 	AppDelegate *appDelegate;
-	UITableView *tableView;
     
     NSManagedObjectContext *managedObjectContext;
-	Person *_selectedPerson;
 
     UISegmentedControl *btnContactActions;
 
+    NSArray *contactTypes;
+    NSArray *contactLabels;
+    NSArray *contactKeys;
+    NSString *editedItemId;
     
 }
 
-@property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic, strong) NSArray *contactTypes;
-@property (nonatomic, strong) NSArray *contactLabels;
-@property (nonatomic, strong) NSArray *contactKeys;
-@property (nonatomic, strong) NSString *editedItemId;
 
 @property (nonatomic, strong) Person *selectedPerson;
 

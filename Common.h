@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <netinet/in.h>
+#import <SystemConfiguration/SCNetworkReachability.h>
 
 @interface Common : NSObject
 
 - (id) init;
++ (BOOL)connectedToNetwork;
 + (UIToolbar *)customBarButtons:buttonProperties;
 + (NSDate *)dateFromString:(NSString *)tmpDate;
 + (NSString *)stringFromDate:(NSDate*)tmpDate;

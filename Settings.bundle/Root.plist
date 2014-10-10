@@ -18,7 +18,7 @@
 			<key>Key</key>
 			<string>maxResults</string>
 			<key>DefaultValue</key>
-			<integer>20</integer>
+			<integer>50</integer>
 			<key>Values</key>
 			<array>
 				<string>10</string>
