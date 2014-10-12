@@ -22,6 +22,4 @@
 - (void)configureCell:(UITableViewCell *)cell 
 			 withEvent:(NSManagedObject *)model;
 
-- (void)customBarButtons;
-
 @end

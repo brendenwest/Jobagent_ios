@@ -20,6 +20,5 @@
 
 - (void)configureCell:(UITableViewCell *)cell 
 			withCompany:(NSManagedObject *)model;
-- (void)customBarButtons;
 
 @end

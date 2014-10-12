@@ -209,9 +209,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = NSLocalizedString(@"STR_TITLE_DETAILS", nil);
 
-	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    // ensure tableview will be flush to nav bar on return from edit view
+    self.automaticallyAdjustsScrollViewInsets = NO;
+ 
+    appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	if (managedObjectContext == nil)
 	{ 
 		managedObjectContext = [appDelegate managedObjectContext];

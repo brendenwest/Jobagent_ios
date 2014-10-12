@@ -43,28 +43,38 @@
 }
 
 
-+ (UIToolbar*)customBarButtons:buttonProperties {
 
-    long nButtons = [buttonProperties count]/3;
-	// create a toolbar to have N buttons in the right. Set width according to # of buttons
-	UIToolbar* tools = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, nButtons*45, 45)];
-	
-	// create the array to hold the buttons, which then gets added to the toolbar
-	NSMutableArray* buttons = [[NSMutableArray alloc] init];
+
++ (UIToolbar*)customBarButtons:(NSArray*)buttonProperties {
+    // toolbar button constructor
     
-	for (int i=0; i < [buttonProperties count]; i+=3) {
-        Class systemButton = NSClassFromString(buttonProperties[i]);
-        SEL selAction = NSSelectorFromString(buttonProperties[i+1]);
-        Class selTarget = NSClassFromString(buttonProperties[i+2]);
-
+    int nButtons = (int)[buttonProperties count];
+	// create  array to hold the buttons, which then gets added to the toolbar
+    // buttonProperties is an array of arrays. Each sub array
+    // has properties for button type, action, and target
+	NSMutableArray* buttons = [[NSMutableArray alloc] init];
+    UIBarButtonItem* bi;
+    
+	for (int i=0; i < nButtons; i++) {
         
-        // create a standard toolbar button
-        UIBarButtonItem* bi = [[UIBarButtonItem alloc]
-						   initWithBarButtonSystemItem:systemButton target:selTarget action:selAction];
-        [buttons addObject:bi];
-        NSLog(@"i=%d; button=%@ target=%@, action=%@",i, systemButton,selTarget, buttonProperties[i+1]);
+        int buttonType = (int)[buttonProperties[i][0] integerValue];
+        UIViewController *selTarget = buttonProperties[i][2];
+        
+        if (buttonType == 2) {
+            // create a standard "edit" button
+            bi = selTarget.editButtonItem;
+        } else {
+            UIBarButtonSystemItem systemButton = buttonType;
+            SEL selAction = NSSelectorFromString(buttonProperties[i][1]);
+            
+            // create a standard toolbar button
+            bi = [[UIBarButtonItem alloc]
+                                   initWithBarButtonSystemItem:systemButton target:selTarget action:selAction];
+        }
 
-        if ([buttonProperties count] > 3) {
+        [buttons addObject:bi];
+        
+        if (nButtons > 1) {
         // create a spacer
             bi = [[UIBarButtonItem alloc]
               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -72,7 +82,8 @@
         }
     }
 		  
-	// stick the buttons into the toolbar
+    // create a toolbar to have N buttons in the right. Set width according to # of buttons
+    UIToolbar* tools = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, nButtons*45, 45)];
 	[tools setItems:buttons animated:NO];
     return tools;
 	

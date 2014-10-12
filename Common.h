@@ -14,7 +14,7 @@
 
 - (id) init;
 + (BOOL)connectedToNetwork;
-+ (UIToolbar *)customBarButtons:buttonProperties;
++ (UIToolbar *)customBarButtons:(NSArray*)buttonProperties;
 + (NSDate *)dateFromString:(NSString *)tmpDate;
 + (NSString *)stringFromDate:(NSDate*)tmpDate;
 + (NSString *)getShortDate:(NSString*)tmpDate;

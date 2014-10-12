@@ -34,7 +34,10 @@ BOOL isSavedJob;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    // ensure tableview will be flush to nav bar on return from edit view
+    self.automaticallyAdjustsScrollViewInsets = NO;
+ 
+    appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	if (managedObjectContext == nil)
 	{ 
 		managedObjectContext = [appDelegate managedObjectContext];

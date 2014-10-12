@@ -33,21 +33,11 @@
     appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     
-    // get saved searches
+    // get saved searches from storage
     if (userSettings == nil)
-    {
         userSettings = [appDelegate userSettings];
-    }
     
-    if ([[userSettings objectForKey:@"searches"] count] > 0) {
-        // use recent searches
-        searches = [[NSMutableArray alloc] initWithArray:[userSettings objectForKey:@"searches"]];
-        if (![_txtSearch.text length]) {
-            _txtSearch.text = [[searches objectAtIndex:0] substringToIndex:[[searches objectAtIndex:0] rangeOfString:@"|"].location];
-        }
-    } else {
-        searches = [[NSMutableArray alloc] init];
-    }
+    [self getRecentSearches];
     
     [Ads getAd:self];
     
@@ -82,6 +72,20 @@ NSLog(@"viewWillAppear");
     
     // Google Analytics call needs to happen here to record initial launch event
     [appDelegate trackPV:@"Home"];
+}
+
+- (void)getRecentSearches {
+    // if user conducted searches earlier, retrieve from storage
+    // populate search query field if field is not empty
+    if ([[userSettings objectForKey:@"searches"] count] > 0) {
+        // use recent searches
+        searches = [[NSMutableArray alloc] initWithArray:[userSettings objectForKey:@"searches"]];
+        if (![_txtSearch.text length]) {
+            _txtSearch.text = [[searches objectAtIndex:0] substringToIndex:[[searches objectAtIndex:0] rangeOfString:@"|"].location];
+        }
+    } else {
+        searches = [[NSMutableArray alloc] init];
+    }
 }
 
 

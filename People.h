@@ -21,6 +21,5 @@
 
 - (void)configureCell:(UITableViewCell *)cell 
 		  withPerson:(NSManagedObject *)model;
-- (void)customBarButtons;
 
 @end

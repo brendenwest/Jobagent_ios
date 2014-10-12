@@ -30,8 +30,15 @@
 		managedObjectContext = [appDelegate managedObjectContext];
 	}
 	
-	[self customBarButtons];
-        
+    // create array of button properties for use by toolbar button constructor
+    NSArray* buttons = @[
+                         @[@4,@"insertItem",self],
+                         @[@2,@"",self]
+                         ];
+    
+    // and put the toolbar in the nav bar
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[Common customBarButtons:buttons]];
+    
 }
 
 // Insert new item
@@ -40,38 +47,6 @@
 	[self performSegueWithIdentifier: @"showJobDetail" sender: fetchedResultsController];
 }
 
-
-- (void)customBarButtons {
-	// create a toolbar to have two buttons in the right
-	UIToolbar* tools = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 100, 44.01)];
-	
-	// create the array to hold the buttons, which then gets added to the toolbar
-	NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:3];
-	
-	// create a standard "add" button
-	UIBarButtonItem* bi = [[UIBarButtonItem alloc]
-						   initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertItem)];
-	bi.style = UIBarButtonItemStyleBordered;
-	[buttons addObject:bi];
-	
-	// create a spacer
-	bi = [[UIBarButtonItem alloc]
-		  initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-	[buttons addObject:bi];
-	
-	// create a standard "edit" button
-	bi = self.editButtonItem;
-	bi.style = UIBarButtonItemStyleBordered;
-	[buttons addObject:bi];
-	
-	// stick the buttons in the toolbar
-	[tools setItems:buttons animated:NO];
-	
-	
-	// and put the toolbar in the nav bar
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
-	
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
