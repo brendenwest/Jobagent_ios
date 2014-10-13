@@ -79,7 +79,7 @@ BOOL isSavedEvent;
                        NSLocalizedString(@"STR_BTN_HIGH", nil), nil];
     
     // configure segmented control for priority selector
-    CGRect tmpFrame = CGRectMake(65.0, 6.0, [[UIScreen mainScreen] bounds].size.width-80, 28.0);
+    CGRect tmpFrame = CGRectMake(60.0, 6.0, [[UIScreen mainScreen] bounds].size.width-100, 28.0);
     self.eventPriority = [[UISegmentedControl alloc] initWithItems:eventPriorities];
     self.eventPriority.frame = tmpFrame;
     [eventPriority addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];

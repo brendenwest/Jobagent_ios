@@ -94,8 +94,9 @@
 	// add selected place to user settings and go back to job listings
 
     CLPlacemark *placemark = [placemarks objectAtIndex:indexPath.row];
+        CLLocation *loc = [[CLLocation alloc] initWithLatitude:placemark.location.coordinate.latitude
+                                                 longitude:placemark.location.coordinate.longitude];
     
-        CLLocation *loc = [[CLLocation alloc] initWithLatitude:placemark.region.center.latitude longitude:placemark.region.center.longitude];
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
         [geocoder reverseGeocodeLocation:loc completionHandler:

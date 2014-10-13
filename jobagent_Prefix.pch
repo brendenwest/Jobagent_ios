@@ -17,7 +17,7 @@
 #define DRYRUN YES
 
 // bypass reverse geocoding and minimize Google api requests when testing search results
-#define DEVLOCATION
+//#define DEVLOCATION
 
 // define value to use local job-search API
 //#define DEVAPI

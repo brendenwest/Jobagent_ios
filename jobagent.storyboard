@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0M0-af-N1b">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="bUQ-xW-XCn">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="bUQ-xW-XCn">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bUQ-xW-XCn" id="yVR-Nh-lRG">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -447,12 +447,12 @@
                                 <exclude reference="m7x-hs-Z7e"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="St9-kq-pvC"/>
                                 <exclude reference="169-HX-fFS"/>
                                 <exclude reference="UfM-Cz-nyd"/>
                                 <exclude reference="Vec-ml-bMS"/>
                                 <exclude reference="NNZ-SQ-A6O"/>
                                 <exclude reference="XCg-gf-BzL"/>
-                                <exclude reference="St9-kq-pvC"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -461,12 +461,12 @@
                                 <include reference="m7x-hs-Z7e"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="St9-kq-pvC"/>
                                 <include reference="169-HX-fFS"/>
                                 <include reference="UfM-Cz-nyd"/>
                                 <include reference="Vec-ml-bMS"/>
                                 <include reference="NNZ-SQ-A6O"/>
                                 <include reference="XCg-gf-BzL"/>
-                                <include reference="St9-kq-pvC"/>
                             </mask>
                         </variation>
                     </view>
@@ -850,9 +850,11 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAE-ka-f62" userLabel="btnSearch">
-                                <rect key="frame" x="254" y="112" width="30" height="29"/>
+                                <rect key="frame" x="254" y="116" width="60" height="29"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="29" id="cvh-Wz-ABL"/>
+                                    <constraint firstAttribute="width" constant="60" id="EZw-Sk-pyY"/>
+                                    <constraint firstAttribute="height" constant="29" id="PXS-Dj-W43"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                                 <state key="normal" title="Go">
@@ -894,7 +896,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fAE-ka-f62" firstAttribute="top" secondItem="3P8-JV-bLY" secondAttribute="bottom" constant="48" id="1Ay-d9-cZz"/>
                             <constraint firstItem="45c-Ci-nPO" firstAttribute="leading" secondItem="Edt-Qh-3yO" secondAttribute="leading" id="6hl-FO-1ra"/>
                             <constraint firstItem="0Az-L5-aGz" firstAttribute="top" secondItem="Edt-Qh-3yO" secondAttribute="bottom" id="DbR-2u-xoN">
                                 <variation key="heightClass=regular-widthClass=compact" constant="21"/>
@@ -907,11 +908,12 @@
                             <constraint firstItem="45c-Ci-nPO" firstAttribute="leading" secondItem="TEg-fH-Bck" secondAttribute="leadingMargin" constant="4" id="Udj-Cr-UQj"/>
                             <constraint firstItem="Pnb-yv-6WJ" firstAttribute="trailing" secondItem="1oF-hQ-JG6" secondAttribute="trailing" id="Xxt-ta-ShG"/>
                             <constraint firstItem="Pnb-yv-6WJ" firstAttribute="leading" secondItem="TEg-fH-Bck" secondAttribute="leadingMargin" id="ecJ-YA-IoI"/>
-                            <constraint firstItem="fAE-ka-f62" firstAttribute="leading" secondItem="1oF-hQ-JG6" secondAttribute="trailing" constant="18" id="mM8-XI-I8v"/>
                             <constraint firstItem="Pnb-yv-6WJ" firstAttribute="top" secondItem="1oF-hQ-JG6" secondAttribute="bottom" constant="9" id="nXP-38-YRj"/>
                             <constraint firstItem="Edt-Qh-3yO" firstAttribute="top" secondItem="Pnb-yv-6WJ" secondAttribute="bottom" constant="20" id="rHt-po-IqQ">
                                 <variation key="heightClass=regular-widthClass=compact" constant="-4"/>
                             </constraint>
+                            <constraint firstItem="fAE-ka-f62" firstAttribute="top" secondItem="1oF-hQ-JG6" secondAttribute="top" id="umJ-67-rKA"/>
+                            <constraint firstItem="fAE-ka-f62" firstAttribute="leading" secondItem="1oF-hQ-JG6" secondAttribute="trailing" constant="18" id="uwg-o7-fDt"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="ThT-iP-Si2"/>

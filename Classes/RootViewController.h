@@ -17,7 +17,6 @@
     
 }
 
-@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @property (nonatomic, strong) IBOutlet UITextField *txtSearch;
 @property (nonatomic, strong) IBOutlet UITextField *txtLocation;

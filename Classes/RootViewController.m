@@ -18,6 +18,7 @@
 
 {
     AppDelegate *appDelegate;
+    CLLocationManager *locationManager;
     CLLocation *startLocation;
     NSMutableDictionary *curLocation;
     NSMutableDictionary *userSettings;
@@ -33,23 +34,16 @@
     appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     
-    // get saved searches from storage
+    // get saved searches
     if (userSettings == nil)
         userSettings = [appDelegate userSettings];
     
     [self getRecentSearches];
-    
-    [Ads getAd:self];
-    
-}
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:(BOOL)animated];
-NSLog(@"viewWillAppear");
-
-    // set instance variables for current location from user defaults
-    curLocation = [Location getDefaultLocation];
-    NSLog(@"default location = %@",[curLocation objectForKey:@"postalcode"]);
+    // initialize location object to keep track user's
+    // city, country, & postal code
+    if (curLocation == nil)
+        curLocation = [Location getDefaultLocation];
     
     if (![[curLocation objectForKey:@"usertext"] length] && [Common connectedToNetwork]) {
         // no user location set. Detect current location
@@ -57,6 +51,13 @@ NSLog(@"viewWillAppear");
     } else {
         [self updateLocationFields];
     }
+    
+    [Ads getAd:self];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:(BOOL)animated];
     
     _tblRecent.dataSource = self;
     
@@ -146,26 +147,25 @@ NSLog(@"viewWillAppear");
 
 #pragma mark Location Manager methods
 
+
 - (void)detectLocation {
     // get location for first-time user
-    NSLog(@"detectLocation");
     
-    if (nil == _locationManager)
-        _locationManager = [[CLLocationManager alloc] init];
+    if (nil == locationManager)
+        locationManager = [CLLocationManager new];
     
     if (![CLLocationManager locationServicesEnabled])
     {   //show an alert
         NSLog(@"locationServices not enabled");
         
     } else {
-        _locationManager.delegate = self;
-        if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-            [_locationManager requestWhenInUseAuthorization];
+        if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [locationManager requestWhenInUseAuthorization];
         }
-        _locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-        [_locationManager startUpdatingLocation];
+        locationManager.delegate = self;
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+        [locationManager startUpdatingLocation];
         startLocation = nil;
-        NSLog(@"startUpdatingLocation");
     }
 }
 
@@ -179,19 +179,18 @@ NSLog(@"viewWillAppear");
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
-    NSLog(@"didUpdateToLocation");
-       CLLocation* newLocation = [locations lastObject];
+    CLLocation* newLocation = [locations lastObject];
 
     if (startLocation == nil || startLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
         startLocation = newLocation;
         
         if (newLocation.horizontalAccuracy <= manager.desiredAccuracy) {
-            [self.locationManager stopUpdatingLocation];
+            [locationManager stopUpdatingLocation];
             
-            // reverse Geocode the lat-long
+            // reverse Geocode the lat-long to get postalcode
             [self performCoordinateGeocode:newLocation];
             
-            self.locationManager.delegate = nil;
+            locationManager.delegate = nil;
 
         }
     }
@@ -220,28 +219,22 @@ NSLog(@"viewWillAppear");
 
 - (void)forwardGeocode:(NSString *)placename
 {
-    NSLog(@"forwardGeocode - %@", placename);
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
     [geocoder geocodeAddressString:placename completionHandler:^(NSArray *placemarks, NSError *error) {
-        //Error checking
-        NSLog(@"placemarks count - %lu", (unsigned long)[placemarks count]);
-        NSLog(@"placemarks error - %@", error.description);
         
         if ([placemarks count] == 1) { // one city returned. set location accordingly
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
-            CLLocation *loc = [[CLLocation alloc] initWithLatitude:placemark.region.center.latitude longitude:placemark.region.center.longitude];
+            CLLocation *loc = [[CLLocation alloc] initWithLatitude:placemark.location.coordinate.latitude
+                                                         longitude:placemark.location.coordinate.longitude];
             
             [geocoder reverseGeocodeLocation:loc completionHandler:
              ^(NSArray* placemarks, NSError* error){
                  if ([placemarks count] > 0)
                  {
-             NSLog(@"got new placemark");
                      CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
-                     [Location updateUserLocation:curLocation withPlace:newPlacemark];
-//                     NSLog(@"new location = %@",curLocation);
-                     [self updateLocationFields];
+                     [self setUserLocation:newPlacemark];
                      
                  }
              }];
@@ -261,16 +254,15 @@ NSLog(@"viewWillAppear");
 - (void)setUserLocation:(CLPlacemark *)placemark {
 
     // populate current location w/ new geocode values
+    [Location updateUserLocation:curLocation withPlace:placemark];
     
-    [Location updateUserLocation:(NSMutableDictionary *)curLocation withPlace:(CLPlacemark *)placemark];
+    // update location entry field
     [self updateLocationFields];
 
 }
 
 - (void)updateLocationFields {
     // update current location values in UI
-NSLog(@"updateLocationFields");
-NSLog(@"curLocation = %@",curLocation);
     
     if ([curLocation objectForKey:@"country"] == nil) {
         NSLog(@"no curLocale");
@@ -285,7 +277,6 @@ NSLog(@"curLocation = %@",curLocation);
 }
 
 - (IBAction)checkEnteredLocation:(id)sender {
-    NSLog(@"checkEnteredLocation");
     // called when user has entered a new location value
     // check that entered location code is valid
     // if entry is an integer, run zip validation rules. Don't check zip for string entries
@@ -294,11 +285,11 @@ NSLog(@"curLocation = %@",curLocation);
     BOOL isValidZip = (integerZip > 0) ? [Location isValidZip:integerZip] : 0;
     
     if ((isValidZip || integerZip == 0) && ![enteredLocation isEqualToString:[curLocation objectForKey:@"usertext"]]) {
-NSLog(@"checkEnteredLocation for new");
         // user entered a string or new zip.
         // get location info from geocoder
         
 #ifdef DEVLOCATION
+        // bypass geocoding while testing search results
         [curLocation setValue:enteredLocation forKey:@"usertext"];
 #else
         [self forwardGeocode:enteredLocation];
@@ -392,8 +383,8 @@ NSLog(@"checkEnteredLocation for new");
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:(BOOL)animated];
 
-    [Location setDefaultLocation:curLocation];
 }
+
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];

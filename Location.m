@@ -12,13 +12,11 @@
 
 
 + (BOOL)isValidZip:(int)integerZip {
-    NSLog(@"isValidZip for %i",integerZip);
     
     // check that entered location code is valid
     // valid entries either match current stored location or a valid US 5-digit zip
     BOOL validUSzip = integerZip > 9999 && integerZip < 100000;
-    NSLog(@"integerZip = %i",integerZip);
-    
+
     if (!validUSzip) {
         UIAlertView *validZipAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_VALID_LOCATION", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
         [validZipAlert show];
@@ -28,16 +26,18 @@
 
 + (void)updateUserLocation:(NSMutableDictionary *)curLocation withPlace:(CLPlacemark *)placemark {
     
-    NSLog(@"updateUserLocation");
-    
     // populate current location w/ new geocode values
     [curLocation setValue:(NSString *)placemark.locality forKey:@"city"];
     [curLocation setValue:(NSString *)placemark.administrativeArea forKey:@"state"];
     [curLocation setValue:(NSString *)placemark.ISOcountryCode forKey:@"country"];
     [curLocation setValue:(NSString *)placemark.postalCode forKey:@"postalcode"];
 
+    // get text for display in location-entry field
     NSString *locationText =  [self getLocationText:placemark.locality withCountry:placemark.ISOcountryCode withZip:placemark.postalCode];
     [curLocation setValue:locationText forKey:@"usertext"];
+    
+    // save new location to user defaults
+    [self setDefaultLocation:curLocation];
     
 }
 
@@ -58,24 +58,20 @@
 
 
 + (NSMutableDictionary *)getDefaultLocation {
-    NSLog(@"getDefaultLocation");
     // set instance variables for current location from user defaults
     
-    NSMutableDictionary *curLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-               [[NSUserDefaults standardUserDefaults] stringForKey:@""], @"usertext",
+    // get last-stored user location data from user defaults
+    NSMutableDictionary *defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+               [[NSUserDefaults standardUserDefaults] stringForKey:@"usertext"], @"usertext",
                [[NSUserDefaults standardUserDefaults] stringForKey:@"city"], @"city",
                [[NSUserDefaults standardUserDefaults] stringForKey:@"state"], @"state",
                [[NSUserDefaults standardUserDefaults] stringForKey:@"countryCode"], @"country",
                [[NSUserDefaults standardUserDefaults] stringForKey:@"postalcode"], @"postalcode",
                nil];
     
-    NSString *locationText =  [self getLocationText:[curLocation objectForKey:@"city"] withCountry:[curLocation objectForKey:@"country"] withZip:[curLocation objectForKey:@"postalcode"]];
-    [curLocation setValue:locationText forKey:@"usertext"];
-    
 #ifdef DEVLOCATION
-NSLog(@"getDefaultLocation - dummy values");
     // set dummy values to minimize location detection calls while testing
-    curLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+    defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                    @"98104", @"usertext",
                    @"Seattle", @"city",
                    @"WA", @"state",
@@ -84,20 +80,24 @@ NSLog(@"getDefaultLocation - dummy values");
                    nil];
 #endif
     
-    return curLocation;
+    return defaultLocation;
 }
 
 +(void)setDefaultLocation:(id)newLocation {
     // store current location to User Defaults
-    NSLog(@"setDefaultLocation");
+    // may be called from home screen or from cities picker
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSString *locationText;
     if([newLocation isKindOfClass:[NSMutableDictionary class]])
     {
         [defaults setObject:[newLocation objectForKey:@"city"] forKey:@"city"];
         [defaults setObject:[newLocation objectForKey:@"state"] forKey:@"state"];
         [defaults setObject:[newLocation objectForKey:@"country"] forKey:@"countryCode"];
         [defaults setObject:[newLocation objectForKey:@"postalcode"] forKey:@"postalcode"];
+        
+        locationText =  [self getLocationText:[newLocation objectForKey:@"city"] withCountry:[newLocation objectForKey:@"country"] withZip:[newLocation objectForKey:@"postalcode"]];
+
     } else if([newLocation isKindOfClass:[CLPlacemark class]]) {
         newLocation = (CLPlacemark*)newLocation;
         // populate current location w/ new geocode values
@@ -107,10 +107,10 @@ NSLog(@"getDefaultLocation - dummy values");
         [defaults setObject:[newLocation ISOcountryCode] forKey:@"countryCode"];
         [defaults setObject:[newLocation postalCode] forKey:@"postalcode"];
 
-        NSString *locationText =  [self getLocationText:[newLocation locality] withCountry:[newLocation ISOcountryCode] withZip:[newLocation postalCode]];
-        [defaults setObject:locationText forKey:@"usertext"];
+        locationText =  [self getLocationText:[newLocation locality] withCountry:[newLocation ISOcountryCode] withZip:[newLocation postalCode]];
         
     }
+    [defaults setObject:locationText forKey:@"usertext"];
     [defaults synchronize];
     
 }
