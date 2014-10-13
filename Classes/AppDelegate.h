@@ -16,42 +16,26 @@
 	
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     NSManagedObjectModel *managedObjectModel;
-    NSManagedObjectContext *managedObjectContext; 
-	NSMutableDictionary *userSettings;
-	
-    UIWindow *window;
-    UITabBarController *tabBarController;
-    UINavigationController *navigationController;
-    NSString *prevSearch;
+    NSString *settingsFile;
+
 }
 
 @property (nonatomic, strong) IBOutlet UIWindow *window;
-@property (nonatomic, strong) IBOutlet UITabBarController *tabBarController;
-@property (nonatomic, strong) IBOutlet UINavigationController *navigationController;
-
-@property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic, strong, readonly) NSString *applicationDocumentsDirectory;
 @property (nonatomic, strong) NSMutableDictionary *userSettings;
-@property (nonatomic, strong) NSString *prevSearch;
-@property(nonatomic, strong) id<GAITracker> tracker;
 @property (strong, nonatomic, readonly) NSDictionary *configuration;
+@property (nonatomic, strong) NSString *previousSearch;
+@property(nonatomic, strong) id<GAITracker> tracker;
 
 
-- (IBAction)saveAction:sender;
+- (void)saveAction:sender;
 
+// Google Analytics methods
 - (void)trackPV:(NSString*)screenName;
 - (void)trackPVFull:(NSString*)screenName :(NSString*)eventCategory :(NSString*)eventAction :(NSString*)eventLabel;
 
+// Core Data methods
 - (void)setCompany:(NSString *)companyName;
-- (NSArray*)getCompanies:(NSString*)companyName;
-- (NSArray*)getJobs:(NSString*)jobName;
-
-- (NSArray*)getPeople:(NSString*)personName;
 - (void)setPerson:(NSString*)personName withCo:(NSString*)companyName;
-
-- (NSArray*)getEvents:(NSString*)eventName;
-
 
 @end

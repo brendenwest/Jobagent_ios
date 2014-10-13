@@ -15,7 +15,7 @@
 
 @implementation PickList
 
-@synthesize appDelegate, options, selectedItem, header;
+@synthesize options, selectedItem, header;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

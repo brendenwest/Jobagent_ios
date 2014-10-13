@@ -11,7 +11,6 @@
 #import "AppDelegate.h"
 #import "Common.h"
 
-
 #define kPickerAnimationDuration    0.40   // duration for the animation to slide the date picker into view
 #define kDatePickerTag              99     // view tag identifiying the date picker view
 
@@ -23,7 +22,7 @@ static NSString *kDatePickerID = @"datePicker"; // the cell containing the date 
 
 @implementation EventDetail
 
-@synthesize  eventLabels, eventKeys, eventTypes, eventPriority, eventPriorities, editedItemId;
+@synthesize  eventPriority;
 @synthesize datePickerIndexPath, pickerCellRowHeight, doneButton;
 
 BOOL isSavedEvent;
@@ -149,11 +148,11 @@ BOOL isSavedEvent;
     if ([self hasInlineDatePicker])
     {
         // we have a date picker, so allow for it in the number of rows in this section
-        NSInteger numRows = self.eventKeys.count;
+        NSInteger numRows = eventKeys.count;
         return ++numRows;
     }
     
-    return self.eventKeys.count;
+    return eventKeys.count;
 }
 
 

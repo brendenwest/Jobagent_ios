@@ -18,19 +18,19 @@
 	NSManagedObjectContext *managedObjectContext;
     EditItemVC *editItemVC;
 
+    NSArray *eventLabels;
+    NSArray *eventKeys;
+    NSArray *eventTypes;
+    NSArray *eventPriorities;
+    NSString *editedItemId;
+
 }
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *jobActions;
-@property (nonatomic, strong) NSArray *eventLabels;
-@property (nonatomic, strong) NSArray *eventKeys;
-@property (nonatomic, strong) NSArray *eventTypes;
-@property (nonatomic, strong) NSArray *eventPriorities;
-@property (nonatomic, strong) NSString *editedItemId;
+@property (nonatomic, strong) IBOutlet UISegmentedControl *eventPriority;
 
 @property (nonatomic, strong) Event *selectedEvent;
-
-@property (nonatomic, strong) UISegmentedControl *eventPriority;
 
 // Date Picker properties
 // keep track which indexPath points to the cell with UIDatePicker

@@ -14,11 +14,8 @@
 @interface SearchJobs : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
 
 	AppDelegate *appDelegate;
-				
-	NSMutableDictionary *userSettings;
-    NSString *prevSearch;
+
     NSArray *siteList;
-    NSString *feedNew;
     NSNumber *currentSection;
     NSMutableArray *jobsAll;
     NSArray *jobsForSite;
@@ -36,7 +33,6 @@
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *uiLoading;
 
 
-- (IBAction)requestJobs:(id)sender;
 - (IBAction)switchJobSite:(id)sender;     // for segmented control actions
 
 @end

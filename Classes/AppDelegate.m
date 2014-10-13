@@ -28,15 +28,8 @@
 
 @implementation AppDelegate
 
-@synthesize window=_window;
-@synthesize tabBarController=_tabBarController;
-@synthesize navigationController =_navigationController;
-
-@synthesize prevSearch, userSettings;
-@synthesize managedObjectModel;
+@synthesize previousSearch, userSettings;
 @synthesize managedObjectContext;
-@synthesize persistentStoreCoordinator;
-@synthesize applicationDocumentsDirectory;
 @synthesize configuration = _configuration;
 
 
@@ -52,7 +45,7 @@
     [newDefaults setObject:[[NSLocale autoupdatingCurrentLocale] objectForKey:NSLocaleCountryCode] forKey:@"countryCode"];
     
     // add values from legacy settings.xml if found
-    NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
+    settingsFile = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:@"userSettings.xml"];
     
 	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
 		NSDictionary *oldSettings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
@@ -119,8 +112,8 @@
 
 - (void)registerDefaultsFromSettingsBundle
 {
-    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
-    [defs synchronize];
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults synchronize];
     
     NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
     
@@ -140,7 +133,7 @@
         if (key)
         {
             // check if value readable in userDefaults
-            id currentObject = [defs objectForKey:key];
+            id currentObject = [userDefaults objectForKey:key];
             if (currentObject == nil)
             {
                 // not readable: set value from Settings.bundle
@@ -155,8 +148,8 @@
         }
     }
     
-    [defs registerDefaults:defaultsToRegister];
-    [defs synchronize];
+    [userDefaults registerDefaults:defaultsToRegister];
+    [userDefaults synchronize];
 }
 
 - (void)application:(UIApplication *)app didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -264,6 +257,14 @@
 }
 
 
+- (void)saveRecentSearches {
+    // store recent searches
+    NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
+                                                                 format:NSPropertyListXMLFormat_v1_0
+                                                       errorDescription:nil];
+    [xmlData writeToFile:settingsFile atomically:YES];
+}
+
 /**
  applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
  */
@@ -276,16 +277,16 @@
         } 
     }
     
+    [self synchUserDefaults];
+    
+    [self saveRecentSearches];
+
+}
+
+- (void)synchUserDefaults {
     // Store user settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
-    // store recent searches
-    NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
-	NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
-																 format:NSPropertyListXMLFormat_v1_0
-													   errorDescription:nil];
-	[xmlData writeToFile:settingsFile atomically:YES];
-
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -297,18 +298,9 @@
         } 
     }
     
+    [self synchUserDefaults];
     
-    // Store user settings
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    
-    // store recent searches
-    NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
-	NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
-																 format:NSPropertyListXMLFormat_v1_0
-													   errorDescription:nil];
-	[xmlData writeToFile:settingsFile atomically:YES];
-
+    [self saveRecentSearches];
 
 }
 
@@ -319,7 +311,7 @@
  Performs the save action for the application, which is to send the save:
  message to the application's managed object context.
  */
-- (IBAction)saveAction:(id)sender {
+- (void)saveAction:(id)sender {
     
     NSError *error = nil;
     if (![[self managedObjectContext] save:&error]) {
@@ -395,14 +387,12 @@
 /**
  Returns userSettings dictionary. Now used only for storing recent searches
  */
-- (NSMutableDictionary *) userSettings {
+- (NSMutableDictionary *)userSettings {
 	
     if (userSettings != nil) {
         return userSettings;
     }
     
-    NSString *settingsFile = [self.applicationDocumentsDirectory stringByAppendingPathComponent:@"userSettings.xml"];
-	
 	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
 		return [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
 	} else {
@@ -478,7 +468,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Application's documents directory
 
 /**
@@ -491,50 +480,7 @@
     return basePath;
 }
 
-#pragma mark GET from sqlite
--(NSArray *)getEvents:(NSString *)eventName {
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	[fetchRequest setEntity: [NSEntityDescription entityForName:@"Event" inManagedObjectContext:managedObjectContext]];
-	[fetchRequest setResultType:NSDictionaryResultType];
-	if (eventName) {
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE %@", eventName];
-		[fetchRequest setPredicate:predicate];	
-	}
-	
-	NSError *error = nil;
-	return [managedObjectContext executeFetchRequest: fetchRequest error: &error];	
-}
-
--(NSArray *)getJobs:(NSString *)jobName {
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	[fetchRequest setEntity: [NSEntityDescription entityForName:@"Job" inManagedObjectContext:managedObjectContext]];
-	[fetchRequest setResultType:NSDictionaryResultType];
-	if (jobName) {
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title LIKE %@", jobName];
-		[fetchRequest setPredicate:predicate];	
-	}
-	
-	NSError *error = nil;
-	return [managedObjectContext executeFetchRequest: fetchRequest error: &error];
-	
-}
-
-
--(NSArray *)getCompanies:(NSString *)companyName {
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	[fetchRequest setEntity: [NSEntityDescription entityForName:@"Company" inManagedObjectContext:managedObjectContext]];
-	[fetchRequest setResultType:NSDictionaryResultType];
-	if (companyName.length > 0) {
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE %@", companyName];
-		[fetchRequest setPredicate:predicate];	
-	}
-	
-	NSError *error = nil;
-	return [managedObjectContext executeFetchRequest: fetchRequest error: &error];
-	
-}
-
-#pragma mark SAVE to DB
+#pragma mark Core Data methods
 
 - (void)setCompany:(NSString *)companyName {
 	if ([companyName length] > 0) {
@@ -556,34 +502,6 @@
 		
 	}
 }
-
--(NSArray *)getPeople:(NSString *)personName {
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	[fetchRequest setEntity: [NSEntityDescription entityForName:@"Person" inManagedObjectContext:managedObjectContext]];
-	[fetchRequest setResultType:NSDictionaryResultType];
-	if (personName) {
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE %@", personName];
-		[fetchRequest setPredicate:predicate];	
-	}
-	
-	NSError *error = nil;
-	return [managedObjectContext executeFetchRequest: fetchRequest error: &error];
-	
-}
-
--(NSArray *)getPerson:(NSString *)personName {
-        NSString *firstName = [NSString stringWithFormat:@"%@",[personName substringToIndex:[personName rangeOfString:@" "].location]];
-        NSString *lastName = [personName substringFromIndex:[personName rangeOfString:@" "].location+1];
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        [fetchRequest setEntity: [NSEntityDescription entityForName:@"Person" inManagedObjectContext:managedObjectContext]];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"firstName LIKE[cd] %@ AND lastName LIKE[cd] %@", firstName, lastName];
-        [fetchRequest setPredicate:predicate];	
-        
-        NSError *error = nil;
-        NSArray *people = [managedObjectContext executeFetchRequest: fetchRequest error: &error];
-        return people;
-}
-
 
 - (void)setPerson:(NSString *)personName withCo:(NSString *)companyName {
 	if ([personName length] > 0) {

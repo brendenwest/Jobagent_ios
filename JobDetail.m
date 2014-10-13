@@ -77,8 +77,6 @@ BOOL isSavedJob;
                 NSLocalizedString(@"STR_OTHER", nil), nil];
 	
     // Date picker setup
-
-    
     pickerCellRowHeight = 210; // TODO - check if needs to be variable
     
     // listen for locale changes while in the background, so we can update the date

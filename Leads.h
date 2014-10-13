@@ -8,7 +8,7 @@
 
 #import <CoreData/CoreData.h>
 
-@class AppDelegate, JobDetail;
+@class JobDetail;
 
 @interface Leads : UITableViewController <NSFetchedResultsControllerDelegate> {
     

@@ -24,7 +24,6 @@
 
 }
 
-@property (nonatomic, strong) AppDelegate *appDelegate;
 @property(retain) id <PickListDelegate> delegate;
 
 @property (nonatomic, strong) NSArray *options;

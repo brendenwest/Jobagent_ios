@@ -30,10 +30,9 @@
 }
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
-
+@property (nonatomic, strong) IBOutlet UISegmentedControl *btnContactActions;
 
 @property (nonatomic, strong) Person *selectedPerson;
 
-@property (nonatomic, strong) IBOutlet UISegmentedControl *btnContactActions;
 
 @end

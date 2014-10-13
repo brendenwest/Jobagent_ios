@@ -58,6 +58,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="Fd7-xN-lIq"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="view" destination="jcQ-sa-pAw" id="3jt-BH-T4d"/>
                         <segue destination="b5D-bt-zZc" kind="show" identifier="showJobDetail" id="R9d-Wk-1GE"/>
                     </connections>
                 </tableViewController>
@@ -733,6 +734,11 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="vhr-hm-Bpe"/>
                                 </constraints>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="vhr-hm-Bpe"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="yQH-WO-6DA" id="31w-es-QsQ"/>
                                     <outlet property="delegate" destination="yQH-WO-6DA" id="kdM-Ha-Z2J"/>
@@ -763,8 +769,10 @@
                             <mask key="constraints">
                                 <include reference="1Mm-gf-JZ3"/>
                                 <include reference="5GK-h8-J8Y"/>
+                                <exclude reference="QpD-kS-f6z"/>
                                 <include reference="e4a-yO-1J6"/>
                                 <include reference="koG-69-pNO"/>
+                                <exclude reference="se6-SA-VbW"/>
                             </mask>
                         </variation>
                     </view>

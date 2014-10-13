@@ -16,7 +16,7 @@
 
 @implementation CompanyDetail
 
-@synthesize btnExternalLinks, coTypes, coKeys, coLabels, notes, editedItemId;
+@synthesize btnExternalLinks;
 
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -86,7 +86,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.coKeys.count;
+    return coKeys.count;
 }
 
 

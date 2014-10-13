@@ -76,7 +76,6 @@
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<distance>" withString:[settings stringForKey:@"distanceResults"]];
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<country>" withString:_curLocale];
     
- 
     NSURL *url = [NSURL URLWithString:searchUrl];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -141,7 +140,6 @@
 
 
 - (void)linkToSource:(id)sender {
-    //[[siteList objectAtIndex:currentSection] valueForKey:@"domain"]
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[siteList objectAtIndex:currentSection] valueForKey:@"domain"]]];
 
 }
@@ -214,18 +212,18 @@
 	[super viewWillAppear:animated];
     
     NSString *newSearch = [NSString stringWithFormat:@"%@+%@",_keyword, _curLocation];
-    if (_keyword && ![newSearch isEqualToString:prevSearch]) {
+    // check that search query differs from previous query
+    if (_keyword && ![newSearch isEqualToString:[appDelegate previousSearch]]) {
         // new search requested.
         _tableView.hidden = YES;
         _btnJobSite.hidden = YES;
         _uiLoading.hidden = NO;
         [_uiLoading startAnimating];
-        prevSearch = newSearch;
+        [appDelegate setPreviousSearch:newSearch];
 		[self requestJobs:nil];
     } else {
         [_uiLoading stopAnimating];
     }
-
     
     _lblSearch.text = [NSString stringWithFormat:NSLocalizedString(@"STR_RESULTS_FOR", nil),_keyword,_curLocation];
     

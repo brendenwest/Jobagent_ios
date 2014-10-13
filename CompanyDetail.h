@@ -23,23 +23,20 @@
 	SearchJobs *_searchVC;
 	Leads *_leadsVC;
 	People *_contactsVC;
-	
+
+    NSArray *coTypes;
+    NSArray *coLabels;
+    NSArray *coKeys;
+    NSString *editedItemId;
+
 	IBOutlet UISegmentedControl *btnInternalLinks;
 	
 }
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) IBOutlet UITextView *notes;
-
-@property (nonatomic, strong) Company *selectedCompany;
-
-@property (nonatomic, strong) NSArray *coTypes;
-@property (nonatomic, strong) NSArray *coLabels;
-@property (nonatomic, strong) NSArray *coKeys;
-@property (nonatomic, strong) NSString *editedItemId;
-
 @property (nonatomic, strong) IBOutlet UISegmentedControl *btnExternalLinks;
 
+@property (nonatomic, strong) Company *selectedCompany;
 
 @end
 

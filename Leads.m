@@ -25,11 +25,17 @@
     [super viewDidLoad];
     
 	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
 	if (managedObjectContext == nil)
 	{ 
 		managedObjectContext = [appDelegate managedObjectContext];
 	}
 	
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        // handle the error...
+    }
+
     // create array of button properties for use by toolbar button constructor
     NSArray* buttons = @[
                          @[@4,@"insertItem",self],
@@ -49,13 +55,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    NSError *error = nil;
-	if (![fetchedResultsController performFetch:&error]) {
-		// handle the error...
-	}
-
+    [super viewWillAppear:(BOOL)animated];
     [self.tableView reloadData];
     
     [appDelegate trackPV:self.title];
@@ -72,10 +72,10 @@
 }
 
 - (void)viewDidUnload {
+    [super viewDidUnload];
 
     // Release any retained subviews of the main view.
-	fetchedResultsController = nil;
-    [super viewDidUnload];
+	self.fetchedResultsController = nil;
 }
 
 
