@@ -73,8 +73,6 @@ static NSString *kTitleNewItem = @"";
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"n rows = %lu",(unsigned long)[[[fetchedResultsController sections] objectAtIndex:section]
-                                          numberOfObjects]);
 	return [[[fetchedResultsController sections] objectAtIndex:section]
 			numberOfObjects];
 }

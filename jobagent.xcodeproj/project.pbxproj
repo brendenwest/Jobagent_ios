@@ -61,15 +61,20 @@
 		CE1EB5EF191C6E330000901C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE1EB5ED191C6E330000901C /* InfoPlist.strings */; };
 		CE1EB5F1191C6E330000901C /* jobagent_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1EB5F0191C6E330000901C /* jobagent_Tests.m */; };
 		CE3CAE40194B9B2400CF93DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE3CAE3D194B99C100CF93DE /* Localizable.strings */; };
-		CE3CAE4E194BB48400CF93DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE3CAE49194B9F9900CF93DE /* Localizable.strings */; };
 		CE5AB1BA191A0690008146A1 /* Tips.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5AB1B9191A0690008146A1 /* Tips.m */; };
-		CE60563919DCAF4C002244BD /* jobagent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE60563819DCAF4C002244BD /* jobagent.storyboard */; };
 		CE60563B19DDA0BC002244BD /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE60563A19DDA0BC002244BD /* libGoogleAnalyticsServices.a */; };
 		CE60563E19DDAA89002244BD /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFF4EC119C94969007B5C44 /* libGoogleAdMobAds.a */; };
 		CE68CA0A190032480044CA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE68CA09190032480044CA66 /* AVFoundation.framework */; };
 		CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74D8B81946CAD3006C9ACE /* EditItemVC.m */; };
 		CE8CED6C19C94D2C008217C8 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE8CED6B19C94D2C008217C8 /* AirshipConfig.plist */; };
 		CE8CED7019CA0C13008217C8 /* RootView_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8CED6F19CA0C13008217C8 /* RootView_Tests.m */; };
+		CE8EA61419EDC0E7002040C2 /* jobagent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8EA61219EDC0E7002040C2 /* jobagent.storyboard */; };
+		CE8EA61819EDE525002040C2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8EA61719EDE525002040C2 /* Images.xcassets */; };
+		CE8EA61919EE0B96002040C2 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DCD95B1182208F0033DEC9 /* RootViewController.m */; };
+		CE8EA61A19EE0BD0002040C2 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10803B19E1DE7700542B05 /* Location.m */; };
+		CE8EA61B19EE0BD8002040C2 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF5221F191BDD8500844450 /* Common.m */; };
+		CE8EA61C19EE0BDF002040C2 /* Ads.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF397419DFBDE000C546D7 /* Ads.m */; };
+		CE8EA61D19EE0C58002040C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479869B114A183100096236 /* AppDelegate.m */; };
 		CEB1A207190394410008F0A2 /* jobagent_icon_29.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A203190394410008F0A2 /* jobagent_icon_29.png */; };
 		CEB1A208190394410008F0A2 /* jobagent_icon_58.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A204190394410008F0A2 /* jobagent_icon_58.png */; };
 		CEB1A209190394410008F0A2 /* jobagent_icon_80.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A205190394410008F0A2 /* jobagent_icon_80.png */; };
@@ -172,11 +177,12 @@
 		CE1EB5EE191C6E330000901C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CE1EB5F0191C6E330000901C /* jobagent_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jobagent_Tests.m; sourceTree = "<group>"; };
 		CE1EB5F2191C6E330000901C /* jobagent Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "jobagent Tests-Prefix.pch"; sourceTree = "<group>"; };
+		CE1F0AD719FE086E00600B98 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE1F0AD919FE0F2600600B98 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/jobagent.strings; sourceTree = "<group>"; };
+		CE29EB5D19EF4AC800E0E2F9 /* jobagent_Tests_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobagent_Tests_Prefix.pch; sourceTree = "<group>"; };
 		CE3CAE3E194B99C100CF93DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
-		CE3CAE4A194B9F9900CF93DE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE5AB1B8191A0690008146A1 /* Tips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tips.h; sourceTree = "<group>"; };
 		CE5AB1B9191A0690008146A1 /* Tips.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tips.m; sourceTree = "<group>"; };
-		CE60563819DCAF4C002244BD /* jobagent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = jobagent.storyboard; sourceTree = "<group>"; };
 		CE60563A19DDA0BC002244BD /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = "Pods/GoogleAnalytics-iOS-SDK/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; };
 		CE68CA09190032480044CA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		CE74D8B71946CAD3006C9ACE /* EditItemVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditItemVC.h; sourceTree = "<group>"; };
@@ -184,6 +190,8 @@
 		CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobagent_Prefix.pch; sourceTree = "<group>"; };
 		CE8CED6B19C94D2C008217C8 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		CE8CED6F19CA0C13008217C8 /* RootView_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootView_Tests.m; sourceTree = "<group>"; };
+		CE8EA61319EDC0E7002040C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/jobagent.storyboard; sourceTree = "<group>"; };
+		CE8EA61719EDE525002040C2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = jobagent/Images.xcassets; sourceTree = "<group>"; };
 		CEB1A203190394410008F0A2 /* jobagent_icon_29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_29.png; path = Resources/jobagent_icon_29.png; sourceTree = "<group>"; };
 		CEB1A204190394410008F0A2 /* jobagent_icon_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_58.png; path = Resources/jobagent_icon_58.png; sourceTree = "<group>"; };
 		CEB1A205190394410008F0A2 /* jobagent_icon_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_80.png; path = Resources/jobagent_icon_80.png; sourceTree = "<group>"; };
@@ -351,9 +359,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				CE60563819DCAF4C002244BD /* jobagent.storyboard */,
 				CE8CED6B19C94D2C008217C8 /* AirshipConfig.plist */,
 				CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */,
+				CE29EB5D19EF4AC800E0E2F9 /* jobagent_Tests_Prefix.pch */,
 				8D1107310486CEB800E47090 /* jobagent-Info.plist */,
 				CE1B83D2193E917A00058D22 /* appconfig.plist */,
 				04B36748126BFE0900249902 /* Helpers */,
@@ -377,9 +385,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE8EA61719EDE525002040C2 /* Images.xcassets */,
+				CE8EA61219EDC0E7002040C2 /* jobagent.storyboard */,
 				CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */,
 				CE3CAE4C194B9FA500CF93DE /* de */,
-				CE3CAE49194B9F9900CF93DE /* Localizable.strings */,
 				CE3CAE24194B8A8700CF93DE /* en */,
 				CEB27813193F81770071EC32 /* Settings.bundle */,
 				04F4FD8D175B176F00FED540 /* Default-568h@2x.png */,
@@ -540,8 +549,8 @@
 				French,
 				German,
 				en,
-				de,
 				Base,
+				de,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -561,20 +570,20 @@
 				CE3CAE40194B9B2400CF93DE /* Localizable.strings in Resources */,
 				CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */,
 				CE8CED6C19C94D2C008217C8 /* AirshipConfig.plist in Resources */,
-				CE3CAE4E194BB48400CF93DE /* Localizable.strings in Resources */,
 				CEB1A208190394410008F0A2 /* jobagent_icon_58.png in Resources */,
 				CEB1A20A190394410008F0A2 /* jobagent_icon_120.png in Resources */,
 				5A64C2DC151C17E700CA8876 /* icon_companies2.png in Resources */,
 				CEB1A209190394410008F0A2 /* jobagent_icon_80.png in Resources */,
 				04F985A215315696000CE69A /* Default.png in Resources */,
 				5A894CEF15368B33002E3D57 /* indeed_logo.gif in Resources */,
+				CE8EA61819EDE525002040C2 /* Images.xcassets in Resources */,
 				CEB1A207190394410008F0A2 /* jobagent_icon_29.png in Resources */,
 				04F4FD84175B161200FED540 /* jobagent_icon_57.png in Resources */,
 				04F4FD86175B165100FED540 /* jobagent_icon_114.png in Resources */,
 				CEB27814193F81770071EC32 /* Settings.bundle in Resources */,
 				04F4FD8A175B168300FED540 /* Default@2x.png in Resources */,
-				CE60563919DCAF4C002244BD /* jobagent.storyboard in Resources */,
 				04F4FD8E175B176F00FED540 /* Default-568h@2x.png in Resources */,
+				CE8EA61419EDC0E7002040C2 /* jobagent.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,8 +698,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE8EA61C19EE0BDF002040C2 /* Ads.m in Sources */,
+				CE8EA61B19EE0BD8002040C2 /* Common.m in Sources */,
+				CE8EA61A19EE0BD0002040C2 /* Location.m in Sources */,
+				CE8EA61919EE0B96002040C2 /* RootViewController.m in Sources */,
 				CE8CED7019CA0C13008217C8 /* RootView_Tests.m in Sources */,
 				CE1EB5F1191C6E330000901C /* jobagent_Tests.m in Sources */,
+				CE8EA61D19EE0C58002040C2 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,16 +731,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				CE3CAE3E194B99C100CF93DE /* en */,
+				CE1F0AD719FE086E00600B98 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		CE3CAE49194B9F9900CF93DE /* Localizable.strings */ = {
+		CE8EA61219EDC0E7002040C2 /* jobagent.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				CE3CAE4A194B9F9900CF93DE /* de */,
+				CE8EA61319EDC0E7002040C2 /* Base */,
+				CE1F0AD919FE0F2600600B98 /* de */,
 			);
-			name = Localizable.strings;
+			name = jobagent.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -737,11 +753,12 @@
 			baseConfigurationReference = 2A0F71210D3C4585ADE21B59 /* Pods-jobagent.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -780,11 +797,12 @@
 			baseConfigurationReference = 2A0F71210D3C4585ADE21B59 /* Pods-jobagent.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Brisk Software LLC (H5973LM3UE)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -809,7 +827,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jobagent;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ec2da667-f78c-4a42-bb99-12cf291745a4";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -822,7 +840,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLY_RULES_IN_COPY_FILES = NO;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_OPENMP_SUPPORT = NO;
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -852,7 +870,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLY_RULES_IN_COPY_FILES = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Brisk Software LLC (H5973LM3UE)";
 				ENABLE_OPENMP_SUPPORT = NO;
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -869,7 +887,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
-				PROVISIONING_PROFILE = "DB3159C3-DCFF-47B7-8A2C-6B25F5F65E0E";
+				PROVISIONING_PROFILE = "ec2da667-f78c-4a42-bb99-12cf291745a4";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos;

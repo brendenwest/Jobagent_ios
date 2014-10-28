@@ -19,6 +19,6 @@
 + (NSString *)stringFromDate:(NSDate*)tmpDate;
 + (NSString *)getShortDate:(NSString*)tmpDate;
 + (UITextView *)formatTextView:(UITextView*)textView :(NSString*)placeholder;
-
++ (void)buttonRounded:(UIButton*)button;
 
 @end

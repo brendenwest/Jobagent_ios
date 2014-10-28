@@ -21,6 +21,12 @@
 	
 }
 
++ (void)buttonRounded:(UIButton*)button {
+    button.layer.cornerRadius = 8;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor blueColor].CGColor;
+}
+
 + (BOOL)connectedToNetwork  {
     // Create zero addy
     struct sockaddr_in zeroAddress;

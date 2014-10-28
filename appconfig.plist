@@ -15,7 +15,7 @@
 	<key>tipsUrl</key>
 	<string>http://brisksoft.us/jobagent/tips.json</string>
 	<key>apiDomainProd</key>
-	<string>http://brisksoft.heroku.com</string>
+	<string>http://brisksoft.herokuapp.com</string>
 	<key>apiDomainDev</key>
 	<string>http://localhost:8888</string>
 	<key>searchUrl</key>

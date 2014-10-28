@@ -60,27 +60,28 @@
 + (NSMutableDictionary *)getDefaultLocation {
     // set instance variables for current location from user defaults
     
-    // get last-stored user location data from user defaults
-    NSMutableDictionary *defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-               [[NSUserDefaults standardUserDefaults] stringForKey:@"usertext"], @"usertext",
-               [[NSUserDefaults standardUserDefaults] stringForKey:@"city"], @"city",
-               [[NSUserDefaults standardUserDefaults] stringForKey:@"state"], @"state",
-               [[NSUserDefaults standardUserDefaults] stringForKey:@"countryCode"], @"country",
-               [[NSUserDefaults standardUserDefaults] stringForKey:@"postalcode"], @"postalcode",
-               nil];
-    
 #ifdef DEVLOCATION
     // set dummy values to minimize location detection calls while testing
-    defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+    return [NSMutableDictionary dictionaryWithObjectsAndKeys:
                    @"98104", @"usertext",
                    @"Seattle", @"city",
                    @"WA", @"state",
                    @"US", @"country",
                    @"98104", @"postalcode",
                    nil];
+#else
+
+    // get last-stored user location data from user defaults
+    return [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                            [[NSUserDefaults standardUserDefaults] stringForKey:@"usertext"], @"usertext",
+                                            [[NSUserDefaults standardUserDefaults] stringForKey:@"city"], @"city",
+                                            [[NSUserDefaults standardUserDefaults] stringForKey:@"state"], @"state",
+                                            [[NSUserDefaults standardUserDefaults] stringForKey:@"countryCode"], @"country",
+                                            [[NSUserDefaults standardUserDefaults] stringForKey:@"postalcode"], @"postalcode",
+                                            nil];
+
 #endif
     
-    return defaultLocation;
 }
 
 +(void)setDefaultLocation:(id)newLocation {

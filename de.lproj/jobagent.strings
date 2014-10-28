@@ -1,0 +1,168 @@
+
+/* Class = "IBUINavigationItem"; title = "Kontakte"; ObjectID = "0EM-6W-iBq"; */
+"0EM-6W-iBq.title" = "Kontakte";
+
+/* Class = "IBUITextField"; placeholder = "Stichwort oder Firmenname"; ObjectID = "1oF-hQ-JG6"; */
+"1oF-hQ-JG6.placeholder" = "Stichwort oder Firmenname";
+
+/* Class = "IBUITableViewController"; title = "Firmen"; ObjectID = "2Zd-nF-35D"; */
+"2Zd-nF-35D.title" = "Firmen";
+
+/* Class = "IBUILabel"; text = "Finden Sie Jobs in 50 Ländern:"; ObjectID = "45c-Ci-nPO"; */
+"45c-Ci-nPO.text" = "Finden Sie Jobs in 50 Ländern:";
+
+/* Class = "IBUIViewController"; title = "Ereignis"; ObjectID = "559-DE-8zM"; */
+"559-DE-8zM.title" = "Ereignis";
+
+/* Class = "IBUITableViewController"; title = "Kontakte"; ObjectID = "7cd-Cu-NGC"; */
+"7cd-Cu-NGC.title" = "Kontakte";
+
+/* Class = "IBUIViewController"; title = "Bearbeiten"; ObjectID = "AWK-m6-P97"; */
+"AWK-m6-P97.title" = "Bearbeiten";
+
+/* Class = "IBUINavigationItem"; title = "Geschehen"; ObjectID = "BtD-8c-KuE"; */
+"BtD-8c-KuE.title" = "Geschehen";
+
+/* Class = "IBUINavigationItem"; title = "Search Results"; ObjectID = "CT5-nb-FUY"; */
+"CT5-nb-FUY.title" = "Search Results";
+
+/* Class = "IBUIViewController"; title = "Job Agent"; ObjectID = "CTO-dM-qv1"; */
+"CTO-dM-qv1.title" = "Job Agent";
+
+/* Class = "IBUIBarButtonItem"; title = "Zurück"; ObjectID = "Caf-Bf-T4G"; */
+"Caf-Bf-T4G.title" = "Zurück";
+
+/* Class = "IBUINavigationController"; title = "Nav - companies"; ObjectID = "Co2-bZ-r26"; */
+"Co2-bZ-r26.title" = "Nav - companies";
+
+/* Class = "IBUILabel"; text = "Stadt, Land"; ObjectID = "Edt-Qh-3yO"; */
+"Edt-Qh-3yO.text" = "Stadt, Land";
+
+/* Class = "IBUIBarButtonItem"; title = "Zurück"; ObjectID = "Fd7-xN-lIq"; */
+"Fd7-xN-lIq.title" = "Zurück";
+
+/* Class = "IBUITableViewController"; title = "Favoriten"; ObjectID = "Irf-Bq-gwj"; */
+"Irf-Bq-gwj.title" = "Favoriten";
+
+/* Class = "IBUIBarButtonItem"; title = "Zurück"; ObjectID = "OMu-Io-Z4R"; */
+"OMu-Io-Z4R.title" = "Zurück";
+
+/* Class = "IBUINavigationController"; title = "Nav - people"; ObjectID = "OSD-vi-Obm"; */
+"OSD-vi-Obm.title" = "Nav - people";
+
+/* Class = "IBUITextField"; placeholder = "Stadt, Land"; ObjectID = "Pnb-yv-6WJ"; */
+"Pnb-yv-6WJ.placeholder" = "Stadt, Land";
+
+/* Class = "IBUIViewController"; title = "Suchergebnisse"; ObjectID = "Q4j-cy-wKS"; */
+"Q4j-cy-wKS.title" = "Suchergebnisse";
+
+/* Class = "IBUINavigationItem"; title = "Job Agent"; ObjectID = "QD6-SW-NiM"; */
+"QD6-SW-NiM.title" = "Job Agent";
+
+/* Class = "IBUINavigationController"; title = "Nav - calendar"; ObjectID = "RjK-ML-hfc"; */
+"RjK-ML-hfc.title" = "Nav - calendar";
+
+/* Class = "IBUIViewController"; title = "Kontakt"; ObjectID = "Rvv-EY-qkc"; */
+"Rvv-EY-qkc.title" = "Kontakt";
+
+/* Class = "IBUINavigationController"; title = "Nav - leads"; ObjectID = "S1A-Ng-JeS"; */
+"S1A-Ng-JeS.title" = "Nav - leads";
+
+/* Class = "IBUITableViewController"; title = "Geschehen"; ObjectID = "Teg-Ho-u9d"; */
+"Teg-Ho-u9d.title" = "Geschehen";
+
+/* Class = "IBUISegmentedControl"; Vx8-kL-4Y4.segmentTitles[0] = "CB"; ObjectID = "Vx8-kL-4Y4"; */
+"Vx8-kL-4Y4.segmentTitles[0]" = "CB";
+
+/* Class = "IBUISegmentedControl"; Vx8-kL-4Y4.segmentTitles[1] = "Indeed"; ObjectID = "Vx8-kL-4Y4"; */
+"Vx8-kL-4Y4.segmentTitles[1]" = "Indeed";
+
+/* Class = "IBUISegmentedControl"; Vx8-kL-4Y4.segmentTitles[2] = "Oodle"; ObjectID = "Vx8-kL-4Y4"; */
+"Vx8-kL-4Y4.segmentTitles[2]" = "Oodle";
+
+/* Class = "IBUISegmentedControl"; Vx8-kL-4Y4.segmentTitles[3] = "LinkUp"; ObjectID = "Vx8-kL-4Y4"; */
+"Vx8-kL-4Y4.segmentTitles[3]" = "LinkUp";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Wtw-bc-zj8"; */
+"Wtw-bc-zj8.text" = "Label";
+
+/* Class = "IBUIViewController"; title = "Job"; ObjectID = "b5D-bt-zZc"; */
+"b5D-bt-zZc.title" = "Job";
+
+/* Class = "IBUINavigationItem"; title = "Firmen"; ObjectID = "eK7-0d-U0m"; */
+"eK7-0d-U0m.title" = "Firmen";
+
+/* Class = "IBUIButton"; normalTitle = "Suchen"; ObjectID = "fAE-ka-f62"; */
+"fAE-ka-f62.normalTitle" = "Suchen";
+
+/* Class = "IBUITabBarItem"; title = "Firmen"; ObjectID = "fmq-as-FfI"; */
+"fmq-as-FfI.title" = "Firmen";
+
+/* Class = "IBUITabBarItem"; title = "Kalender"; ObjectID = "jCj-9a-UxT"; */
+"jCj-9a-UxT.title" = "Kalender";
+
+/* Class = "IBUISegmentedControl"; k4o-6d-ljq.segmentTitles[0] = "Karte"; ObjectID = "k4o-6d-ljq"; */
+"k4o-6d-ljq.segmentTitles[0]" = "Karte";
+
+/* Class = "IBUISegmentedControl"; k4o-6d-ljq.segmentTitles[1] = "LinkedIn"; ObjectID = "k4o-6d-ljq"; */
+"k4o-6d-ljq.segmentTitles[1]" = "LinkedIn";
+
+/* Class = "IBUISegmentedControl"; k4o-6d-ljq.segmentTitles[2] = "Jobs"; ObjectID = "k4o-6d-ljq"; */
+"k4o-6d-ljq.segmentTitles[2]" = "Jobs";
+
+/* Class = "IBUISegmentedControl"; k4o-6d-ljq.segmentTitles[3] = "Kontakte"; ObjectID = "k4o-6d-ljq"; */
+"k4o-6d-ljq.segmentTitles[3]" = "Kontakte";
+
+/* Class = "IBUISegmentedControl"; k4o-6d-ljq.segmentTitles[4] = "Suchen"; ObjectID = "k4o-6d-ljq"; */
+"k4o-6d-ljq.segmentTitles[4]" = "Suchen";
+
+/* Class = "IBUINavigationItem"; title = "Favoriten"; ObjectID = "lGS-QR-Thr"; */
+"lGS-QR-Thr.title" = "Favoriten";
+
+/* Class = "IBUIBarButtonItem"; title = "Zurück"; ObjectID = "lZx-Em-jM4"; */
+"lZx-Em-jM4.title" = "Zurück";
+
+/* Class = "IBUIViewController"; title = "Firma"; ObjectID = "llL-JH-Nc7"; */
+"llL-JH-Nc7.title" = "Firma";
+
+/* Class = "IBUISegmentedControl"; m7x-hs-Z7e.segmentTitles[0] = "Telefon"; ObjectID = "m7x-hs-Z7e"; */
+"m7x-hs-Z7e.segmentTitles[0]" = "Telefon";
+
+/* Class = "IBUISegmentedControl"; m7x-hs-Z7e.segmentTitles[1] = "E-Mail"; ObjectID = "m7x-hs-Z7e"; */
+"m7x-hs-Z7e.segmentTitles[1]" = "E-Mail";
+
+/* Class = "IBUISegmentedControl"; m7x-hs-Z7e.segmentTitles[2] = "LinkedIn"; ObjectID = "m7x-hs-Z7e"; */
+"m7x-hs-Z7e.segmentTitles[2]" = "LinkedIn";
+
+/* Class = "IBUIBarButtonItem"; title = "Zurück"; ObjectID = "s72-wa-o4t"; */
+"s72-wa-o4t.title" = "Zurück";
+
+/* Class = "IBUISegmentedControl"; tOM-Xq-vcz.segmentTitles[0] = "Speichern"; ObjectID = "tOM-Xq-vcz"; */
+"tOM-Xq-vcz.segmentTitles[0]" = "Speichern";
+
+/* Class = "IBUISegmentedControl"; tOM-Xq-vcz.segmentTitles[1] = "Senden"; ObjectID = "tOM-Xq-vcz"; */
+"tOM-Xq-vcz.segmentTitles[1]" = "Senden";
+
+/* Class = "IBUISegmentedControl"; tOM-Xq-vcz.segmentTitles[2] = "Bewerbung"; ObjectID = "tOM-Xq-vcz"; */
+"tOM-Xq-vcz.segmentTitles[2]" = "Bewerbung";
+
+/* Class = "IBUINavigationController"; title = "Nav - home"; ObjectID = "tuE-iB-mVX"; */
+"tuE-iB-mVX.title" = "Nav - home";
+
+/* Class = "IBUITabBarItem"; title = "Hinweis"; ObjectID = "tvt-ci-7gd"; */
+"tvt-ci-7gd.title" = "Hinweis";
+
+/* Class = "IBUIBarButtonItem"; title = "Zurück"; ObjectID = "uKZ-NF-sNc"; */
+"uKZ-NF-sNc.title" = "Zurück";
+
+/* Class = "IBUINavigationController"; title = "Nav - tips"; ObjectID = "vl7-bK-P8S"; */
+"vl7-bK-P8S.title" = "Nav - tips";
+
+/* Class = "IBUITableViewController"; title = "Location"; ObjectID = "xg8-Eb-Q0j"; */
+"xg8-Eb-Q0j.title" = "Location";
+
+/* Class = "IBUIViewController"; title = "Hinweis"; ObjectID = "yQH-WO-6DA"; */
+"yQH-WO-6DA.title" = "Hinweis";
+
+/* Class = "IBUITabBarItem"; title = "Hinweis"; ObjectID = "zl4-JD-Jbo"; */
+"zl4-JD-Jbo.title" = "Hinweis";

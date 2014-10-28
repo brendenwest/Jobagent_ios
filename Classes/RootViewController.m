@@ -28,6 +28,7 @@
 
 #pragma mark View methods
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -53,6 +54,8 @@
     }
     
     [Ads getAd:self];
+    
+    [Common buttonRounded:_btnSearch];
     
 }
 
@@ -131,7 +134,9 @@
         UIAlertView *emptyFieldAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_EMPTY_FIELD", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
 		[emptyFieldAlert show];
     } else {
+ NSLog(@"searchJobs");
         if ([self isNewLocation:_txtLocation.text]) {
+            NSLog(@"checkEnteredLocation");
             // user entered a new location value
             [self checkEnteredLocation:_txtLocation];
         }
@@ -223,6 +228,7 @@
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
     [geocoder geocodeAddressString:placename completionHandler:^(NSArray *placemarks, NSError *error) {
+NSLog(@"# of placemarks = %lu",(unsigned long)[placemarks count]);
         
         if ([placemarks count] == 1) { // one city returned. set location accordingly
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
@@ -248,6 +254,7 @@
 
 - (BOOL)isNewLocation:(NSString*)entry {
     // return true if user entry differs from last stored value
+
     return (![entry isEqualToString:[curLocation objectForKey:@"usertext"]]);
 }
 
@@ -256,7 +263,7 @@
     // populate current location w/ new geocode values
     [Location updateUserLocation:curLocation withPlace:placemark];
     
-    // update location entry field
+    // update location entry field and label
     [self updateLocationFields];
 
 }
@@ -277,26 +284,32 @@
 }
 
 - (IBAction)checkEnteredLocation:(id)sender {
-    // called when user has entered a new location value
-    // check that entered location code is valid
-    // if entry is an integer, run zip validation rules. Don't check zip for string entries
+
+    // called only when user has entered a new location value
+    // check that entered location code is valid numeric US zip
+    // Don't validate zip for string entries (assume non-US location)
     NSString *enteredLocation = _txtLocation.text;
     int integerZip = (int)[enteredLocation integerValue];
+    
+    // zip validation happens before 'if' statement because
+    // we show an alert for invalid US zips and don't proceed
+    // to geocoding
     BOOL isValidZip = (integerZip > 0) ? [Location isValidZip:integerZip] : 0;
     
-    if ((isValidZip || integerZip == 0) && ![enteredLocation isEqualToString:[curLocation objectForKey:@"usertext"]]) {
+    if (isValidZip || integerZip == 0) {
         // user entered a string or new zip.
         // get location info from geocoder
-        
+
 #ifdef DEVLOCATION
         // bypass geocoding while testing search results
         [curLocation setValue:enteredLocation forKey:@"usertext"];
 #else
         [self forwardGeocode:enteredLocation];
+
 #endif
 
     }
- 
+
 }
 
 #pragma mark Text Field methods

@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     siteList = [NSArray arrayWithObjects:
                 [NSDictionary dictionaryWithObjectsAndKeys:
                  @"CareerBuilder", @"displayName" , @"http://www.careerbuilder.com", @"domain", @"careerbuilder", @"tag", nil],
@@ -77,7 +76,7 @@
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<country>" withString:_curLocale];
     
     NSURL *url = [NSURL URLWithString:searchUrl];
-    
+    NSLog(@"url = %@",url);
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //AFNetworking asynchronous url request
     
