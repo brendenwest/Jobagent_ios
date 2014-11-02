@@ -106,6 +106,12 @@
 
     }
     
+    
+    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:1 * 1024 * 1024
+                                                            diskCapacity:5 * 1024 * 1024
+                                                                diskPath:nil];
+    [NSURLCache setSharedURLCache:sharedCache];
+    
     return TRUE;
     
 }
@@ -302,6 +308,16 @@
     
     [self saveRecentSearches];
 
+}
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+{
+    return YES;
 }
 
 #pragma mark -

@@ -30,6 +30,7 @@
     }
 }
     
+#pragma mark View methods
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,7 +46,41 @@
     
 	appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
+}
 
+- (void)uiStateLoading:(BOOL)isLoading {
+    if (isLoading) {
+        _tableView.hidden = YES;
+        _btnJobSite.hidden = YES;
+        _uiLoading.hidden = NO;
+        [_uiLoading startAnimating];
+    } else {
+        // table finished loading
+        _tableView.hidden = NO;
+        [_btnJobSite setEnabled:[_curLocale isEqualToString:@"US"] forSegmentAtIndex:2];
+        [_btnJobSite setEnabled:[_curLocale isEqualToString:@"US"] forSegmentAtIndex:3];
+        _btnJobSite.hidden = NO;
+        [_uiLoading stopAnimating];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSString *newSearch = [NSString stringWithFormat:@"%@+%@",_keyword, _curLocation];
+    [self uiStateLoading:TRUE];
+    [appDelegate setPreviousSearch:newSearch];
+    [self requestJobs:nil];
+    
+    _lblSearch.text = [NSString stringWithFormat:NSLocalizedString(@"STR_RESULTS_FOR", nil),_keyword,_curLocation];
+    
+    // Log pageview w/ Google Analytics
+    [appDelegate trackPVFull:@"SearchJobs" :@"search term" :@"search" :_keyword];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
 }
 
 
@@ -87,14 +122,8 @@
         jobsAll = [responseObject objectForKey:@"jobs"];
         
         [self switchJobSite:nil];
-
-        _tableView.hidden = NO;
-        [_btnJobSite setEnabled:[_curLocale isEqualToString:@"US"] forSegmentAtIndex:2];
-        [_btnJobSite setEnabled:[_curLocale isEqualToString:@"US"] forSegmentAtIndex:3];
-        _btnJobSite.hidden = NO;
-        [_uiLoading stopAnimating];
+        [self uiStateLoading:FALSE];
         [Ads getAd:self];
-
      
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Failed: Status Code: %ld", (long)operation.response.statusCode);
@@ -207,33 +236,6 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-    
-    NSString *newSearch = [NSString stringWithFormat:@"%@+%@",_keyword, _curLocation];
-    // check that search query differs from previous query
-    if (_keyword && ![newSearch isEqualToString:[appDelegate previousSearch]]) {
-        // new search requested.
-        _tableView.hidden = YES;
-        _btnJobSite.hidden = YES;
-        _uiLoading.hidden = NO;
-        [_uiLoading startAnimating];
-        [appDelegate setPreviousSearch:newSearch];
-		[self requestJobs:nil];
-    } else {
-        [_uiLoading stopAnimating];
-    }
-    
-    _lblSearch.text = [NSString stringWithFormat:NSLocalizedString(@"STR_RESULTS_FOR", nil),_keyword,_curLocation];
-    
-    // Log pageview w/ Google Analytics
-    [appDelegate trackPVFull:@"SearchJobs" :@"search term" :@"search" :_keyword];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-    
-}
 
 
 @end

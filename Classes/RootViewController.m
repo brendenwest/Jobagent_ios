@@ -14,6 +14,8 @@
 #import "Location.h"
 #import "Common.h"
 
+NSString * kLocationUpdated = @"";
+
 @implementation RootViewController
 
 {
@@ -23,7 +25,7 @@
     NSMutableDictionary *curLocation;
     NSMutableDictionary *userSettings;
     NSMutableArray *searches;
-    
+    id token;
 }
 
 #pragma mark View methods
@@ -33,7 +35,6 @@
     [super viewDidLoad];
     
     appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
     
     // get saved searches
     if (userSettings == nil)
@@ -102,6 +103,22 @@
 }
 
 
+- (BOOL) shouldPerformSegueWithIdentifier:(NSString *)identifier
+                                   sender:(id)sender{
+    
+    // Only perform search if there's a network connection
+    if ([identifier isEqualToString:@"showSearchResults"]){
+        
+        if (![Common connectedToNetwork]) {
+            [self displayNoNetwork];
+            return NO;
+        }
+    };
+    
+    return YES;
+    
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 
@@ -109,6 +126,7 @@
         
         // save this search
         NSString *thisSearch = [NSString stringWithFormat:@"%@|%@|%@",_txtSearch.text,_txtLocation.text,[curLocation objectForKey:@"country"],nil];
+        
         if (![searches containsObject:thisSearch]) {
             [searches insertObject:thisSearch atIndex:0];
             [userSettings setValue:searches forKey:@"searches"];
@@ -124,30 +142,57 @@
 }
 
 
-- (IBAction)searchJobs:(id)sender {
+- (void)displayTextIsRequired {
+    // remind user to enter value for both search term and location
+    UIAlertView *emptyFieldAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_EMPTY_FIELD", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
+    [emptyFieldAlert show];
+}
+
+- (void)displayNoNetwork {
+    UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_NO_NETWORK", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
+    [noNetworkAlert show];
+}
+
+- (IBAction)searchBtnClicked:(id)sender {
     
     if (![Common connectedToNetwork]) {
-        UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_NO_NETWORK", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
-        [noNetworkAlert show];
-    } else if (![_txtLocation.text length] || ![_txtSearch.text length]) {
-        // remind user to enter value for both search term and location
-        UIAlertView *emptyFieldAlert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"STR_EMPTY_FIELD", nil) delegate:NULL cancelButtonTitle:@"Ok" otherButtonTitles:NULL];
-		[emptyFieldAlert show];
+        [self displayNoNetwork];
+    } else if ([_txtSearch.text length] == 0 || [_txtLocation.text length] == 0){
+        [self displayTextIsRequired];
     } else {
- NSLog(@"searchJobs");
+        // close keyboard
+        [_txtSearch resignFirstResponder];
+        [_txtLocation resignFirstResponder];
+        
         if ([self isNewLocation:_txtLocation.text]) {
-            NSLog(@"checkEnteredLocation");
-            // user entered a new location value
-            [self checkEnteredLocation:_txtLocation];
-        }
 
-        // Don't fire job search if user entered invalid location
-        // curLocation values may be updated by geocoding action on checkEnteredLocation call
-        if ([_txtLocation.text isEqualToString:[curLocation objectForKey:@"usertext"]]) {
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(searchJobs:)
+                                                         name:@"kLocationUpdated"
+                                                       object:nil];
+
+            NSBlockOperation* checkLocation = [NSBlockOperation blockOperationWithBlock: ^{
+                NSLog(@"Beginning operation.\n");
+                [self checkEnteredLocation:_txtLocation];
+            }];
+            NSOperationQueue *operationQueue = [[NSOperationQueue alloc]init];
+            [operationQueue addOperation:checkLocation];
+            
+        } else {
             [self performSegueWithIdentifier: @"showSearchResults" sender: nil];
-
         }
+        
     }
+
+}
+
+- (void)searchJobs:(id)sender {
+    NSLog(@"searchJobs");
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [self performSegueWithIdentifier: @"showSearchResults" sender: nil];
+
+
 }
 
 #pragma mark Location Manager methods
@@ -266,6 +311,12 @@ NSLog(@"# of placemarks = %lu",(unsigned long)[placemarks count]);
     // update location entry field and label
     [self updateLocationFields];
 
+    // notify search method
+    NSLog(@"posting notification");
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"kLocationUpdated"
+     object:self];
+    
 }
 
 - (void)updateLocationFields {
@@ -284,6 +335,7 @@ NSLog(@"# of placemarks = %lu",(unsigned long)[placemarks count]);
 }
 
 - (IBAction)checkEnteredLocation:(id)sender {
+    NSLog(@"checkEnteredLocation");
 
     // called only when user has entered a new location value
     // check that entered location code is valid numeric US zip
@@ -317,17 +369,11 @@ NSLog(@"# of placemarks = %lu",(unsigned long)[placemarks count]);
 {
     // the user pressed the "Done" button, so dismiss the keyboard
     [textField resignFirstResponder];
-    if (textField == _txtSearch) {
-        [self searchJobs:_btnSearch];
-    }
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == _txtLocation && [self isNewLocation:_txtLocation.text]) {
-        // new location entered
-        [self checkEnteredLocation:textField];
-	}
+
 }
 
 
@@ -389,7 +435,7 @@ NSLog(@"# of placemarks = %lu",(unsigned long)[placemarks count]);
         _txtLocation.text = [tmpSearch objectAtIndex:1];
         // TODO add check for users w/ o locale setting
         [curLocation setValue:[tmpSearch objectAtIndex:2] forKey:@"country"];
-        [self searchJobs:nil];
+        [self performSegueWithIdentifier: @"showSearchResults" sender: nil];
 	
 }
 
@@ -410,5 +456,8 @@ NSLog(@"# of placemarks = %lu",(unsigned long)[placemarks count]);
     [super viewDidUnload];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end
