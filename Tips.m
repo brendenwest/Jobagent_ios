@@ -47,26 +47,17 @@
 
 -(void)requestTips
 {
-    NSURL *url = [NSURL URLWithString:[appDelegate.configuration objectForKey:@"tipsUrl"]];
-
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    //AFNetworking asynchronous url request
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
-                                         initWithRequest:request];
-    operation.responseSerializer = [AFJSONResponseSerializer serializer];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        allItems = [responseObject objectForKey:@"Tips"];
-        [self.tableView reloadData];
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failed: Status Code: %ld", (long)operation.response.statusCode);
-    }];
-    [operation start];
+  
+  AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+  [manager GET:@"tipsUrl" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    NSLog(@"JSON: %@", responseObject);
+      allItems = [responseObject objectForKey:@"Tips"];
+      [self.tableView reloadData];
+  } failure:^(NSURLSessionTask *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+  }];
+  
 }
-
-
 
 // Share Job Agent
 - (NSArray *)activityViewController:(NSArray *)activityViewController itemsForActivityType:(NSString *)activityType {

@@ -1,39 +1,32 @@
 PODS:
-  - AFNetworking (2.4.1):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
+  - AFNetworking (3.0.4):
+    - AFNetworking/NSURLSession (= 3.0.4)
+    - AFNetworking/Reachability (= 3.0.4)
+    - AFNetworking/Security (= 3.0.4)
+    - AFNetworking/Serialization (= 3.0.4)
+    - AFNetworking/UIKit (= 3.0.4)
+  - AFNetworking/NSURLSession (3.0.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-    - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.4.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.4.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.4.1)
-  - AFNetworking/Security (2.4.1)
-  - AFNetworking/Serialization (2.4.1)
-  - AFNetworking/UIKit (2.4.1):
-    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (3.0.4)
+  - AFNetworking/Security (3.0.4)
+  - AFNetworking/Serialization (3.0.4)
+  - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
   - Google-Mobile-Ads-SDK (6.12.0)
   - GoogleAnalytics-iOS-SDK (3.0.9)
-  - UrbanAirship-iOS-SDK (4.0.4)
 
 DEPENDENCIES:
-  - AFNetworking
-  - Google-Mobile-Ads-SDK (~> 6.12)
+  - AFNetworking (~> 3.0)
+  - Google-Mobile-Ads-SDK
   - GoogleAnalytics-iOS-SDK
-  - UrbanAirship-iOS-SDK
 
 SPEC CHECKSUMS:
-  AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
-  Google-Mobile-Ads-SDK: b1b5cfd1b604a8412faa5536586b13a4b640f344
-  GoogleAnalytics-iOS-SDK: d9e198b1f955259a72886769be7377cdfcdb2250
-  UrbanAirship-iOS-SDK: d67f4c3e4676bb94b04d19ea47432f70d1bba3fa
+  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  Google-Mobile-Ads-SDK: 2a5ae48f92c66d584b1583278cfd2a7f8da24a8b
+  GoogleAnalytics-iOS-SDK: 3b0994bef22ed2e176a9e2a4d1660c7c2542eb47
 
-COCOAPODS: 0.33.1
+PODFILE CHECKSUM: 8f8fb1cddcbc5aab538c42e05157f15fc60bce00
+
+COCOAPODS: 1.2.0

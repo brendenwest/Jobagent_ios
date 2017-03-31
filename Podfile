@@ -1,13 +1,9 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '7.0'
 
-target 'jobagent' do
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
 
-pod 'AFNetworking'
+target 'jobagent'
+pod 'AFNetworking', '~> 3.0'
 pod 'GoogleAnalytics-iOS-SDK'
-pod 'Google-Mobile-Ads-SDK', '~> 6.12'
-pod 'UrbanAirship-iOS-SDK'
-
-link_with 'jobagent Tests'
-
-end
+pod 'Google-Mobile-Ads-SDK'

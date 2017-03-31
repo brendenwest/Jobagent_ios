@@ -6,10 +6,6 @@
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 
-#import "UAirship.h"
-#import "UAConfig.h"
-#import "UAPush.h"
-
 #import "People.h"
 #import "Leads.h"
 #import "Companies.h"
@@ -80,21 +76,7 @@
 //    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
     self.tracker = [[GAI sharedInstance] trackerWithTrackingId:[_configuration objectForKey:@"kGaPropertyId"]];
     
-    
-#ifdef IS_SIMULATOR
-#else
-    // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
-    // or set runtime properties here.
-    UAConfig *config = [UAConfig defaultConfig];
-    // Call takeOff (which creates the UAirship singleton)
-    [UAirship takeOff:config];
-
-    // Request a custom set of notification types
-    [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
-                                         UIRemoteNotificationTypeSound |
-                                         UIRemoteNotificationTypeAlert );
-#endif
-    
+        
     if (launchOptions != nil)
     {
         NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];

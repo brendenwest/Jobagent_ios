@@ -109,26 +109,19 @@
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<age>" withString:[settings stringForKey:@"ageResults"]];
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<distance>" withString:[settings stringForKey:@"distanceResults"]];
     searchUrl = [searchUrl stringByReplacingOccurrencesOfString:@"<country>" withString:_curLocale];
-    
-    NSURL *url = [NSURL URLWithString:searchUrl];
-    NSLog(@"url = %@",url);
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+  
     //AFNetworking asynchronous url request
+  AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+  [manager GET:searchUrl parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    NSLog(@"JSON: %@", responseObject);
+    jobsAll = [responseObject objectForKey:@"jobs"];
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
-                                         initWithRequest:request];
-    operation.responseSerializer = [AFJSONResponseSerializer serializer];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        jobsAll = [responseObject objectForKey:@"jobs"];
-        
-        [self switchJobSite:nil];
-        [self uiStateLoading:FALSE];
-        [Ads getAd:self];
-     
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failed: Status Code: %ld", (long)operation.response.statusCode);
-    }];
-    [operation start];
+    [self switchJobSite:nil];
+    [self uiStateLoading:FALSE];
+    [Ads getAd:self];
+  } failure:^(NSURLSessionTask *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+  }];
     
 }
 
