@@ -49,7 +49,7 @@
 {
   
   AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-  [manager GET:@"tipsUrl" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+  [manager GET:[appDelegate.configuration objectForKey:@"tipsUrl"] parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
     NSLog(@"JSON: %@", responseObject);
       allItems = [responseObject objectForKey:@"Tips"];
       [self.tableView reloadData];
