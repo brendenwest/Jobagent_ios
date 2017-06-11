@@ -10,8 +10,8 @@
 #import "Leads.h"
 #import "Companies.h"
 #import "Events.h"
-#import "Tips.h"
 #import "Job.h"
+#import "jobagent-Swift.h"
 
 /** Google Analytics configuration constants **/
 /** Other settings in appconfig.plist **/
@@ -21,6 +21,7 @@
     static BOOL const kGaDryRun = NO;
 #endif
 
+@import GoogleMobileAds;
 
 @implementation AppDelegate
 

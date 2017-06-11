@@ -49,7 +49,7 @@
 		5A64C2DC151C17E700CA8876 /* icon_companies2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A64C2DB151C17E700CA8876 /* icon_companies2.png */; };
 		5A894CEF15368B33002E3D57 /* indeed_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5A894CEE15368B33002E3D57 /* indeed_logo.gif */; };
 		5AA09E9314FF3554001A96A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA09E9214FF3554001A96A5 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		BB64D5E273E53A908114E630 /* libPods-jobagent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0062B2B4DEAEED5E969F21 /* libPods-jobagent.a */; };
+		8749384C27A2DD282B742814 /* Pods_jobagent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBBC482E5672C540186D7C6 /* Pods_jobagent.framework */; };
 		CE10803C19E1DE7700542B05 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10803B19E1DE7700542B05 /* Location.m */; };
 		CE10EC7F18FBACD700BA4B01 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE10EC7E18FBACD700BA4B01 /* libz.dylib */; };
 		CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1B83D2193E917A00058D22 /* appconfig.plist */; };
@@ -59,9 +59,6 @@
 		CE1EB5EF191C6E330000901C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE1EB5ED191C6E330000901C /* InfoPlist.strings */; };
 		CE1EB5F1191C6E330000901C /* jobagent_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1EB5F0191C6E330000901C /* jobagent_Tests.m */; };
 		CE3CAE40194B9B2400CF93DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE3CAE3D194B99C100CF93DE /* Localizable.strings */; };
-		CE5AB1BA191A0690008146A1 /* Tips.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5AB1B9191A0690008146A1 /* Tips.m */; };
-		CE60563B19DDA0BC002244BD /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE60563A19DDA0BC002244BD /* libGoogleAnalyticsServices.a */; };
-		CE60563E19DDAA89002244BD /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFF4EC119C94969007B5C44 /* libGoogleAdMobAds.a */; };
 		CE68CA0A190032480044CA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE68CA09190032480044CA66 /* AVFoundation.framework */; };
 		CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74D8B81946CAD3006C9ACE /* EditItemVC.m */; };
 		CE8CED7019CA0C13008217C8 /* RootView_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8CED6F19CA0C13008217C8 /* RootView_Tests.m */; };
@@ -72,6 +69,10 @@
 		CE8EA61B19EE0BD8002040C2 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF5221F191BDD8500844450 /* Common.m */; };
 		CE8EA61C19EE0BDF002040C2 /* Ads.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF397419DFBDE000C546D7 /* Ads.m */; };
 		CE8EA61D19EE0C58002040C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479869B114A183100096236 /* AppDelegate.m */; };
+		CEAC63A91EED0D810033F75C /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC63A81EED0D810033F75C /* Tips.swift */; };
+		CEAC63AB1EED10F10033F75C /* jobagent-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = CEAC63AA1EED0D900033F75C /* jobagent-Bridging-Header.h */; };
+		CEAC63AD1EED18C70033F75C /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAC63AC1EED18C70033F75C /* AFNetworking.framework */; };
+		CEAC63B31EED20620033F75C /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAC63B11EED20180033F75C /* GoogleMobileAds.framework */; };
 		CEB1A207190394410008F0A2 /* jobagent_icon_29.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A203190394410008F0A2 /* jobagent_icon_29.png */; };
 		CEB1A208190394410008F0A2 /* jobagent_icon_58.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A204190394410008F0A2 /* jobagent_icon_58.png */; };
 		CEB1A209190394410008F0A2 /* jobagent_icon_80.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1A205190394410008F0A2 /* jobagent_icon_80.png */; };
@@ -79,7 +80,6 @@
 		CEB27814193F81770071EC32 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CEB27813193F81770071EC32 /* Settings.bundle */; };
 		CECF397519DFBDE000C546D7 /* Ads.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF397419DFBDE000C546D7 /* Ads.m */; };
 		CEDD6BBE19555C310062485F /* jobagent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */; };
-		CEEB686E1E8EBF5C00202EBD /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEB686D1E8EBF5C00202EBD /* libAFNetworking.a */; };
 		CEF52220191BDD8500844450 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF5221F191BDD8500844450 /* Common.m */; };
 /* End PBXBuildFile section */
 
@@ -117,7 +117,7 @@
 		0477EF1F1165133F00D9C69C /* People.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = People.m; sourceTree = "<group>"; };
 		0477EF30116515AF00D9C69C /* PersonDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonDetail.h; sourceTree = "<group>"; };
 		0477EF31116515AF00D9C69C /* PersonDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonDetail.m; sourceTree = "<group>"; };
-		0479869B114A183100096236 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0479869B114A183100096236 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		04836E6A115887FD00F61102 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		04836E6B115887FD00F61102 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		04836E6C115887FD00F61102 /* Job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Job.h; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 		04CBCE4116A363EF007A41E9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		04CBCE4316A363FE007A41E9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		04CBCE8116A39656007A41E9 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		04DCD95B1182208F0033DEC9 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		04DCD95B1182208F0033DEC9 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
 		04E036EB1157081A006FEFE2 /* Leads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leads.h; sourceTree = "<group>"; };
 		04E036EC1157081A006FEFE2 /* Leads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Leads.m; sourceTree = "<group>"; };
 		04E03784115727E6006FEFE2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -148,13 +148,12 @@
 		04F93725116BDF6C0056B473 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = Resources/constants.h; sourceTree = "<group>"; };
 		04F985A115315696000CE69A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		21A3113F97B55D8A0C606699 /* Pods-jobagent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jobagent.release.xcconfig"; path = "Pods/Target Support Files/Pods-jobagent/Pods-jobagent.release.xcconfig"; sourceTree = "<group>"; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		28C286DF0D94DF7D0034E888 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		28C286DF0D94DF7D0034E888 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
-		2C0062B2B4DEAEED5E969F21 /* libPods-jobagent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jobagent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A226F3F151EC81C00880C6B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5A226F41151EC82800880C6B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5A64C2DB151C17E700CA8876 /* icon_companies2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_companies2.png; path = Resources/icon_companies2.png; sourceTree = "<group>"; };
@@ -179,8 +178,6 @@
 		CE1F0AD919FE0F2600600B98 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/jobagent.strings; sourceTree = "<group>"; };
 		CE29EB5D19EF4AC800E0E2F9 /* jobagent_Tests_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobagent_Tests_Prefix.pch; sourceTree = "<group>"; };
 		CE3CAE3E194B99C100CF93DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
-		CE5AB1B8191A0690008146A1 /* Tips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tips.h; sourceTree = "<group>"; };
-		CE5AB1B9191A0690008146A1 /* Tips.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tips.m; sourceTree = "<group>"; };
 		CE60563A19DDA0BC002244BD /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = "Pods/GoogleAnalytics-iOS-SDK/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; };
 		CE68CA09190032480044CA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		CE74D8B71946CAD3006C9ACE /* EditItemVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditItemVC.h; sourceTree = "<group>"; };
@@ -189,6 +186,11 @@
 		CE8CED6F19CA0C13008217C8 /* RootView_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootView_Tests.m; sourceTree = "<group>"; };
 		CE8EA61319EDC0E7002040C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/jobagent.storyboard; sourceTree = "<group>"; };
 		CE8EA61719EDE525002040C2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = jobagent/Images.xcassets; sourceTree = "<group>"; };
+		CEAC63A81EED0D810033F75C /* Tips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
+		CEAC63AA1EED0D900033F75C /* jobagent-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "jobagent-Bridging-Header.h"; sourceTree = "<group>"; };
+		CEAC63AC1EED18C70033F75C /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../../Library/Developer/Xcode/DerivedData/jobagent-cvlojblmovnrurelrphswhxgbgwf/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
+		CEAC63B11EED20180033F75C /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		CEAC63B21EED20180033F75C /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		CEB1A203190394410008F0A2 /* jobagent_icon_29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_29.png; path = Resources/jobagent_icon_29.png; sourceTree = "<group>"; };
 		CEB1A204190394410008F0A2 /* jobagent_icon_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_58.png; path = Resources/jobagent_icon_58.png; sourceTree = "<group>"; };
 		CEB1A205190394410008F0A2 /* jobagent_icon_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_80.png; path = Resources/jobagent_icon_80.png; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		CEF5221E191BDD8500844450 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		CEF5221F191BDD8500844450 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
 		CEFF4EC119C94969007B5C44 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "Pods/Google-Mobile-Ads-SDK/GoogleMobileAdsSdkiOS-6.12.0/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
+		DCBBC482E5672C540186D7C6 /* Pods_jobagent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jobagent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,12 +212,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB686E1E8EBF5C00202EBD /* libAFNetworking.a in Frameworks */,
-				CE60563E19DDAA89002244BD /* libGoogleAdMobAds.a in Frameworks */,
+				CEAC63AD1EED18C70033F75C /* AFNetworking.framework in Frameworks */,
 				CE68CA0A190032480044CA66 /* AVFoundation.framework in Frameworks */,
 				04CBCE8216A39657007A41E9 /* AdSupport.framework in Frameworks */,
 				CE10EC7F18FBACD700BA4B01 /* libz.dylib in Frameworks */,
 				04CBCE4416A363FE007A41E9 /* CoreTelephony.framework in Frameworks */,
+				CEAC63B31EED20620033F75C /* GoogleMobileAds.framework in Frameworks */,
 				04CBCE4016A363DB007A41E9 /* Security.framework in Frameworks */,
 				04CBCE3E16A363CE007A41E9 /* MobileCoreServices.framework in Frameworks */,
 				044596661533D64D0078698D /* libsqlite3.0.dylib in Frameworks */,
@@ -228,9 +231,8 @@
 				0473263F1154BBB400E4C6DA /* MessageUI.framework in Frameworks */,
 				04E03785115727E6006FEFE2 /* CoreData.framework in Frameworks */,
 				04BB0C90115ED4AF0005B400 /* CoreLocation.framework in Frameworks */,
-				CE60563B19DDA0BC002244BD /* libGoogleAnalyticsServices.a in Frameworks */,
 				04BB0D5B115F0AD50005B400 /* MapKit.framework in Frameworks */,
-				BB64D5E273E53A908114E630 /* libPods-jobagent.a in Frameworks */,
+				8749384C27A2DD282B742814 /* Pods_jobagent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,8 +320,6 @@
 				CE74D8B81946CAD3006C9ACE /* EditItemVC.m */,
 				0431984B116194E80005206D /* Cities.h */,
 				0431984C116194E80005206D /* Cities.m */,
-				CE5AB1B8191A0690008146A1 /* Tips.h */,
-				CE5AB1B9191A0690008146A1 /* Tips.m */,
 				CEF5221E191BDD8500844450 /* Common.h */,
 				CEF5221F191BDD8500844450 /* Common.m */,
 				04F9371F116BDE450056B473 /* WebVC.h */,
@@ -335,10 +335,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1D3623240D0F684500981E51 /* AppDelegate.h */,
-				0479869B114A183100096236 /* AppDelegate.m */,
-				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
-				04DCD95B1182208F0033DEC9 /* RootViewController.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			path = Classes;
@@ -356,10 +352,15 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				CE1B83D2193E917A00058D22 /* appconfig.plist */,
+				1D3623240D0F684500981E51 /* AppDelegate.h */,
+				0479869B114A183100096236 /* AppDelegate.m */,
+				CEAC63AA1EED0D900033F75C /* jobagent-Bridging-Header.h */,
+				8D1107310486CEB800E47090 /* jobagent-Info.plist */,
 				CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */,
 				CE29EB5D19EF4AC800E0E2F9 /* jobagent_Tests_Prefix.pch */,
-				8D1107310486CEB800E47090 /* jobagent-Info.plist */,
-				CE1B83D2193E917A00058D22 /* appconfig.plist */,
+				CE8EA61219EDC0E7002040C2 /* jobagent.storyboard */,
+				CEAC63A71EED0D640033F75C /* ViewControllers */,
 				04B36748126BFE0900249902 /* Helpers */,
 				04AFE9CB11ED604F00DA706D /* Tasks */,
 				04AFE9CA11ED600D00DA706D /* People */,
@@ -382,7 +383,6 @@
 			isa = PBXGroup;
 			children = (
 				CE8EA61719EDE525002040C2 /* Images.xcassets */,
-				CE8EA61219EDC0E7002040C2 /* jobagent.storyboard */,
 				CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */,
 				CE3CAE4C194B9FA500CF93DE /* de */,
 				CE3CAE24194B8A8700CF93DE /* en */,
@@ -407,6 +407,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEAC63AE1EED20180033F75C /* Google-Mobile-Ads-SDK */,
+				CEAC63AC1EED18C70033F75C /* AFNetworking.framework */,
 				CEEB686D1E8EBF5C00202EBD /* libAFNetworking.a */,
 				CE60563A19DDA0BC002244BD /* libGoogleAnalyticsServices.a */,
 				CEFF4EC119C94969007B5C44 /* libGoogleAdMobAds.a */,
@@ -431,7 +433,7 @@
 				04E03784115727E6006FEFE2 /* CoreData.framework */,
 				04BB0C8F115ED4AF0005B400 /* CoreLocation.framework */,
 				04BB0D5A115F0AD50005B400 /* MapKit.framework */,
-				2C0062B2B4DEAEED5E969F21 /* libPods-jobagent.a */,
+				DCBBC482E5672C540186D7C6 /* Pods_jobagent.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -479,6 +481,42 @@
 			children = (
 			);
 			name = de;
+			sourceTree = "<group>";
+		};
+		CEAC63A71EED0D640033F75C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
+				04DCD95B1182208F0033DEC9 /* RootViewController.m */,
+				CEAC63A81EED0D810033F75C /* Tips.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CEAC63AE1EED20180033F75C /* Google-Mobile-Ads-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				CEAC63AF1EED20180033F75C /* Frameworks */,
+				CEAC63B21EED20180033F75C /* README.txt */,
+			);
+			name = "Google-Mobile-Ads-SDK";
+			path = "Pods/Google-Mobile-Ads-SDK";
+			sourceTree = "<group>";
+		};
+		CEAC63AF1EED20180033F75C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEAC63B01EED20180033F75C /* frameworks */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEAC63B01EED20180033F75C /* frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEAC63B11EED20180033F75C /* GoogleMobileAds.framework */,
+			);
+			path = frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -532,6 +570,7 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = H5973LM3UE;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
@@ -655,6 +694,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEAC63AB1EED10F10033F75C /* jobagent-Bridging-Header.h in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				049B09351147086F0055B02D /* JobDetail.m in Sources */,
 				0479869C114A183100096236 /* AppDelegate.m in Sources */,
@@ -675,10 +715,10 @@
 				CEF52220191BDD8500844450 /* Common.m in Sources */,
 				0476C9B01161D07D001DE264 /* CompanyDetail.m in Sources */,
 				0477EF201165133F00D9C69C /* People.m in Sources */,
-				CE5AB1BA191A0690008146A1 /* Tips.m in Sources */,
 				CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */,
 				0477EF33116515AF00D9C69C /* PersonDetail.m in Sources */,
 				04F93721116BDE450056B473 /* WebVC.m in Sources */,
+				CEAC63A91EED0D810033F75C /* Tips.swift in Sources */,
 				04AB64991173BDFA00070D76 /* SearchJobs.m in Sources */,
 				04DCD95C1182208F0033DEC9 /* RootViewController.m in Sources */,
 			);
@@ -751,7 +791,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_LINK_WITH_DYNAMIC_LIBRARIES = YES;
@@ -762,8 +805,9 @@
 				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "jobagent-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_GENERATE_MAP_FILE = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -779,6 +823,7 @@
 				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 			};
@@ -798,7 +843,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks",
+				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_LINK_WITH_DYNAMIC_LIBRARIES = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -808,8 +856,9 @@
 				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "jobagent-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_GENERATE_MAP_FILE = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -827,6 +876,7 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 			};
@@ -924,6 +974,7 @@
 		CE1EB5F5191C6E330000901C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/jobagent.app/jobagent";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -978,6 +1029,7 @@
 		CE1EB5F6191C6E330000901C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/jobagent.app/jobagent";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

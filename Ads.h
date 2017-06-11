@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GADRequest.h"
-#import "GADBannerView.h"
 
 @interface Ads : NSObject
 

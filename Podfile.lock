@@ -14,19 +14,31 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
-  - Google-Mobile-Ads-SDK (6.12.0)
-  - GoogleAnalytics-iOS-SDK (3.0.9)
+  - Alamofire (4.4.0)
+  - Google-Mobile-Ads-SDK (7.19.0)
+  - GoogleAnalytics (3.17.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
+  - Alamofire (from `https://github.com/Alamofire/Alamofire.git`)
   - Google-Mobile-Ads-SDK
-  - GoogleAnalytics-iOS-SDK
+  - GoogleAnalytics
+
+EXTERNAL SOURCES:
+  Alamofire:
+    :git: https://github.com/Alamofire/Alamofire.git
+
+CHECKOUT OPTIONS:
+  Alamofire:
+    :commit: 22d4d74a419917ea122c23006cbc183aea5d84f8
+    :git: https://github.com/Alamofire/Alamofire.git
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
-  Google-Mobile-Ads-SDK: 2a5ae48f92c66d584b1583278cfd2a7f8da24a8b
-  GoogleAnalytics-iOS-SDK: 3b0994bef22ed2e176a9e2a4d1660c7c2542eb47
+  Alamofire: 4c2bf7fa03c4a626163606de0a417568c270575e
+  Google-Mobile-Ads-SDK: d1bcdbd8347a105a687345b8511701172a5074e9
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
 
-PODFILE CHECKSUM: 8f8fb1cddcbc5aab538c42e05157f15fc60bce00
+PODFILE CHECKSUM: 28a4502f4b286e7d0478a9fa47aa1a009adb1141
 
 COCOAPODS: 1.2.0

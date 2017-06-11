@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0M0-af-N1b">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0M0-af-N1b">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -733,7 +733,7 @@
         <!--Tips-->
         <scene sceneID="bJx-vC-WPV">
             <objects>
-                <viewController title="Tips" id="yQH-WO-6DA" customClass="Tips" sceneMemberID="viewController">
+                <viewController title="Tips" id="yQH-WO-6DA" customClass="Tips" customModule="jobagent" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OvS-8v-gh1"/>
                         <viewControllerLayoutGuide type="bottom" id="S2m-zK-Qwg"/>
@@ -793,7 +793,7 @@
                     <tabBarItem key="tabBarItem" title="Tips" id="tvt-ci-7gd"/>
                     <navigationItem key="navigationItem" id="4e7-do-w1q"/>
                     <connections>
-                        <outlet property="tableView" destination="vk6-pR-vB4" id="dWm-Jx-28f"/>
+                        <outlet property="tableView" destination="vk6-pR-vB4" id="K9f-a3-9ZN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccM-VS-lrw" userLabel="First Responder" sceneMemberID="firstResponder"/>
