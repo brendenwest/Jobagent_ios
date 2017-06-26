@@ -6,7 +6,6 @@
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 
-#import "People.h"
 #import "Leads.h"
 #import "Companies.h"
 #import "Events.h"
@@ -221,12 +220,10 @@
 	
     Companies *companiesVC = [[Companies alloc] initWithNibName:nil bundle:nil];
     companiesVC.managedObjectContext = context;
-	
-    People *peopleVC = [[People alloc]  initWithNibName:nil bundle:nil];
-    peopleVC.managedObjectContext = context;
     
     Events *eventsVC = [[Events alloc] initWithNibName:nil bundle:nil];
     eventsVC.managedObjectContext = context;
+     
 	
 #ifdef IS_SIMULATOR
 #else

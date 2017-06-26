@@ -10,7 +10,6 @@
 #import "Company.h"
 #import "SearchJobs.h"
 #import "Leads.h"
-#import "People.h"
 #import "Common.h"
 #import "AppDelegate.h"
 
@@ -50,7 +49,7 @@
             [self.navigationController pushViewController:_leadsVC animated:YES];
         } else if (tmpSegment == 3) {
             if(_contactsVC == nil)
-                _contactsVC = [[People alloc] initWithNibName:nil bundle:nil];
+                _contactsVC = [[People alloc] init];
             
             _contactsVC.selectedCompany = _selectedCompany.name;
             [self.navigationController pushViewController:_contactsVC animated:YES];

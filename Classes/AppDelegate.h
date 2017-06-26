@@ -6,6 +6,7 @@
 //  Copyright 2014 Brisk Software LLC. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "GAI.h"
 

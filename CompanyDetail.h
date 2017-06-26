@@ -10,8 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "EditItemVC.h"
 #import "PickList.h"
+#import "jobagent-Swift.h"
 
-@class AppDelegate, Company, LeadDetail, PersonDetail, SearchJobs, Leads, People;
+@class AppDelegate, Company, LeadDetail, PersonDetail, SearchJobs, Leads;
 
 @interface CompanyDetail : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, EditItemDelegate, PickListDelegate> {
 	

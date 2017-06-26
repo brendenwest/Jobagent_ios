@@ -209,7 +209,7 @@
         <!--Contacts-->
         <scene sceneID="n8j-Fb-13P">
             <objects>
-                <tableViewController title="Contacts" id="7cd-Cu-NGC" customClass="People" sceneMemberID="viewController">
+                <tableViewController title="Contacts" id="7cd-Cu-NGC" customClass="People" customModule="jobagent" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="NxO-QI-LHP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -219,7 +219,7 @@
                                 <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r1a-i2-B5g" id="VqW-zI-Dt4">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -420,7 +420,7 @@
         <!--Contact-->
         <scene sceneID="aui-T0-Z01">
             <objects>
-                <viewController title="Contact" id="Rvv-EY-qkc" customClass="PersonDetail" sceneMemberID="viewController">
+                <viewController title="Contact" id="Rvv-EY-qkc" customClass="PersonDetail" customModule="jobagent" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8V4-OG-s8O"/>
                         <viewControllerLayoutGuide type="bottom" id="pKL-TT-Ux1"/>
@@ -485,7 +485,7 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="btnContactActions" destination="m7x-hs-Z7e" id="hWz-FJ-NcV"/>
+                        <outlet property="btnContactActions" destination="m7x-hs-Z7e" id="oZe-eb-C5r"/>
                         <outlet property="tableView" destination="3dz-6w-28d" id="gXL-In-9yp"/>
                         <segue destination="AWK-m6-P97" kind="show" identifier="showItem" id="hFT-T5-Sus"/>
                     </connections>
@@ -1021,7 +1021,7 @@
         <image name="icon_companies2.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YyK-1G-QcY"/>
         <segue reference="R9d-Wk-1GE"/>
+        <segue reference="hFT-T5-Sus"/>
     </inferredMetricsTieBreakers>
 </document>

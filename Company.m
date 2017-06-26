@@ -10,7 +10,6 @@
 
 #import "Event.h"
 #import "Job.h"
-#import "Person.h"
 
 @implementation Company 
 
