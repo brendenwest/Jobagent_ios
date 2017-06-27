@@ -59,7 +59,6 @@ import CoreData
     
     override func viewWillAppear(_ animated: Bool) {
         // fetch data
-        print("People willAppear")
         do {
             try fetchedResultsController.performFetch()
         } catch {

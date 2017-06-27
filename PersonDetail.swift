@@ -68,6 +68,8 @@ class Person: NSManagedObject {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.automaticallyAdjustsScrollViewInsets = false;
+        
         self.tableView?.reloadData()
     }
 
@@ -252,6 +254,44 @@ class Person: NSManagedObject {
         self.selectedPerson?.setValue(itemText, forKey: self.currentKey)
         self.tableView?.reloadData()
 
+    }
+    
+    // MARK: segment actions
+    
+     @IBAction func segmentAction(sender: Any?) {
+        let index = (sender as! UISegmentedControl).selectedSegmentIndex
+
+        if index == 0, let phone = self.selectedPerson?.phone, !phone.isEmpty {
+            print(phone)
+            UIApplication.shared.open(URL.init(string: "tel://\(phone)")! , options: [:], completionHandler: nil)
+        } else if index == 1, let email = self.selectedPerson?.email, !email.isEmpty {
+            self.sendMail(email)
+            
+        }  else if index == 2, let fullName = self.selectedPerson?.getFullName(), !fullName.isEmpty {
+            let company = self.selectedPerson?.company ?? ""
+            let urlStr = "https://www.linkedin.com/vsearch/p?keywords=\(fullName)+\(company)".addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
+
+            UIApplication.shared.open(URL.init(string: urlStr!)! , options: [:], completionHandler: nil)
+ 
+        }
+        
+    }
+    
+    func sendMail(_ recipient: String) {
+        if MFMailComposeViewController.canSendMail() {
+            let mailController = MFMailComposeViewController()
+            mailController.mailComposeDelegate = self
+            mailController.setToRecipients([recipient])
+            mailController.setMessageBody("Hi \(String(describing: self.selectedPerson?.firstName))", isHTML: false)
+            present(mailController, animated: true)
+            
+        } else {
+            let mailError = UIAlertController(title: "mail error", message: "can't send mail" , preferredStyle: UIAlertControllerStyle.alert)
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
     
 }

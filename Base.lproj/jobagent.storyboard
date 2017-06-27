@@ -444,6 +444,9 @@
                                     <segment title="E-Mail"/>
                                     <segment title="LinkedIn"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentActionWithSender:" destination="Rvv-EY-qkc" eventType="valueChanged" id="TuC-V3-Bgh"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -485,7 +488,7 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="btnContactActions" destination="m7x-hs-Z7e" id="oZe-eb-C5r"/>
+                        <outlet property="btnContactActions" destination="m7x-hs-Z7e" id="TZ7-So-43K"/>
                         <outlet property="tableView" destination="3dz-6w-28d" id="gXL-In-9yp"/>
                         <segue destination="AWK-m6-P97" kind="show" identifier="showItem" id="hFT-T5-Sus"/>
                     </connections>
