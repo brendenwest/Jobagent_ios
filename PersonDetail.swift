@@ -10,9 +10,6 @@ import UIKit
 import CoreData
 import MessageUI
 
-//#import "EditItemVC.h"
-//#import "PickList.h"
-
 class Person: NSManagedObject {
     
     @NSManaged var firstName: String?
@@ -37,7 +34,7 @@ class Person: NSManagedObject {
     
 }
 
-@objc internal class PersonDetail: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MFMailComposeViewControllerDelegate {
+@objc internal class PersonDetail: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MFMailComposeViewControllerDelegate, EditItemDelegate, PickListDelegate {
 
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var btnContactActions: UISegmentedControl!
@@ -46,8 +43,7 @@ class Person: NSManagedObject {
     
     weak var selectedPerson: Person?
     var managedObjectContext: NSManagedObjectContext!
-    
-//    NSString *editedItemId;
+    var currentKey: String = ""
     
     let fields = [
         ["label":NSLocalizedString("STR_NAME", comment: ""), "key": "name", "isText": true],
@@ -75,49 +71,87 @@ class Person: NSManagedObject {
         self.tableView?.reloadData()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let name = self.selectedPerson?.firstName, !name.isEmpty {
+            do {
+                try self.selectedPerson?.managedObjectContext?.save()
+            } catch let error {
+                print("Error on save: \(error)")
+            }
+        } else {
+            // delete empty person from data source
+            self.selectedPerson?.managedObjectContext?.delete(self.selectedPerson!)
+        }
+        
+    }
+
+    // MARK: TableView methods
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let field = fields[indexPath.row]
+        let reuseIdentifier = (field["isText"] as? Bool)! ? "editableCell" : "cell"
         let itemKey: String = field["key"] as! String
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: itemKey)
-            ?? UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: itemKey)
+        var cell:UITableViewCell? =
+            tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)
+        if (cell == nil)
+        {
+            cell = UITableViewCell(style: UITableViewCellStyle.default,
+                                   reuseIdentifier: reuseIdentifier)
+        }
         
         var label: UILabel
 
-        if cell.contentView.subviews.isEmpty {
+        var text: String
+        if itemKey == "name" {
+            text = (self.selectedPerson?.getFullName())!
+        } else {
+            text = self.selectedPerson?.value(forKey: itemKey) as? String ?? ""
+        }
+
+        if (cell?.contentView.subviews.isEmpty)! {
             label = UILabel.init(frame: CGRect(x:10.0, y:10.0, width:60.0, height:25.0))
             
             label.text = field["label"] as? String
             label.font = UIFont.systemFont(ofSize: 10.0)
             label.textColor = UIColor.gray
-            cell.contentView.addSubview(label)
-            
-            var text: String
-            if itemKey == "name" {
-                text = (self.selectedPerson?.getFullName())!
-            } else {
-                text = self.selectedPerson?.value(forKey: itemKey) as? String ?? ""
-            }
+            cell?.contentView.addSubview(label)
 
-            if (field["isText"] as? Bool)! {
+            if reuseIdentifier == "editableCell" {
                 let detailText = UITextField.init(frame: detailWidth)
                 detailText.text = text
                 detailText.delegate = self;
                 detailText.tag = indexPath.row;
                 detailText.returnKeyType = UIReturnKeyType.done;
                 
-                cell.contentView.addSubview(detailText)
+                if itemKey == "phone" {
+                    detailText.keyboardType = UIKeyboardType.phonePad
+                } else if itemKey == "email" {
+                    detailText.keyboardType = UIKeyboardType.emailAddress
+                }
+
+                cell?.contentView.addSubview(detailText)
             } else {
                 let detailText = UILabel.init(frame: detailWidth)
                 detailText.text = text
-                cell.contentView.addSubview(detailText)
-                cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator;
+                cell?.contentView.addSubview(detailText)
+                cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator;
+            }
+
+        } else {
+            if reuseIdentifier == "editableCell" {
+                let detailText = cell?.contentView.subviews[1] as! UITextField
+                detailText.text = text
+            } else {
+                let detailText = cell?.contentView.subviews[1] as! UILabel
+                detailText.text = text
             }
 
         }
-        
 
-        return cell
+        return cell!
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -125,10 +159,41 @@ class Person: NSManagedObject {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // store ID of selected row for use when returning from child vc
+        
+        self.currentKey = self.fields[indexPath.row]["key"] as! String
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        switch self.currentKey {
+        case "type":
+            let cell = tableView.cellForRow(at: indexPath)
+            
+            let pickList = PickList()
+            pickList.header = NSLocalizedString("STR_SEL_TYPE", comment: "")
+            pickList.options = contactTypes
+            pickList.selectedItem = cell?.detailTextLabel?.text
+            pickList.delegate = self as PickListDelegate
+            self.navigationController?.pushViewController(pickList, animated: true)
+            break
 
+        default:
+            self.performSegue(withIdentifier: "showItem", sender: cell)
+        }
     }
-    
-    // pragma mark TextView methods
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showItem" {
+            if let cell = sender as? UITableViewCell {
+                let vc = segue.destination as! EditItemVC
+                vc.labelText = (cell.contentView.subviews.first as! UILabel).text
+                vc.itemText =  (cell.contentView.subviews[1] as! UILabel).text
+                vc.delegate = self
+                
+            }
+        }
+    }
+
+    // MARK: TextView methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // the user pressed the "Done" button, so dismiss the keyboard
@@ -172,25 +237,21 @@ class Person: NSManagedObject {
             return (first, last)
         }
         
-        return nil // input strint was empty
+        return nil // input string was empty
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        print("viewWillDisappear")
-        if let name = self.selectedPerson?.firstName, !name.isEmpty {
-            do {
-                print("save")
-                try self.selectedPerson?.managedObjectContext?.save()
-            } catch let error {
-                print("Save error \(error)")
-            }
-        } else {
-            // delete empty person from data source
-            self.selectedPerson?.managedObjectContext?.delete(self.selectedPerson!)
-        }
-        
+    // MARK: protocol methods
+    
+    func pickHandler(_ item: String) {
+        // on return from pickList view
+        self.textEditHandler(item)
+    }
+    
+    func textEditHandler(_ itemText: String) {
+        // on return full-text edit view
+        self.selectedPerson?.setValue(itemText, forKey: self.currentKey)
+        self.tableView?.reloadData()
+
     }
     
 }

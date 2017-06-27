@@ -10,7 +10,7 @@
 
 @protocol PickListDelegate <NSObject>
 
-- (void)pickItem:(NSString*)item;
+- (void)pickHandler:(NSString*)item;
 
 @end
 

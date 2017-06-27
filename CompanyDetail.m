@@ -190,14 +190,14 @@
 
 #pragma mark - Protocol methods
 
--(void)setItemText:(NSString *)editedItemText {
+-(void)textEditHandler:(NSString *)editedItemText {
     // on return from field-edit view...
     NSString *itemKey = [editedItemId lowercaseString];
     [_selectedCompany setValue:editedItemText forKey:itemKey];
     
 }
 
--(void)pickItem:(NSString *)item {
+-(void)pickHandler:(NSString *)item {
     // on return from pickList view...
     NSString *itemKey = [editedItemId lowercaseString];
     [_selectedCompany setValue:item forKey:itemKey];

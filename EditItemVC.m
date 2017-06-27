@@ -14,7 +14,6 @@
 
 @synthesize labelText, itemLabel, itemTextView, itemText;
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -59,7 +58,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     // save edits back to calling VC
     [super viewWillDisappear:(BOOL)animated];
-    [[self delegate] setItemText:itemTextView.text];
+    [[self delegate] textEditHandler:itemTextView.text];
         
 }
 

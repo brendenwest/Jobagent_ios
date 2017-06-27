@@ -286,14 +286,14 @@ BOOL isSavedEvent;
 
 #pragma mark - Protocol methods
 
--(void)setItemText:(NSString *)editedItemText {
+-(void)textEditHandler:(NSString *)editedItemText {
     // on return from field-edit view...
     NSString *itemKey = [editedItemId lowercaseString];
     [_selectedEvent setValue:editedItemText forKey:itemKey];
  
 }
 
--(void)pickItem:(NSString *)item {
+-(void)pickHandler:(NSString *)item {
     // on return from pickList view...
     NSString *itemKey = [editedItemId lowercaseString];
     [_selectedEvent setValue:item forKey:itemKey];
@@ -567,7 +567,7 @@ BOOL isSavedEvent;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    [self setItemText:textField.text];
+    [self textEditHandler:textField.text];
 
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {

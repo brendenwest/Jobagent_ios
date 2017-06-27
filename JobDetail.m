@@ -373,14 +373,14 @@ BOOL isSavedJob;
 
 #pragma mark - Protocol methods
 
--(void)setItemText:(NSString *)editedItemText {
+-(void)textEditHandler:(NSString *)editedItemText {
     
     NSString *itemKey = [editedItemId lowercaseString];
     [aJob setValue:editedItemText forKey:itemKey];
  
 }
 
--(void)pickItem:(NSString *)item {
+-(void)pickHandler:(NSString *)item {
     
     NSString *itemKey = [editedItemId lowercaseString];
     [aJob setValue:item forKey:itemKey];

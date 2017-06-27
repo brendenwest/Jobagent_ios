@@ -10,7 +10,7 @@
 
 @protocol EditItemDelegate <NSObject>
 
-- (void)setItemText:(NSString*)itemText;
+- (void)textEditHandler:(NSString*)itemText;
 
 @end
 

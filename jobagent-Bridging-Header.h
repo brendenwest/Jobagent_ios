@@ -4,3 +4,6 @@
 
 #import "AppDelegate.h"
 #import "Common.h"
+
+#import "EditItemVC.h" // UI for textfield items
+#import "PickList.h" // picklist for multiple-choice items
