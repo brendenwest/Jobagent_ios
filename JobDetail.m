@@ -8,9 +8,9 @@
 
 #import "JobDetail.h"
 #import "Job.h"
-#import "Company.h"
 #import "AppDelegate.h"
 #import "Common.h"
+#import "jobagent-Swift.h"
 
 
 #define kPickerAnimationDuration    0.40   // duration for the animation to slide the date picker into view

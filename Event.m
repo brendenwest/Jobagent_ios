@@ -8,7 +8,7 @@
 
 #import "Event.h"
 
-#import "Company.h"
+#import "jobagent-Swift.h"
 #import "Job.h"
 
 @implementation Event 

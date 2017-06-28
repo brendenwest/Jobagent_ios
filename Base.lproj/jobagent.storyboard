@@ -175,7 +175,7 @@
         <!--Companies-->
         <scene sceneID="3Gs-SZ-htW">
             <objects>
-                <tableViewController title="Companies" id="2Zd-nF-35D" customClass="Companies" sceneMemberID="viewController">
+                <tableViewController title="Companies" id="2Zd-nF-35D" customClass="Companies" customModule="jobagent" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dCW-1M-OsH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -500,7 +500,7 @@
         <!--Company-->
         <scene sceneID="wxD-B6-Udz">
             <objects>
-                <viewController title="Company" id="llL-JH-Nc7" customClass="CompanyDetail" sceneMemberID="viewController">
+                <viewController title="Company" id="llL-JH-Nc7" customClass="CompanyDetail" customModule="jobagent" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0Ei-A6-La8"/>
                         <viewControllerLayoutGuide type="bottom" id="yAN-gK-6Px"/>
@@ -571,7 +571,7 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="btnExternalLinks" destination="k4o-6d-ljq" id="9MZ-oc-N21"/>
+                        <outlet property="btnCompanyActions" destination="k4o-6d-ljq" id="V9h-ek-gnK"/>
                         <outlet property="tableView" destination="EMw-Y2-WBf" id="Uku-ab-wLJ"/>
                         <segue destination="AWK-m6-P97" kind="show" identifier="showItem" id="PXj-D8-bNM"/>
                     </connections>
@@ -1025,6 +1025,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="R9d-Wk-1GE"/>
-        <segue reference="hFT-T5-Sus"/>
+        <segue reference="PXj-D8-bNM"/>
     </inferredMetricsTieBreakers>
 </document>

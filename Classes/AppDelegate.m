@@ -217,9 +217,6 @@
 	
     Leads *leadsVC = [[Leads alloc] initWithNibName:nil bundle:nil];
     leadsVC.managedObjectContext = context;
-	
-    Companies *companiesVC = [[Companies alloc] initWithNibName:nil bundle:nil];
-    companiesVC.managedObjectContext = context;
     
     Events *eventsVC = [[Events alloc] initWithNibName:nil bundle:nil];
     eventsVC.managedObjectContext = context;
@@ -414,7 +411,7 @@
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        managedObjectContext = [[NSManagedObjectContext alloc] init];
+        managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSMainQueueConcurrencyType];
         [managedObjectContext setPersistentStoreCoordinator: coordinator];
     }
     return managedObjectContext;

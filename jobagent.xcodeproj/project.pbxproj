@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		040E0295115966440020C333 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 040E0294115966440020C333 /* Task.m */; };
-		0428F4C3115C5D02000554B9 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 0428F4C0115C5D02000554B9 /* Company.m */; };
 		0428F4C4115C5D02000554B9 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 0428F4C2115C5D02000554B9 /* Event.m */; };
 		0428F4D9115C5E43000554B9 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 0428F4D8115C5E43000554B9 /* Events.m */; };
 		0428F4E1115C6085000554B9 /* EventDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0428F4DF115C6085000554B9 /* EventDetail.m */; };
@@ -16,8 +15,6 @@
 		044596641533D6190078698D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044596631533D6190078698D /* CFNetwork.framework */; };
 		044596661533D64D0078698D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 044596651533D64D0078698D /* libsqlite3.0.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		0473263F1154BBB400E4C6DA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0473263E1154BBB400E4C6DA /* MessageUI.framework */; };
-		0476C99A1161CD82001DE264 /* Companies.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476C9991161CD82001DE264 /* Companies.m */; };
-		0476C9B01161D07D001DE264 /* CompanyDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476C9AE1161D07D001DE264 /* CompanyDetail.m */; };
 		0479869C114A183100096236 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479869B114A183100096236 /* AppDelegate.m */; };
 		04836E6F115887FD00F61102 /* Job.m in Sources */ = {isa = PBXBuildFile; fileRef = 04836E6D115887FD00F61102 /* Job.m */; };
 		049B09351147086F0055B02D /* JobDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 049B09341147086F0055B02D /* JobDetail.m */; };
@@ -69,6 +66,8 @@
 		CE8EA61B19EE0BD8002040C2 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF5221F191BDD8500844450 /* Common.m */; };
 		CE8EA61C19EE0BDF002040C2 /* Ads.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF397419DFBDE000C546D7 /* Ads.m */; };
 		CE8EA61D19EE0C58002040C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479869B114A183100096236 /* AppDelegate.m */; };
+		CEA8F2A01F02DFF8001BAA12 /* Companies.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8F29F1F02DFF8001BAA12 /* Companies.swift */; };
+		CEA8F2A21F02E112001BAA12 /* CompanyDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8F2A11F02E112001BAA12 /* CompanyDetail.swift */; };
 		CEAC63A91EED0D810033F75C /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC63A81EED0D810033F75C /* Tips.swift */; };
 		CEAC63AB1EED10F10033F75C /* jobagent-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = CEAC63AA1EED0D900033F75C /* jobagent-Bridging-Header.h */; };
 		CEAC63AD1EED18C70033F75C /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAC63AC1EED18C70033F75C /* AFNetworking.framework */; };
@@ -96,8 +95,6 @@
 /* Begin PBXFileReference section */
 		040E0293115966440020C333 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		040E0294115966440020C333 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
-		0428F4BF115C5D02000554B9 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
-		0428F4C0115C5D02000554B9 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		0428F4C1115C5D02000554B9 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		0428F4C2115C5D02000554B9 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		0428F4D7115C5E43000554B9 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
@@ -109,10 +106,6 @@
 		044596631533D6190078698D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		044596651533D64D0078698D /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		0473263E1154BBB400E4C6DA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		0476C9981161CD82001DE264 /* Companies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Companies.h; sourceTree = "<group>"; };
-		0476C9991161CD82001DE264 /* Companies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Companies.m; sourceTree = "<group>"; };
-		0476C9AD1161D07D001DE264 /* CompanyDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyDetail.h; sourceTree = "<group>"; };
-		0476C9AE1161D07D001DE264 /* CompanyDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanyDetail.m; sourceTree = "<group>"; };
 		0479869B114A183100096236 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		04836E6C115887FD00F61102 /* Job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Job.h; sourceTree = "<group>"; };
 		04836E6D115887FD00F61102 /* Job.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Job.m; sourceTree = "<group>"; };
@@ -183,6 +176,8 @@
 		CE8CED6F19CA0C13008217C8 /* RootView_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootView_Tests.m; sourceTree = "<group>"; };
 		CE8EA61319EDC0E7002040C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/jobagent.storyboard; sourceTree = "<group>"; };
 		CE8EA61719EDE525002040C2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = jobagent/Images.xcassets; sourceTree = "<group>"; };
+		CEA8F29F1F02DFF8001BAA12 /* Companies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Companies.swift; sourceTree = "<group>"; };
+		CEA8F2A11F02E112001BAA12 /* CompanyDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyDetail.swift; sourceTree = "<group>"; };
 		CEAC63A81EED0D810033F75C /* Tips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
 		CEAC63AA1EED0D900033F75C /* jobagent-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "jobagent-Bridging-Header.h"; sourceTree = "<group>"; };
 		CEAC63AC1EED18C70033F75C /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../../Library/Developer/Xcode/DerivedData/jobagent-cvlojblmovnrurelrphswhxgbgwf/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
@@ -249,8 +244,6 @@
 		04836E651158873100F61102 /* Object classes */ = {
 			isa = PBXGroup;
 			children = (
-				0428F4BF115C5D02000554B9 /* Company.h */,
-				0428F4C0115C5D02000554B9 /* Company.m */,
 				0428F4C1115C5D02000554B9 /* Event.h */,
 				0428F4C2115C5D02000554B9 /* Event.m */,
 				040E0293115966440020C333 /* Task.h */,
@@ -272,17 +265,6 @@
 				04E036EC1157081A006FEFE2 /* Leads.m */,
 			);
 			name = Jobs;
-			sourceTree = "<group>";
-		};
-		04AFE9C711ED5FF300DA706D /* Companies */ = {
-			isa = PBXGroup;
-			children = (
-				0476C9981161CD82001DE264 /* Companies.h */,
-				0476C9991161CD82001DE264 /* Companies.m */,
-				0476C9AD1161D07D001DE264 /* CompanyDetail.h */,
-				0476C9AE1161D07D001DE264 /* CompanyDetail.m */,
-			);
-			name = Companies;
 			sourceTree = "<group>";
 		};
 		04AFE9CB11ED604F00DA706D /* Tasks */ = {
@@ -348,7 +330,6 @@
 				CEAC63A71EED0D640033F75C /* ViewControllers */,
 				04B36748126BFE0900249902 /* Helpers */,
 				04AFE9CB11ED604F00DA706D /* Tasks */,
-				04AFE9C711ED5FF300DA706D /* Companies */,
 				04AFE9C411ED5FD800DA706D /* Jobs */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				04836E651158873100F61102 /* Object classes */,
@@ -473,6 +454,8 @@
 			children = (
 				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
 				04DCD95B1182208F0033DEC9 /* RootViewController.m */,
+				CEA8F29F1F02DFF8001BAA12 /* Companies.swift */,
+				CEA8F2A11F02E112001BAA12 /* CompanyDetail.swift */,
 				CE0CAA2A1EFCC989007A0F95 /* People.swift */,
 				CE0CAA281EFC9C59007A0F95 /* PersonDetail.swift */,
 				CEAC63A81EED0D810033F75C /* Tips.swift */,
@@ -691,17 +674,16 @@
 				04836E6F115887FD00F61102 /* Job.m in Sources */,
 				CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */,
 				040E0295115966440020C333 /* Task.m in Sources */,
-				0428F4C3115C5D02000554B9 /* Company.m in Sources */,
 				0428F4C4115C5D02000554B9 /* Event.m in Sources */,
 				0428F4D9115C5E43000554B9 /* Events.m in Sources */,
 				0428F4E1115C6085000554B9 /* EventDetail.m in Sources */,
+				CEA8F2A01F02DFF8001BAA12 /* Companies.swift in Sources */,
 				CE10803C19E1DE7700542B05 /* Location.m in Sources */,
 				0431984D116194E80005206D /* Cities.m in Sources */,
-				0476C99A1161CD82001DE264 /* Companies.m in Sources */,
 				CEDD6BBE19555C310062485F /* jobagent.xcdatamodeld in Sources */,
 				CEF52220191BDD8500844450 /* Common.m in Sources */,
+				CEA8F2A21F02E112001BAA12 /* CompanyDetail.swift in Sources */,
 				CE0CAA2B1EFCC989007A0F95 /* People.swift in Sources */,
-				0476C9B01161D07D001DE264 /* CompanyDetail.m in Sources */,
 				CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */,
 				04F93721116BDE450056B473 /* WebVC.m in Sources */,
 				CEAC63A91EED0D810033F75C /* Tips.swift in Sources */,
