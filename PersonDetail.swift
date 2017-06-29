@@ -1,5 +1,5 @@
 //
-//  PersonaDetail.swift
+//  PersonDetail.swift
 //  jobagent
 //
 //  Created by Brenden West on 6/15/17.
@@ -15,7 +15,7 @@ class Person: NSManagedObject {
     @NSManaged var firstName: String?
     @NSManaged var lastName: String?
     @NSManaged var title: String?
-    @NSManaged var company: String?
+    @NSManaged var company: Company?
     @NSManaged var type: String?
     @NSManaged var notes: String?
     @NSManaged var link: String?
@@ -30,6 +30,33 @@ class Person: NSManagedObject {
         
         return "\(first)\(separator)\(last)"
         
+    }
+    
+    // add new company item if not exists
+    func setCompany(name: String?) {
+        if let name = name {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Company")
+            fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+            do {
+                let fetchedResults = try self.managedObjectContext?.fetch(fetchRequest) as! [Company]
+                var company: Company
+                if fetchedResults.isEmpty {
+                    company = Company(context: self.managedObjectContext!)
+                    company.name = name
+                } else {
+                    company = fetchedResults.first!
+                }
+                company.addToPeople(self)
+                do {
+                    try company.managedObjectContext?.save()
+                } catch let error {
+                    print("Error on save: \(error)")
+                }
+            
+            } catch {
+                fatalError("Failed to fetch employees: \(error)")
+            }
+        }
     }
     
 }
@@ -82,6 +109,7 @@ class Person: NSManagedObject {
         if let name = self.selectedPerson?.firstName, !name.isEmpty {
             do {
                 try self.selectedPerson?.managedObjectContext?.save()
+//                self.selectedPerson?.setCompany()
             } catch let error {
                 print("Error on save: \(error)")
             }
@@ -224,7 +252,7 @@ class Person: NSManagedObject {
             self.selectedPerson?.title = textField.text
             break
         case 2:
-            self.selectedPerson?.company = textField.text
+            self.selectedPerson?.setCompany(name: textField.text)
             break
         case 4:
             self.selectedPerson?.phone = textField.text
@@ -274,7 +302,7 @@ class Person: NSManagedObject {
             self.sendMail(email)
             
         }  else if index == 2, let fullName = self.selectedPerson?.getFullName(), !fullName.isEmpty {
-            let company = self.selectedPerson?.company ?? ""
+            let company = self.selectedPerson?.company?.name ?? ""
             let urlStr = "https://www.linkedin.com/vsearch/p?keywords=\(fullName)+\(company)".addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
 
             UIApplication.shared.open(URL.init(string: urlStr!)! , options: [:], completionHandler: nil)

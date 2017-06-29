@@ -15,10 +15,21 @@ class Company: NSManagedObject {
     @NSManaged var location: String?
     @NSManaged var notes: String?
     @NSManaged var toJobs: Set<Job>?
-    @NSManaged var toPerson: Set<Person>?
+    @NSManaged var people: Set<Person>?
     @NSManaged var toEvent: Set<Event>?
     
-    // TBD CoreDataGeneratedAccessors
+    
+    @objc(addPeopleObject:)
+    @NSManaged public func addToPeople(_ value: Person)
+    
+    @objc(removePeopleObject:)
+    @NSManaged public func removeFromPeople(_ value: Person)
+    
+    @objc(addPeople:)
+    @NSManaged public func addToPeople(_ values: NSSet)
+    
+    @objc(removeUsers:)
+    @NSManaged public func removeFromPeople(_ values: NSSet)
     
 }
 

@@ -58,13 +58,11 @@ import CoreData
 
     override func viewWillAppear(_ animated: Bool) {
         // fetch data
-        print("viewWillAppear")
         do {
             try fetchedResultsController.performFetch()
         } catch {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
-        
         self.tableView.reloadData()
     }
 

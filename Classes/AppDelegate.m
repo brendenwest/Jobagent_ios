@@ -7,7 +7,6 @@
 #import "GAIDictionaryBuilder.h"
 
 #import "Leads.h"
-#import "Companies.h"
 #import "Events.h"
 #import "Job.h"
 #import "jobagent-Swift.h"
