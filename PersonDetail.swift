@@ -15,12 +15,13 @@ class Person: NSManagedObject {
     @NSManaged var firstName: String?
     @NSManaged var lastName: String?
     @NSManaged var title: String?
-    @NSManaged var company: Company?
     @NSManaged var type: String?
     @NSManaged var notes: String?
     @NSManaged var link: String?
     @NSManaged var phone: String?
     @NSManaged var email: String?
+    @NSManaged var company: Company?
+    @NSManaged var job: Job?
     
     func getFullName() -> String {
         
@@ -34,31 +35,20 @@ class Person: NSManagedObject {
     
     // add new company item if not exists
     func setCompany(name: String?) {
-        if let name = name {
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Company")
-            fetchRequest.predicate = NSPredicate(format: "name == %@", name)
-            do {
-                let fetchedResults = try self.managedObjectContext?.fetch(fetchRequest) as! [Company]
-                var company: Company
-                if fetchedResults.isEmpty {
-                    company = Company(context: self.managedObjectContext!)
-                    company.name = name
-                } else {
-                    company = fetchedResults.first!
-                }
-                company.addToPeople(self)
-                do {
-                    try company.managedObjectContext?.save()
-                } catch let error {
-                    print("Error on save: \(error)")
-                }
-            
-            } catch {
-                fatalError("Failed to fetch employees: \(error)")
-            }
-        }
+        DataController.setCompany(name: name, for: self)
     }
-    
+
+    static func getNameParts(_ name: String?) -> (firstName: String, lastName: String)? {
+        if let name = name {
+            let nameArray = name.components(separatedBy: " ")
+            let first = nameArray[0]
+            let last = nameArray.count > 1 ? nameArray[1] : ""
+            return (first, last)
+        }
+        
+        return nil // input string was empty
+    }
+
 }
 
 @objc internal class PersonDetail: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MFMailComposeViewControllerDelegate, EditItemDelegate, PickListDelegate {
@@ -66,8 +56,6 @@ class Person: NSManagedObject {
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var btnContactActions: UISegmentedControl!
 
-    let detailWidth = CGRect(x:65.0, y:0.0, width:UIScreen.main.bounds.size.width - 80, height:44.0)
-    
     weak var selectedPerson: Person?
     var managedObjectContext: NSManagedObjectContext!
     var currentKey: String = ""
@@ -109,7 +97,6 @@ class Person: NSManagedObject {
         if let name = self.selectedPerson?.firstName, !name.isEmpty {
             do {
                 try self.selectedPerson?.managedObjectContext?.save()
-//                self.selectedPerson?.setCompany()
             } catch let error {
                 print("Error on save: \(error)")
             }
@@ -131,8 +118,7 @@ class Person: NSManagedObject {
             tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)
         if (cell == nil)
         {
-            cell = UITableViewCell(style: UITableViewCellStyle.default,
-                                   reuseIdentifier: reuseIdentifier)
+            cell = UITableViewCell(style: UITableViewCellStyle.default,  reuseIdentifier: reuseIdentifier)
         }
         
         var label: UILabel
@@ -140,16 +126,15 @@ class Person: NSManagedObject {
         var text: String
         if itemKey == "name" {
             text = (self.selectedPerson?.getFullName())!
+        } else if itemKey == "company" {
+                text = self.selectedPerson?.company?.name ?? ""
         } else {
             text = self.selectedPerson?.value(forKey: itemKey) as? String ?? ""
         }
 
         if (cell?.contentView.subviews.isEmpty)! {
-            label = UILabel.init(frame: CGRect(x:10.0, y:10.0, width:60.0, height:25.0))
-            
+            label = customLabel(from: nil)
             label.text = field["label"] as? String
-            label.font = UIFont.systemFont(ofSize: 10.0)
-            label.textColor = UIColor.gray
             cell?.contentView.addSubview(label)
 
             if reuseIdentifier == "editableCell" {
@@ -178,7 +163,7 @@ class Person: NSManagedObject {
                 let detailText = cell?.contentView.subviews[1] as! UITextField
                 detailText.text = text
             } else {
-                let detailText = cell?.contentView.subviews[1] as! UILabel
+                let detailText = customDetail(from: cell)
                 detailText.text = text
             }
 
@@ -207,7 +192,7 @@ class Person: NSManagedObject {
             let pickList = PickList()
             pickList.header = NSLocalizedString("STR_SEL_TYPE", comment: "")
             pickList.options = contactTypes
-            pickList.selectedItem = cell?.detailTextLabel?.text
+            pickList.selectedItem = customDetail(from: cell).text
             pickList.delegate = self as PickListDelegate
             self.navigationController?.pushViewController(pickList, animated: true)
             break
@@ -221,8 +206,8 @@ class Person: NSManagedObject {
         if segue.identifier == "showItem" {
             if let cell = sender as? UITableViewCell {
                 let vc = segue.destination as! EditItemVC
-                vc.labelText = (cell.contentView.subviews.first as! UILabel).text
-                vc.itemText =  (cell.contentView.subviews[1] as! UILabel).text
+                vc.labelText = customLabel(from: cell).text
+                vc.itemText =  customDetail(from: cell).text
                 vc.delegate = self
                 
             }
@@ -243,7 +228,7 @@ class Person: NSManagedObject {
         switch textField.tag {
         case 0:
 
-            if let person = getNameParts(textField.text) {
+            if let person = Person.getNameParts(textField.text) {
                 self.selectedPerson?.firstName = person.firstName
                 self.selectedPerson?.lastName = person.lastName
             }
@@ -264,17 +249,6 @@ class Person: NSManagedObject {
             break
         }
  
-    }
-    
-    func getNameParts(_ name: String?) -> (firstName: String, lastName: String)? {
-        if let name = name {
-            let nameArray = name.components(separatedBy: " ")
-            let first = nameArray[0]
-            let last = nameArray.count > 1 ? nameArray[1] : ""
-            return (first, last)
-        }
-        
-        return nil // input string was empty
     }
     
     // MARK: protocol methods

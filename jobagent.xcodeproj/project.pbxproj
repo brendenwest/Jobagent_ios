@@ -16,8 +16,6 @@
 		044596661533D64D0078698D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 044596651533D64D0078698D /* libsqlite3.0.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		0473263F1154BBB400E4C6DA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0473263E1154BBB400E4C6DA /* MessageUI.framework */; };
 		0479869C114A183100096236 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479869B114A183100096236 /* AppDelegate.m */; };
-		04836E6F115887FD00F61102 /* Job.m in Sources */ = {isa = PBXBuildFile; fileRef = 04836E6D115887FD00F61102 /* Job.m */; };
-		049B09351147086F0055B02D /* JobDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 049B09341147086F0055B02D /* JobDetail.m */; };
 		04AB64991173BDFA00070D76 /* SearchJobs.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AB64981173BDFA00070D76 /* SearchJobs.m */; };
 		04BB0C90115ED4AF0005B400 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB0C8F115ED4AF0005B400 /* CoreLocation.framework */; };
 		04BB0D5B115F0AD50005B400 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB0D5A115F0AD50005B400 /* MapKit.framework */; };
@@ -26,7 +24,6 @@
 		04CBCE4416A363FE007A41E9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CBCE4316A363FE007A41E9 /* CoreTelephony.framework */; };
 		04CBCE8216A39657007A41E9 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CBCE8116A39656007A41E9 /* AdSupport.framework */; };
 		04DCD95C1182208F0033DEC9 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DCD95B1182208F0033DEC9 /* RootViewController.m */; };
-		04E036EE1157081A006FEFE2 /* Leads.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E036EC1157081A006FEFE2 /* Leads.m */; };
 		04E03785115727E6006FEFE2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E03784115727E6006FEFE2 /* CoreData.framework */; };
 		04F4FD84175B161200FED540 /* jobagent_icon_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F4FD83175B161200FED540 /* jobagent_icon_57.png */; };
 		04F4FD86175B165100FED540 /* jobagent_icon_114.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F4FD85175B165100FED540 /* jobagent_icon_114.png */; };
@@ -44,11 +41,15 @@
 		5A894CEF15368B33002E3D57 /* indeed_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5A894CEE15368B33002E3D57 /* indeed_logo.gif */; };
 		5AA09E9314FF3554001A96A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA09E9214FF3554001A96A5 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		8749384C27A2DD282B742814 /* Pods_jobagent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBBC482E5672C540186D7C6 /* Pods_jobagent.framework */; };
+		CE0452261F04B9F3004783B0 /* JobDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0452251F04B9F3004783B0 /* JobDetail.swift */; };
+		CE0452281F04CA8E004783B0 /* Jobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0452271F04CA8E004783B0 /* Jobs.swift */; };
 		CE0CAA271EFC97BE007A0F95 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CAA261EFC97BE007A0F95 /* libGoogleAnalytics.a */; };
 		CE0CAA291EFC9C59007A0F95 /* PersonDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CAA281EFC9C59007A0F95 /* PersonDetail.swift */; };
 		CE0CAA2B1EFCC989007A0F95 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CAA2A1EFCC989007A0F95 /* People.swift */; };
 		CE10803C19E1DE7700542B05 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10803B19E1DE7700542B05 /* Location.m */; };
 		CE10EC7F18FBACD700BA4B01 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE10EC7E18FBACD700BA4B01 /* libz.dylib */; };
+		CE12F9F11F0586C600F18F1D /* TableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12F9F01F0586C600F18F1D /* TableViews.swift */; };
+		CE12F9F91F05969200F18F1D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12F9F81F05969200F18F1D /* DataController.swift */; };
 		CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1B83D2193E917A00058D22 /* appconfig.plist */; };
 		CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1E6DA41947FB0D00C9437A /* PickList.m */; };
 		CE1EB5E8191C6E330000901C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -107,11 +108,7 @@
 		044596651533D64D0078698D /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		0473263E1154BBB400E4C6DA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		0479869B114A183100096236 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
-		04836E6C115887FD00F61102 /* Job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Job.h; sourceTree = "<group>"; };
-		04836E6D115887FD00F61102 /* Job.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Job.m; sourceTree = "<group>"; };
 		048FE0C31307B73E009BCE27 /* jobagent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jobagent.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		049B09331147086F0055B02D /* JobDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobDetail.h; sourceTree = "<group>"; };
-		049B09341147086F0055B02D /* JobDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobDetail.m; sourceTree = "<group>"; };
 		04AB64981173BDFA00070D76 /* SearchJobs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchJobs.m; sourceTree = "<group>"; };
 		04BB0C8F115ED4AF0005B400 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		04BB0D5A115F0AD50005B400 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -123,8 +120,6 @@
 		04CBCE4316A363FE007A41E9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		04CBCE8116A39656007A41E9 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		04DCD95B1182208F0033DEC9 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
-		04E036EB1157081A006FEFE2 /* Leads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leads.h; sourceTree = "<group>"; };
-		04E036EC1157081A006FEFE2 /* Leads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Leads.m; sourceTree = "<group>"; };
 		04E03784115727E6006FEFE2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		04F4FD83175B161200FED540 /* jobagent_icon_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_57.png; path = Resources/jobagent_icon_57.png; sourceTree = "<group>"; };
 		04F4FD85175B165100FED540 /* jobagent_icon_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jobagent_icon_114.png; path = Resources/jobagent_icon_114.png; sourceTree = "<group>"; };
@@ -150,12 +145,16 @@
 		5AF99D66175A978900713946 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* jobagent-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "jobagent-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		AB832EA2CF09565FE9051071 /* Pods-jobagent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jobagent.debug.xcconfig"; path = "Pods/Target Support Files/Pods-jobagent/Pods-jobagent.debug.xcconfig"; sourceTree = "<group>"; };
+		CE0452251F04B9F3004783B0 /* JobDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobDetail.swift; sourceTree = "<group>"; };
+		CE0452271F04CA8E004783B0 /* Jobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jobs.swift; sourceTree = "<group>"; };
 		CE0CAA261EFC97BE007A0F95 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = Pods/GoogleAnalytics/Libraries/libGoogleAnalytics.a; sourceTree = "<group>"; };
 		CE0CAA281EFC9C59007A0F95 /* PersonDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonDetail.swift; sourceTree = "<group>"; };
 		CE0CAA2A1EFCC989007A0F95 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
 		CE10803A19E1DE7700542B05 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = SOURCE_ROOT; };
 		CE10803B19E1DE7700542B05 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = SOURCE_ROOT; };
 		CE10EC7E18FBACD700BA4B01 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		CE12F9F01F0586C600F18F1D /* TableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViews.swift; sourceTree = "<group>"; };
+		CE12F9F81F05969200F18F1D /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		CE1B83D2193E917A00058D22 /* appconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appconfig.plist; sourceTree = "<group>"; };
 		CE1E6DA31947FB0D00C9437A /* PickList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickList.h; sourceTree = "<group>"; };
 		CE1E6DA41947FB0D00C9437A /* PickList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickList.m; sourceTree = "<group>"; };
@@ -248,8 +247,6 @@
 				0428F4C2115C5D02000554B9 /* Event.m */,
 				040E0293115966440020C333 /* Task.h */,
 				040E0294115966440020C333 /* Task.m */,
-				04836E6C115887FD00F61102 /* Job.h */,
-				04836E6D115887FD00F61102 /* Job.m */,
 			);
 			name = "Object classes";
 			sourceTree = "<group>";
@@ -259,10 +256,6 @@
 			children = (
 				04CAF4C5114B0C39004F9DBF /* SearchJobs.h */,
 				04AB64981173BDFA00070D76 /* SearchJobs.m */,
-				049B09331147086F0055B02D /* JobDetail.h */,
-				049B09341147086F0055B02D /* JobDetail.m */,
-				04E036EB1157081A006FEFE2 /* Leads.h */,
-				04E036EC1157081A006FEFE2 /* Leads.m */,
 			);
 			name = Jobs;
 			sourceTree = "<group>";
@@ -278,9 +271,10 @@
 			name = Tasks;
 			sourceTree = "<group>";
 		};
-		04B36748126BFE0900249902 /* Helpers */ = {
+		04B36748126BFE0900249902 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				CE12F9F81F05969200F18F1D /* DataController.swift */,
 				CE10803A19E1DE7700542B05 /* Location.h */,
 				CE10803B19E1DE7700542B05 /* Location.m */,
 				CE74D8B71946CAD3006C9ACE /* EditItemVC.h */,
@@ -289,6 +283,7 @@
 				0431984C116194E80005206D /* Cities.m */,
 				CEF5221E191BDD8500844450 /* Common.h */,
 				CEF5221F191BDD8500844450 /* Common.m */,
+				CE12F9F01F0586C600F18F1D /* TableViews.swift */,
 				04F9371F116BDE450056B473 /* WebVC.h */,
 				04F93720116BDE450056B473 /* WebVC.m */,
 				CE1E6DA31947FB0D00C9437A /* PickList.h */,
@@ -296,7 +291,7 @@
 				CECF397319DFBDE000C546D7 /* Ads.h */,
 				CECF397419DFBDE000C546D7 /* Ads.m */,
 			);
-			name = Helpers;
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
@@ -327,8 +322,9 @@
 				CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */,
 				CE29EB5D19EF4AC800E0E2F9 /* jobagent_Tests_Prefix.pch */,
 				CE8EA61219EDC0E7002040C2 /* jobagent.storyboard */,
+				CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */,
 				CEAC63A71EED0D640033F75C /* ViewControllers */,
-				04B36748126BFE0900249902 /* Helpers */,
+				04B36748126BFE0900249902 /* Utilities */,
 				04AFE9CB11ED604F00DA706D /* Tasks */,
 				04AFE9C411ED5FD800DA706D /* Jobs */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -348,7 +344,6 @@
 			isa = PBXGroup;
 			children = (
 				CE8EA61719EDE525002040C2 /* Images.xcassets */,
-				CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */,
 				CE3CAE4C194B9FA500CF93DE /* de */,
 				CE3CAE24194B8A8700CF93DE /* en */,
 				CEB27813193F81770071EC32 /* Settings.bundle */,
@@ -456,6 +451,8 @@
 				04DCD95B1182208F0033DEC9 /* RootViewController.m */,
 				CEA8F29F1F02DFF8001BAA12 /* Companies.swift */,
 				CEA8F2A11F02E112001BAA12 /* CompanyDetail.swift */,
+				CE0452271F04CA8E004783B0 /* Jobs.swift */,
+				CE0452251F04B9F3004783B0 /* JobDetail.swift */,
 				CE0CAA2A1EFCC989007A0F95 /* People.swift */,
 				CE0CAA281EFC9C59007A0F95 /* PersonDetail.swift */,
 				CEAC63A81EED0D810033F75C /* Tips.swift */,
@@ -667,23 +664,24 @@
 				CEAC63AB1EED10F10033F75C /* jobagent-Bridging-Header.h in Sources */,
 				CE0CAA291EFC9C59007A0F95 /* PersonDetail.swift in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				049B09351147086F0055B02D /* JobDetail.m in Sources */,
 				0479869C114A183100096236 /* AppDelegate.m in Sources */,
-				04E036EE1157081A006FEFE2 /* Leads.m in Sources */,
 				CECF397519DFBDE000C546D7 /* Ads.m in Sources */,
-				04836E6F115887FD00F61102 /* Job.m in Sources */,
 				CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */,
 				040E0295115966440020C333 /* Task.m in Sources */,
 				0428F4C4115C5D02000554B9 /* Event.m in Sources */,
+				CE12F9F11F0586C600F18F1D /* TableViews.swift in Sources */,
 				0428F4D9115C5E43000554B9 /* Events.m in Sources */,
 				0428F4E1115C6085000554B9 /* EventDetail.m in Sources */,
+				CE12F9F91F05969200F18F1D /* DataController.swift in Sources */,
 				CEA8F2A01F02DFF8001BAA12 /* Companies.swift in Sources */,
+				CE0452281F04CA8E004783B0 /* Jobs.swift in Sources */,
 				CE10803C19E1DE7700542B05 /* Location.m in Sources */,
 				0431984D116194E80005206D /* Cities.m in Sources */,
 				CEDD6BBE19555C310062485F /* jobagent.xcdatamodeld in Sources */,
 				CEF52220191BDD8500844450 /* Common.m in Sources */,
 				CEA8F2A21F02E112001BAA12 /* CompanyDetail.swift in Sources */,
 				CE0CAA2B1EFCC989007A0F95 /* People.swift in Sources */,
+				CE0452261F04B9F3004783B0 /* JobDetail.swift in Sources */,
 				CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */,
 				04F93721116BDE450056B473 /* WebVC.m in Sources */,
 				CEAC63A91EED0D810033F75C /* Tips.swift in Sources */,

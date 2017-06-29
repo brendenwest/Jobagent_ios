@@ -1,73 +1,68 @@
 //
-//  CompanyDetail.swift
+//  JobDetail.swift
 //  jobagent
 //
-//  Created by Brenden West on 6/27/17.
+//  Created by Brenden West on 6/28/17.
 //
 //
 
 import UIKit
 import CoreData
+import MessageUI
 
-class Company: NSManagedObject {
-    @NSManaged var name: String?
-    @NSManaged var type: String?
+class Job: NSManagedObject {
+
+    @NSManaged var title: String?
     @NSManaged var location: String?
+    @NSManaged var link: String?
     @NSManaged var notes: String?
-    @NSManaged var jobs: Set<Job>?
-    @NSManaged var people: Set<Person>?
-    @NSManaged var toEvent: Set<Event>?
-    
-    
-    @objc(addPeopleObject:)
-    @NSManaged public func addToPeople(_ value: Person)
-    
-    @objc(removePeopleObject:)
-    @NSManaged public func removeFromPeople(_ value: Person)
-    
-    @objc(addPeople:)
-    @NSManaged public func addToPeople(_ values: NSSet)
-    
-    @objc(removePeople:)
-    @NSManaged public func removeFromPeople(_ values: NSSet)
+    @NSManaged var type: String?
+    @NSManaged var pay: String?
+    @NSManaged var date: Date?
+    @NSManaged var company: Company?
+    @NSManaged var contact: Person?
 
-    @objc(addJobsObject:)
-    @NSManaged public func addToJobs(_ value: Job)
-    
-    @objc(removeJobsObject:)
-    @NSManaged public func removeFromJobs(_ value: Job)
-    
-    @objc(addJobs:)
-    @NSManaged public func addToJobs(_ values: NSSet)
-    
-    @objc(removeJobs:)
-    @NSManaged public func removeFromJobs(_ values: NSSet)
+    // add new company item if not exists
+    func setCompany(name: String?) {
+        DataController.setCompany(name: name, for: self)
+    }
+
+    func setContact(name: String?) {
+        DataController.setPerson(name: name, for: self)
+    }
 
 }
 
-@objc internal class CompanyDetail: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, EditItemDelegate, PickListDelegate {
-    
-    @IBOutlet weak var tableView: UITableView?
-    @IBOutlet weak var btnCompanyActions: UISegmentedControl!
+@objc internal class JobDetail: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MFMailComposeViewControllerDelegate, EditItemDelegate, PickListDelegate {
 
-    weak var selectedCompany: Company?
+    @IBOutlet weak var tableView: UITableView?
+    @IBOutlet weak var btnJobActions: UISegmentedControl!
+
+    weak var selectedJob: Job?
     var managedObjectContext: NSManagedObjectContext!
     var currentKey: String = ""
-    
+
     let fields = [
-        ["label":NSLocalizedString("STR_COMPANY", comment: ""), "key": "name", "isText": true],
-        ["label":NSLocalizedString("STR_LOCATION", comment: ""), "key": "location", "isText": false],
+        ["label":NSLocalizedString("STR_TITLE", comment: ""), "key": "title", "isText": true],
+        ["label":NSLocalizedString("STR_COMPANY", comment: ""), "key": "company", "isText": true],
+        ["label":NSLocalizedString("STR_LOCATION", comment: ""), "key": "location", "isText": true],
+//        ["label":NSLocalizedString("STR_DATE", comment: ""), "key": "date", "isText": true],
         ["label":NSLocalizedString("STR_TYPE", comment: ""), "key": "type", "isText": false],
         ["label":NSLocalizedString("STR_NOTES", comment: ""), "key": "notes", "isText": false],
+        ["label":NSLocalizedString("STR_CONTACT", comment: ""), "key": "contact", "isText": true],
+        ["label":NSLocalizedString("STR_PAY", comment: ""), "key": "pay", "isText": true],
+        ["label":NSLocalizedString("STR_LINK", comment: ""), "key": "link", "isText": false],
     ]
-
-    let companyTypes = [
-        NSLocalizedString("STR_CO_TYPE_DEFAULT", comment: ""),
-        NSLocalizedString("STR_CO_TYPE_AGENCY", comment: ""),
-        NSLocalizedString("STR_CO_TYPE_GOVT", comment: ""),
-        NSLocalizedString("STR_CO_TYPE_EDUC", comment: ""),
+    
+    let jobTypes = [
+        NSLocalizedString("STR_JOB_TYPE_FT", comment: ""),
+        NSLocalizedString("STR_JOB_TYPE_PT", comment: ""),
+        NSLocalizedString("STR_JOB_TYPE_CON", comment: ""),
+        NSLocalizedString("STR_JOB_TYPE_C2C", comment: ""),
+        NSLocalizedString("STR_JOB_TYPE_INTERN", comment: ""),
+        NSLocalizedString("STR_JOB_TYPE_VOL", comment: ""),
         NSLocalizedString("STR_OTHER", comment: "")
-    ];
+    ]
 
     required init?(coder aDecoder: NSCoder) {
         
@@ -76,38 +71,37 @@ class Company: NSManagedObject {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.automaticallyAdjustsScrollViewInsets = false;
-
-        self.btnCompanyActions.addTarget(self, action: #selector(segmentAction(sender:)), for: .valueChanged)
         
-        self.tableView?.reloadData()
+        self.btnJobActions.addTarget(self, action: #selector(segmentAction(sender:)), for: .valueChanged)
+        
+       self.tableView?.reloadData()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
+        
         // trigger text fields to save contents
         self.view.window?.endEditing(true)
 
-        if let name = self.selectedCompany?.name, !name.isEmpty {
+        if let name = self.selectedJob?.title, !name.isEmpty {
             do {
-                try self.selectedCompany?.managedObjectContext?.save()
+                try self.selectedJob?.managedObjectContext?.save()
             } catch let error {
                 print("Error on save: \(error)")
             }
         } else {
             // delete empty record from data source
-            self.selectedCompany?.managedObjectContext?.delete(self.selectedCompany!)
+            self.selectedJob?.managedObjectContext?.delete(self.selectedJob!)
         }
     }
-
+    
     // MARK: TabelView methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fields.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let field = fields[indexPath.row]
         let reuseIdentifier = (field["isText"] as? Bool)! ? "editableCell" : "cell"
@@ -117,12 +111,19 @@ class Company: NSManagedObject {
             tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)
         if (cell == nil)
         {
-            cell = UITableViewCell(style: UITableViewCellStyle.default,
-                                   reuseIdentifier: reuseIdentifier)
+            cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: reuseIdentifier)
         }
         
         var label: UILabel
-        let text = self.selectedCompany?.value(forKey: itemKey) as? String ?? ""
+        var text: String
+        
+        if itemKey == "company" {
+            text = self.selectedJob?.company?.name ?? ""
+        } else if itemKey == "contact" {
+                text = self.selectedJob?.contact?.getFullName() ?? ""
+        } else {
+            text = self.selectedJob?.value(forKey: itemKey) as? String ?? ""
+        }
 
         if (cell?.contentView.subviews.isEmpty)! {
             label = customLabel(from: nil)
@@ -152,7 +153,7 @@ class Company: NSManagedObject {
                 detailText.text = text
             }
         }
-
+        
         return cell!
     }
     
@@ -171,8 +172,8 @@ class Company: NSManagedObject {
             
             let pickList = PickList()
             pickList.header = NSLocalizedString("STR_SEL_TYPE", comment: "")
-            pickList.options = companyTypes
-            pickList.selectedItem = customDetail(from: cell).text
+            pickList.options = jobTypes
+            pickList.selectedItem = customLabel(from: cell).text
             pickList.delegate = self as PickListDelegate
             self.navigationController?.pushViewController(pickList, animated: true)
             break
@@ -204,16 +205,27 @@ class Company: NSManagedObject {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
-
+        
         switch textField.tag {
         case 0:
-            self.selectedCompany?.name = textField.text
+            self.selectedJob?.title = textField.text
+            break
+        case 1:
+            self.selectedJob?.setCompany(name: textField.text)
+            break
+        case 2:
+            self.selectedJob?.location = textField.text
+            break
+        case 5:
+            self.selectedJob?.setContact(name: textField.text)
+            break
+        case 6:
+            self.selectedJob?.pay = textField.text
             break
         default:
             break
         }
     }
-
     
     // MARK: protocol methods
     
@@ -224,10 +236,10 @@ class Company: NSManagedObject {
     
     func textEditHandler(_ itemText: String) {
         // on return full-text edit view
-        self.selectedCompany?.setValue(itemText, forKey: self.currentKey)
+        self.selectedJob?.setValue(itemText, forKey: self.currentKey)
         self.tableView?.reloadData()
     }
-    
+
     // MARK: segment actions
     
     @IBAction func segmentAction(sender: Any?) {

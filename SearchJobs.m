@@ -7,11 +7,11 @@
 //
 
 #import "SearchJobs.h"
-#import "JobDetail.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "Ads.h"
 #import "Common.h"
+#import "jobagent-Swift.h"
 
 @implementation SearchJobs
 
@@ -223,7 +223,7 @@
         // transfer job description into 'notes' property
         [tmpJob setObject:[tmpJob valueForKey:@"description"] forKey:@"notes"];
 
-        [[segue destinationViewController] setAJob:[tmpJob mutableCopy]];
+//        [[segue destinationViewController] setAJob:[tmpJob mutableCopy]];
 
     }
 }

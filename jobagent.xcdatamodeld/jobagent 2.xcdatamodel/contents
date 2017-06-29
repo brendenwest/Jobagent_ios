@@ -11,13 +11,13 @@
         <attribute name="type" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
+        <relationship name="jobs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Job" inverseName="company" inverseEntity="Job" indexed="YES">
+            <userInfo/>
+        </relationship>
         <relationship name="people" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="company" inverseEntity="Person" indexed="YES">
             <userInfo/>
         </relationship>
         <relationship name="toEvent" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="toCompany" inverseEntity="Event" indexed="YES">
-            <userInfo/>
-        </relationship>
-        <relationship name="toJobs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Job" inverseName="toCompany" inverseEntity="Job" indexed="YES">
             <userInfo/>
         </relationship>
         <userInfo/>
@@ -56,28 +56,19 @@
         </relationship>
         <userInfo/>
     </entity>
-    <entity name="Job" representedClassName="Job">
+    <entity name="Job" representedClassName=".Job" syncable="YES">
         <attribute name="bMailed" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="company" optional="YES" attributeType="String">
-            <userInfo/>
-        </attribute>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO">
-            <userInfo/>
-        </attribute>
-        <attribute name="jobid" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
         <attribute name="link" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
         <attribute name="pay" optional="YES" attributeType="String">
-            <userInfo/>
-        </attribute>
-        <attribute name="person" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
         <attribute name="title" attributeType="String">
@@ -86,11 +77,11 @@
         <attribute name="type" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
-        <relationship name="toCompany" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="toJobs" inverseEntity="Company" indexed="YES">
+        <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="jobs" inverseEntity="Company" indexed="YES">
             <userInfo/>
         </relationship>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="job" inverseEntity="Person" syncable="YES"/>
         <relationship name="toEvent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="toJob" inverseEntity="Event" syncable="YES"/>
-        <userInfo/>
     </entity>
     <entity name="Person" representedClassName=".Person">
         <attribute name="email" optional="YES" attributeType="String">
@@ -116,6 +107,7 @@
         <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="people" inverseEntity="Company" indexed="YES">
             <userInfo/>
         </relationship>
+        <relationship name="job" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Job" inverseName="contact" inverseEntity="Job" syncable="YES"/>
         <relationship name="toEvent" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="toPerson" inverseEntity="Event" indexed="YES">
             <userInfo/>
         </relationship>
@@ -145,8 +137,8 @@
     <elements>
         <element name="Company" positionX="216" positionY="-45" width="128" height="150"/>
         <element name="Event" positionX="270" positionY="147" width="128" height="210"/>
-        <element name="Job" positionX="36" positionY="162" width="128" height="225"/>
-        <element name="Person" positionX="27" positionY="-54" width="128" height="195"/>
+        <element name="Job" positionX="36" positionY="162" width="128" height="210"/>
+        <element name="Person" positionX="27" positionY="-54" width="128" height="210"/>
         <element name="Task" positionX="448" positionY="-54" width="128" height="135"/>
     </elements>
 </model>

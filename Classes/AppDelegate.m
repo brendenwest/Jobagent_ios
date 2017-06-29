@@ -6,9 +6,7 @@
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 
-#import "Leads.h"
 #import "Events.h"
-#import "Job.h"
 #import "jobagent-Swift.h"
 
 /** Google Analytics configuration constants **/
@@ -213,9 +211,6 @@
     if (!context) {
         // Handle the error.
     }
-	
-    Leads *leadsVC = [[Leads alloc] initWithNibName:nil bundle:nil];
-    leadsVC.managedObjectContext = context;
     
     Events *eventsVC = [[Events alloc] initWithNibName:nil bundle:nil];
     eventsVC.managedObjectContext = context;
