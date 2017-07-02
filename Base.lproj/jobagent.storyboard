@@ -586,7 +586,7 @@
         <!--Results-->
         <scene sceneID="Vy8-Wk-1lJ">
             <objects>
-                <viewController title="Results" id="Q4j-cy-wKS" customClass="SearchJobs" sceneMemberID="viewController">
+                <viewController title="Results" id="Q4j-cy-wKS" customClass="SearchResults" customModule="jobagent" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pKH-j1-Eq5"/>
                         <viewControllerLayoutGuide type="bottom" id="UrY-UA-038"/>
@@ -607,7 +607,7 @@
                                     <segment title="LinkUp"/>
                                 </segments>
                                 <connections>
-                                    <action selector="switchJobSite:" destination="Q4j-cy-wKS" eventType="valueChanged" id="YVJ-WG-DnJ"/>
+                                    <action selector="switchJobSiteWithSender:" destination="Q4j-cy-wKS" eventType="valueChanged" id="2wL-QZ-t7a"/>
                                 </connections>
                             </segmentedControl>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="30" sectionFooterHeight="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Gam-wC-rrX" userLabel="tableView">
@@ -675,7 +675,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="s72-wa-o4t"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="btnJobSite" destination="Vx8-kL-4Y4" id="Ujl-ae-nlt"/>
+                        <outlet property="btnJobSites" destination="Vx8-kL-4Y4" id="7dY-Ud-KZq"/>
                         <outlet property="tableView" destination="Gam-wC-rrX" id="oD4-tD-lQQ"/>
                         <outlet property="uiLoading" destination="X39-LZ-bua" id="q85-gm-N7k"/>
                         <segue destination="b5D-bt-zZc" kind="show" identifier="showJobDetail" id="Kpe-XC-Clz"/>
@@ -1027,7 +1027,7 @@
         <image name="icon_companies2.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="R9d-Wk-1GE"/>
         <segue reference="YyK-1G-QcY"/>
+        <segue reference="Kpe-XC-Clz"/>
     </inferredMetricsTieBreakers>
 </document>

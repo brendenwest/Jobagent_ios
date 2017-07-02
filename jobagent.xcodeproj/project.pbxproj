@@ -16,7 +16,6 @@
 		044596661533D64D0078698D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 044596651533D64D0078698D /* libsqlite3.0.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		0473263F1154BBB400E4C6DA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0473263E1154BBB400E4C6DA /* MessageUI.framework */; };
 		0479869C114A183100096236 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479869B114A183100096236 /* AppDelegate.m */; };
-		04AB64991173BDFA00070D76 /* SearchJobs.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AB64981173BDFA00070D76 /* SearchJobs.m */; };
 		04BB0C90115ED4AF0005B400 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB0C8F115ED4AF0005B400 /* CoreLocation.framework */; };
 		04BB0D5B115F0AD50005B400 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB0D5A115F0AD50005B400 /* MapKit.framework */; };
 		04CBCE3E16A363CE007A41E9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CBCE3D16A363CE007A41E9 /* MobileCoreServices.framework */; };
@@ -50,6 +49,7 @@
 		CE10EC7F18FBACD700BA4B01 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE10EC7E18FBACD700BA4B01 /* libz.dylib */; };
 		CE12F9F11F0586C600F18F1D /* TableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12F9F01F0586C600F18F1D /* TableViews.swift */; };
 		CE12F9F91F05969200F18F1D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12F9F81F05969200F18F1D /* DataController.swift */; };
+		CE12F9FB1F061E0A00F18F1D /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12F9FA1F061E0900F18F1D /* SearchResults.swift */; };
 		CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1B83D2193E917A00058D22 /* appconfig.plist */; };
 		CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1E6DA41947FB0D00C9437A /* PickList.m */; };
 		CE1EB5E8191C6E330000901C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -109,11 +109,9 @@
 		0473263E1154BBB400E4C6DA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		0479869B114A183100096236 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		048FE0C31307B73E009BCE27 /* jobagent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jobagent.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		04AB64981173BDFA00070D76 /* SearchJobs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchJobs.m; sourceTree = "<group>"; };
 		04BB0C8F115ED4AF0005B400 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		04BB0D5A115F0AD50005B400 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		04C12457162273C800BADCE6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
-		04CAF4C5114B0C39004F9DBF /* SearchJobs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchJobs.h; sourceTree = "<group>"; };
 		04CBCE3D16A363CE007A41E9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		04CBCE3F16A363DB007A41E9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		04CBCE4116A363EF007A41E9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -155,6 +153,7 @@
 		CE10EC7E18FBACD700BA4B01 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CE12F9F01F0586C600F18F1D /* TableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViews.swift; sourceTree = "<group>"; };
 		CE12F9F81F05969200F18F1D /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		CE12F9FA1F061E0900F18F1D /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		CE1B83D2193E917A00058D22 /* appconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appconfig.plist; sourceTree = "<group>"; };
 		CE1E6DA31947FB0D00C9437A /* PickList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickList.h; sourceTree = "<group>"; };
 		CE1E6DA41947FB0D00C9437A /* PickList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickList.m; sourceTree = "<group>"; };
@@ -251,15 +250,6 @@
 			name = "Object classes";
 			sourceTree = "<group>";
 		};
-		04AFE9C411ED5FD800DA706D /* Jobs */ = {
-			isa = PBXGroup;
-			children = (
-				04CAF4C5114B0C39004F9DBF /* SearchJobs.h */,
-				04AB64981173BDFA00070D76 /* SearchJobs.m */,
-			);
-			name = Jobs;
-			sourceTree = "<group>";
-		};
 		04AFE9CB11ED604F00DA706D /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,7 +316,6 @@
 				CEAC63A71EED0D640033F75C /* ViewControllers */,
 				04B36748126BFE0900249902 /* Utilities */,
 				04AFE9CB11ED604F00DA706D /* Tasks */,
-				04AFE9C411ED5FD800DA706D /* Jobs */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				04836E651158873100F61102 /* Object classes */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -455,6 +444,7 @@
 				CE0452251F04B9F3004783B0 /* JobDetail.swift */,
 				CE0CAA2A1EFCC989007A0F95 /* People.swift */,
 				CE0CAA281EFC9C59007A0F95 /* PersonDetail.swift */,
+				CE12F9FA1F061E0900F18F1D /* SearchResults.swift */,
 				CEAC63A81EED0D810033F75C /* Tips.swift */,
 			);
 			name = ViewControllers;
@@ -685,7 +675,7 @@
 				CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */,
 				04F93721116BDE450056B473 /* WebVC.m in Sources */,
 				CEAC63A91EED0D810033F75C /* Tips.swift in Sources */,
-				04AB64991173BDFA00070D76 /* SearchJobs.m in Sources */,
+				CE12F9FB1F061E0A00F18F1D /* SearchResults.swift in Sources */,
 				04DCD95C1182208F0033DEC9 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

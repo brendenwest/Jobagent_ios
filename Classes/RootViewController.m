@@ -8,7 +8,6 @@
 
 #import "RootViewController.h"
 #import "AppDelegate.h"
-#import "SearchJobs.h"
 #import "Cities.h"
 #import "Ads.h"
 #import "Location.h"
@@ -133,8 +132,8 @@ NSString * kLocationUpdated = @"";
         }
         
         [[segue destinationViewController] setKeyword:_txtSearch.text];
-        [[segue destinationViewController] setCurLocation:_txtLocation.text];
-        [[segue destinationViewController] setCurLocale:[curLocation objectForKey:@"country"]];
+        [[segue destinationViewController] setLocation:_txtLocation.text];
+        [[segue destinationViewController] setLocale:[curLocation objectForKey:@"country"]];
     } else if ([[segue identifier] isEqualToString:@"showCities"]) {
         [[segue destinationViewController] setPlacemarks:sender];
 

@@ -35,8 +35,4 @@
 - (void)trackPV:(NSString*)screenName;
 - (void)trackPVFull:(NSString*)screenName :(NSString*)eventCategory :(NSString*)eventAction :(NSString*)eventLabel;
 
-// Core Data methods
-- (void)setCompany:(NSString *)companyName;
-- (void)setPerson:(NSString*)personName withCo:(NSString*)companyName;
-
 @end

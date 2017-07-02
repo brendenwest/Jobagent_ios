@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "jobagent-Swift.h"
 
-@class AppDelegate, SearchJobs, Cities;
+@class AppDelegate, Cities;
 
 @interface RootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate > {
     
