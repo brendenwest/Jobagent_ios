@@ -904,6 +904,7 @@
                                     <constraint firstAttribute="width" constant="280" id="QYh-A2-GxI"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="dataSource" destination="CTO-dM-qv1" id="GnO-7M-Gez"/>
                                     <outlet property="delegate" destination="CTO-dM-qv1" id="XMk-HY-Y8T"/>
                                 </connections>
                             </tableView>

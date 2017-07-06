@@ -1,5 +1,4 @@
 #import "AppDelegate.h"
-#import "RootViewController.h"
 
 #import "GAI.h"
 #import "GAIFields.h"
@@ -21,7 +20,6 @@
 
 @implementation AppDelegate
 
-@synthesize previousSearch, userSettings;
 @synthesize managedObjectContext;
 @synthesize configuration = _configuration;
 
@@ -30,34 +28,10 @@
 
     // get bundle defaults
     [self registerDefaultsFromSettingsBundle];
+    [Settings onLaunch];
     
-    // get user defaults object
-    NSUserDefaults *newDefaults = [NSUserDefaults standardUserDefaults];
+    [self setContextForVCs];
     
-    // get system default country code
-    [newDefaults setObject:[[NSLocale autoupdatingCurrentLocale] objectForKey:NSLocaleCountryCode] forKey:@"countryCode"];
-    
-    // add values from legacy settings.xml if found
-    settingsFile = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:@"userSettings.xml"];
-    
-	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
-		NSDictionary *oldSettings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
-        
-        if ([oldSettings objectForKey:@"city"] != nil) {
-            [newDefaults setObject:[oldSettings objectForKey:@"city"] forKey:@"city"];
-        }
-        if ([oldSettings objectForKey:@"state"] != nil) {
-            [newDefaults setObject:[oldSettings objectForKey:@"state"] forKey:@"state"];
-        }
-        if ([oldSettings objectForKey:@"postalcode"] != nil) {
-            [newDefaults setObject:[oldSettings objectForKey:@"postalcode"] forKey:@"postalcode"];
-        }
-        if ([oldSettings objectForKey:@"country"] != nil) {
-            [newDefaults setObject:[oldSettings objectForKey:@"country"] forKey:@"countryCode"];
-        }
-    }
-    [newDefaults synchronize];
-        
     // load values from appconfig.plist
     _configuration = [self configuration];
     
@@ -233,15 +207,6 @@
     NSLog(@"Error in registration. Error: %@", err);
 }
 
-
-- (void)saveRecentSearches {
-    // store recent searches
-    NSData *xmlData = [NSPropertyListSerialization dataFromPropertyList:userSettings
-                                                                 format:NSPropertyListXMLFormat_v1_0
-                                                       errorDescription:nil];
-    [xmlData writeToFile:settingsFile atomically:YES];
-}
-
 /**
  applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
  */
@@ -256,13 +221,16 @@
     
     [self synchUserDefaults];
     
-    [self saveRecentSearches];
-
 }
 
 - (void)synchUserDefaults {
     // Store user settings
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if (Settings.searches != NULL) {
+        [defaults setValue:Settings.searches forKey:@"searches"];
+    }
     [defaults synchronize];
 }
 
@@ -277,8 +245,6 @@
     
     [self synchUserDefaults];
     
-    [self saveRecentSearches];
-
 }
 
 - (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
@@ -368,27 +334,6 @@
     
     return _configuration;
 }
-
-
-#pragma mark userSettings
-/**
- Returns userSettings dictionary. Now used only for storing recent searches
- */
-- (NSMutableDictionary *)userSettings {
-	
-    if (userSettings != nil) {
-        return userSettings;
-    }
-    
-	if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFile]) {
-		return [NSMutableDictionary dictionaryWithContentsOfFile:settingsFile];
-	} else {
-		userSettings = [[NSMutableDictionary alloc] init];
-    }
-    return userSettings;
-
-}
-
 
 #pragma mark -
 #pragma mark Core Data stack

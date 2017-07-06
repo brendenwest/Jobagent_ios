@@ -25,6 +25,7 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
     
     var curLocation = Location.defaultLocation
     var prevLocation: String?
+    let cellId = "cell"
     
     // location detection
     var startLocation: CLLocation?
@@ -37,13 +38,26 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if curLocation["postalCode"]!.isEmpty && Common.connectedToNetwork() {
+        
+        if !Settings.searches.isEmpty {
+            let values = Settings.searches.last?.components(separatedBy: "|")
+            self.txtSearch?.text = values?.first
+            self.txtLocation?.text = values?.last
+        } else if curLocation["postalCode"]!.isEmpty && Common.connectedToNetwork() {
             self.detectLocation()
         } else {
             self.updateLocationFields()
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.tblRecent?.isHidden = Settings.searches.isEmpty
+        self.tblRecent?.reloadData()
+    }
+    
+    // UI methods
     func searchJobs() {
         NotificationCenter.default.removeObserver(self)
         self.performSegue(withIdentifier: "showSearchResults", sender: nil)
@@ -71,13 +85,11 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
                 
                 // forward geocode to get address location
                 geocoder.geocodeAddressString(enteredLocation, completionHandler: {[weak self] placemarks,error in
-                    print("1 \(placemarks)")
                     if (error != nil) || (placemarks?.isEmpty)! {
                         // error handling
                     } else if placemarks?.count == 1, let coordinate = placemarks!.first?.location?.coordinate {
                         
                         // get postal code for placemark
-                        print("2 ")
                         let location = CLLocation.init (latitude: coordinate.latitude, longitude: coordinate.longitude)
                         geocoder.reverseGeocodeLocation(location, completionHandler: {
                             newPlacemarks, error in
@@ -87,7 +99,6 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
                             }
                         })
                     } else {
-                        print("2b ")
                         self?.geocodeHandler(placemarks!)
                     }
                 })
@@ -97,7 +108,6 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
     
     func geocodeHandler(_ placemarks: [CLPlacemark]) {
         if placemarks.count == 1 {
-            print("3 \(placemarks)")
             self.curLocation = Location.updateLocation(placemarks.first!)
             
             self.updateLocationFields()
@@ -106,7 +116,6 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
             NotificationCenter.default.post(name: Notification.Name.LocationUpdated, object: self)
 
         } else {
-            print("2b ")
             self.performSegue(withIdentifier: "showCities", sender: placemarks)
         }
     }
@@ -121,6 +130,11 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showSearchResults" {
             // TK: save search
+            
+            let newSearch = "\(self.txtSearch!.text!)|\(self.txtLocation!.text!)"
+            if !Settings.searches.contains(newSearch) {
+                Settings.searches.append(newSearch)
+            }
             
             if let vc = segue.destination as? SearchResults {
                 vc.keyword = self.txtSearch!.text!
@@ -180,16 +194,31 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
     }
     
     // MARK: TableView methods
+    
     @available(iOS 2.0, *)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return Settings.searches.count
     }
     
     @available(iOS 2.0, *)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        print(Settings.searches[indexPath.row])
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId)
+            ?? UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellId)
+        cell.textLabel?.text = Settings.searches[indexPath.row]
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+
+        return cell
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let parts = Settings.searches[indexPath.row].components(separatedBy: "|")
+        self.txtSearch?.text = parts.first
+        self.txtLocation?.text = parts.last
+        self.performSegue(withIdentifier: "showSearchResults", sender: nil)
+    }
+    
     // MARK: TextView methods
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
