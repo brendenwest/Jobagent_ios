@@ -843,7 +843,7 @@
         <!--Job Agent-->
         <scene sceneID="0cP-xs-0En">
             <objects>
-                <viewController title="Job Agent" id="CTO-dM-qv1" customClass="RootViewController" sceneMemberID="viewController">
+                <viewController title="Job Agent" id="CTO-dM-qv1" customClass="Home" customModule="jobagent" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3P8-JV-bLY"/>
                         <viewControllerLayoutGuide type="bottom" id="uva-75-alr"/>
@@ -894,7 +894,7 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="searchJobs:" destination="CTO-dM-qv1" eventType="touchUpInside" id="cL4-yp-3Se"/>
+                                    <action selector="searchButtonClicked" destination="CTO-dM-qv1" eventType="touchUpInside" id="J4W-oY-PeW"/>
                                 </connections>
                             </button>
                             <tableView hidden="YES" autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0Az-L5-aGz">
