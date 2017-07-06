@@ -121,6 +121,7 @@ import CoreData
         case segueId:
             
             let detailVC = segue.destination as! JobDetail
+            detailVC.isFavorite = true
             if (sender as? UITableView) == self.tableView {
                 let indexPath = tableView.indexPathForSelectedRow!
                 let job = fetchedResultsController.object(at: indexPath) as! Job

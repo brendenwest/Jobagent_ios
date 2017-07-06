@@ -57,7 +57,6 @@ class Person: NSManagedObject {
     @IBOutlet weak var btnContactActions: UISegmentedControl!
 
     weak var selectedPerson: Person?
-    var managedObjectContext: NSManagedObjectContext!
     var currentKey: String = ""
     
     let fields = [

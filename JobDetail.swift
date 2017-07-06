@@ -39,7 +39,7 @@ class Job: NSManagedObject {
     @IBOutlet weak var btnJobActions: UISegmentedControl!
 
     weak var selectedJob: Job?
-    var managedObjectContext: NSManagedObjectContext!
+    var isFavorite = false // true when entering from Jobs
     var currentKey: String = ""
 
     let fields = [
@@ -84,7 +84,7 @@ class Job: NSManagedObject {
         // trigger text fields to save contents
         self.view.window?.endEditing(true)
 
-        if let name = self.selectedJob?.title, !name.isEmpty {
+        if let name = self.selectedJob?.title, !name.isEmpty, isFavorite  {
             do {
                 try self.selectedJob?.managedObjectContext?.save()
             } catch let error {
@@ -96,7 +96,7 @@ class Job: NSManagedObject {
         }
     }
     
-    // MARK: TabelView methods
+    // MARK: TableView methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fields.count
@@ -244,5 +244,44 @@ class Job: NSManagedObject {
     
     @IBAction func segmentAction(sender: Any?) {
         let index = (sender as! UISegmentedControl).selectedSegmentIndex
+        switch index {
+        case 0:
+            self.isFavorite = true
+            self.navigationController?.popViewController(animated: true)
+            break
+        case 1:
+            self.shareJob()
+            break
+        case 2:
+            let webVC = WebVC()
+            webVC.requestedURL = self.selectedJob?.link
+            webVC.title = "Job Listing"
+            self.navigationController?.pushViewController(webVC, animated: true)
+            break
+        default:
+            break
+        }
     }
+    
+    func shareJob() {
+        if let link = self.selectedJob?.link {
+            let tinyUrl = URL.init(string: "http://tinyurl.com/api-create.php?url=\(link)")
+            do {
+                let shortUrl = try String(contentsOf: tinyUrl!, encoding: String.Encoding.ascii)
+                let postText = "\(String(describing: self.selectedJob?.title)) - \(shortUrl)"
+                let activityController = UIActivityViewController(activityItems: [postText, URL.init(string: "") as Any], applicationActivities: nil)
+                activityController.setValue("Job lead - \(String(describing: self.selectedJob?.title))", forKey: "subject")
+                activityController.excludedActivityTypes = [
+                    UIActivityType.copyToPasteboard,
+                    UIActivityType.saveToCameraRoll,
+                    UIActivityType.assignToContact
+                ]
+                
+                self.present(activityController, animated: true, completion: nil)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
 }

@@ -38,7 +38,7 @@ import Alamofire
     @IBOutlet weak var lblSearch: UILabel?
     @IBOutlet weak var uiLoading: UIActivityIndicatorView?
 
-    let segueId = "showCompanyDetail"
+    let segueId = "showJobDetail"
     let cellId = "cell"
     
     let siteList = [
@@ -70,7 +70,7 @@ import Alamofire
         
     }
     
-    // MARK: TabelView methods
+    // MARK: TableView methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return jobsForSite.count
@@ -92,13 +92,41 @@ import Alamofire
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
          return cell;
     }
-    
-    @IBAction func switchJobSite(sender: Any?) {
-        let index = (sender as? UISegmentedControl)?.selectedSegmentIndex ?? 0
-        print(index)
-        print(jobsForSite.count)
-        self.tableView?.reloadData()
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: segueId, sender: tableView)
         
+    }
+
+    // MARK: segue to detail
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        switch segue.identifier! {
+        case segueId:
+            
+            let detailVC = segue.destination as! JobDetail
+            if (sender as? UITableView) == self.tableView {
+                let job = Job(context: appDelegate.managedObjectContext)
+                if let indexPath = tableView?.indexPathForSelectedRow  {
+                    let tmpJob = self.jobsForSite[indexPath.row]
+                    job.title = tmpJob["title"] as? String
+                    job.notes = tmpJob["description"] as? String
+                    job.location = tmpJob["location"] as? String
+                    job.link = tmpJob["link"] as? String
+                    job.setCompany(name: tmpJob["company"] as? String)
+                    detailVC.selectedJob = job
+                }
+ 
+            }
+            
+        default:
+            print("Unknown segue: \(String(describing: segue.identifier))")
+        }
+    }
+
+    @IBAction func switchJobSite(sender: Any?) {
+        self.tableView?.reloadData()
     }
     
     func loadJobs() {
@@ -112,7 +140,7 @@ import Alamofire
         searchUrl = searchUrl.replacingOccurrences(of: "<max>", with: settings.string(forKey: "maxResults")!)
         searchUrl = searchUrl.replacingOccurrences(of: "<age>", with: settings.string(forKey: "ageResults")!)
         searchUrl = searchUrl.replacingOccurrences(of: "<distance>", with: settings.string(forKey: "distanceResults")!)
-        
+
         Alamofire.request(searchUrl).responseJSON { response in
             if let JSON = response.result.value as? [String: Any], let results = JSON["jobs"] as? [[String: Any]] {
                 self.jobsAll = results
