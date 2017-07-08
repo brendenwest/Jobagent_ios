@@ -20,7 +20,6 @@ import Alamofire
             return jobsAll.filter() {
                 ($0["link"] as! String).range(of:tag) != nil
             }
-
         }
     }
 
@@ -28,6 +27,7 @@ import Alamofire
     var keyword = ""
     var location = ""
     var locale = "US"
+    var shouldLoad = false
 
     var currentSearch = [String: String]()
 
@@ -66,14 +66,60 @@ import Alamofire
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.loadJobs()
-        
+        let label = NSLocalizedString("STR_RESULTS_FOR", comment: "")
+        self.lblSearch?.text = "\(label) \(keyword) in \(location))"
+        if self.shouldLoad {
+            self.isLoading(true)
+            self.loadJobs()
+        }
+    }
+    
+    func isLoading(_ state: Bool) {
+        self.tableView?.isHidden = state
+        self.btnJobSites?.isHidden = state
+        self.uiLoading?.isHidden = !state
+        if state {
+            uiLoading?.startAnimating()
+        } else {
+            uiLoading?.stopAnimating()
+            self.btnJobSites?.setEnabled(locale == "US", forSegmentAt: 2)
+            self.btnJobSites?.setEnabled(locale == "US", forSegmentAt: 3)
+        }
     }
     
     // MARK: TableView methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return jobsForSite.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let index = self.btnJobSites.selectedSegmentIndex
+        
+        let labelWidth = (index == 1) ? 65 : 300
+        let headerView = UIControl.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 25))
+        let headerLabel = UILabel.init(frame: CGRect.init(x: 5, y: 5, width: labelWidth, height: 20))
+        headerLabel.text = siteList[index]["displayName"]
+        headerLabel.textColor = UIColor.darkGray
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        let headerBorder = UIView.init(frame: CGRect.init(x: 0, y: 24, width: 320, height: 1))
+        headerBorder.backgroundColor = UIColor.lightGray
+        headerView.addSubview(headerLabel)
+        
+        if index == 1 {
+            let imageRect = CGRect.init(x: labelWidth+1, y: 5, width: 54, height: 20)
+            let headerImage = UIImageView.init(frame: imageRect)
+            let image = UIImage.init(contentsOfFile: Bundle.main.path(forResource: "indeed_logo", ofType: "gif")!)
+            headerImage.image = image
+            headerImage.isOpaque = true
+            headerView.addSubview(headerImage)
+            headerView.addTarget(self, action: #selector(linkToSource), for: .touchUpInside)
+        }
+        
+        headerView.addSubview(headerBorder)
+        
+        return headerView
+        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -82,7 +128,7 @@ import Alamofire
             ?? UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: cellId)
         let job = jobsForSite[indexPath.row]
 
-        let pubdate = Common.getShortDate(job["pubdate"] as? String ?? "")!
+        let pubdate = DateUtilities.dateStringFrom(string: job["pubdate"] as! String)
         let company = job["company"] as? String ?? ""
         let location = job["location"] as? String ?? ""
         
@@ -114,10 +160,13 @@ import Alamofire
                     job.notes = tmpJob["description"] as? String
                     job.location = tmpJob["location"] as? String
                     job.link = tmpJob["link"] as? String
-                    job.setCompany(name: tmpJob["company"] as? String)
+                    job.setValue(value: tmpJob["company"] as Any, forField: .company)
+
+                    let pubdate = DateUtilities.dateStringFrom(string: tmpJob["pubdate"] as! String)
+                    job.setValue(value: pubdate as String, forField: .date)
                     detailVC.selectedJob = job
                 }
- 
+                self.shouldLoad = false
             }
             
         default:
@@ -127,6 +176,10 @@ import Alamofire
 
     @IBAction func switchJobSite(sender: Any?) {
         self.tableView?.reloadData()
+    }
+    
+    func linkToSource() {
+        UIApplication.shared.open(URL.init(string: siteList[self.btnJobSites.selectedSegmentIndex]["domain"]!)!, options: [:], completionHandler: nil)
     }
     
     func loadJobs() {
@@ -143,6 +196,7 @@ import Alamofire
 
         Alamofire.request(searchUrl).responseJSON { response in
             if let JSON = response.result.value as? [String: Any], let results = JSON["jobs"] as? [[String: Any]] {
+                self.isLoading(false)
                 self.jobsAll = results
                 self.switchJobSite(sender: nil)
             }

@@ -43,9 +43,29 @@ class Company: NSManagedObject {
     @objc(removeJobs:)
     @NSManaged public func removeFromJobs(_ values: NSSet)
 
+    func stringValueFor(field: ModelFieldType) -> String {
+        switch field {
+        case .name: return name ?? ""
+        case .location: return location ?? ""
+        case .type: return type ?? ""
+        case .notes: return notes ?? ""
+        default: return ""
+        }
+    }
+    
+    func setValue(value: Any, forField field: ModelFieldType) {
+        switch field {
+        case .name: if let name = value as? String { self.name = name }
+        case .location: if let location = value as? String { self.location = location }
+        case .type: if let type = value as? String { self.type = type }
+        case .notes: if let notes = value as? String { self.notes = notes }
+        default:
+            break
+        }
+    }
 }
 
-@objc internal class CompanyDetail: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, EditItemDelegate, PickListDelegate {
+@objc internal class CompanyDetail: UIViewController, UITableViewDelegate, UITableViewDataSource, TextFieldTableViewCellDelegate, EditItemDelegate, PickListDelegate {
     
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var btnCompanyActions: UISegmentedControl!
@@ -54,12 +74,7 @@ class Company: NSManagedObject {
     var managedObjectContext: NSManagedObjectContext!
     var currentKey: String = ""
     
-    let fields = [
-        ["label":NSLocalizedString("STR_COMPANY", comment: ""), "key": "name", "isText": true],
-        ["label":NSLocalizedString("STR_LOCATION", comment: ""), "key": "location", "isText": false],
-        ["label":NSLocalizedString("STR_TYPE", comment: ""), "key": "type", "isText": false],
-        ["label":NSLocalizedString("STR_NOTES", comment: ""), "key": "notes", "isText": false],
-    ]
+    let fields : [ModelFieldType] = [.name, .location, .type, .notes]
 
     let companyTypes = [
         NSLocalizedString("STR_CO_TYPE_DEFAULT", comment: ""),
@@ -79,6 +94,8 @@ class Company: NSManagedObject {
 
         self.automaticallyAdjustsScrollViewInsets = false;
 
+        self.tableView?.register(UINib(nibName: "TextFieldTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFieldTableViewCell")
+        
         self.btnCompanyActions.addTarget(self, action: #selector(segmentAction(sender:)), for: .valueChanged)
         
         self.tableView?.reloadData()
@@ -110,108 +127,59 @@ class Company: NSManagedObject {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let field = fields[indexPath.row]
-        let reuseIdentifier = (field["isText"] as? Bool)! ? "editableCell" : "cell"
-        let itemKey: String = field["key"] as! String
+        let cell = self.tableView?.dequeueReusableCell(withIdentifier: "TextFieldTableViewCell", for: indexPath) as! TextFieldTableViewCell
+        cell.configureWithField(field: field, andValue: self.selectedCompany?.stringValueFor(field: field))
+        cell.delegate = self
         
-        var cell:UITableViewCell? =
-            tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)
-        if (cell == nil)
-        {
-            cell = UITableViewCell(style: UITableViewCellStyle.default,
-                                   reuseIdentifier: reuseIdentifier)
-        }
-        
-        var label: UILabel
-        let text = self.selectedCompany?.value(forKey: itemKey) as? String ?? ""
-
-        if (cell?.contentView.subviews.isEmpty)! {
-            label = customLabel(from: nil)
-            label.text = field["label"] as? String
-            cell?.contentView.addSubview(label)
-            
-            if reuseIdentifier == "editableCell" {
-                let detailText = UITextField.init(frame: detailWidth)
-                detailText.text = text
-                detailText.delegate = self;
-                detailText.tag = indexPath.row;
-                detailText.returnKeyType = UIReturnKeyType.done;
-                cell?.contentView.addSubview(detailText)
-            } else {
-                let detailText = UILabel.init(frame: detailWidth)
-                detailText.text = text
-                cell?.contentView.addSubview(detailText)
-                cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator;
-            }
-            
-        } else {
-            if reuseIdentifier == "editableCell" {
-                let detailText = cell?.contentView.subviews[1] as! UITextField
-                detailText.text = text
-            } else {
-                let detailText = customDetail(from: cell)
-                detailText.text = text
-            }
-        }
-
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // store name if entered
-        self.view.window?.endEditing(true)
+        self.view.endEditing(true)
+        let field = fields[indexPath.row]
         
         // store ID of selected row for use when returning from child vc
-        self.currentKey = self.fields[indexPath.row]["key"] as! String
-        let cell = tableView.cellForRow(at: indexPath)
+        self.currentKey = field.rawValue
         
         switch self.currentKey {
         case "type":
-            let cell = tableView.cellForRow(at: indexPath)
             
             let pickList = PickList()
             pickList.header = NSLocalizedString("STR_SEL_TYPE", comment: "")
             pickList.options = companyTypes
-            pickList.selectedItem = customDetail(from: cell).text
+            pickList.selectedItem = self.selectedCompany?.stringValueFor(field: field)
             pickList.delegate = self as PickListDelegate
             self.navigationController?.pushViewController(pickList, animated: true)
             break
             
         default:
-            self.performSegue(withIdentifier: "showItem", sender: cell)
+            self.performSegue(withIdentifier: "showItem", sender: field)
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showItem" {
-            if let cell = sender as? UITableViewCell {
+            if let field = sender as? ModelFieldType {
                 let vc = segue.destination as! EditItemVC
-                vc.labelText = customLabel(from: cell).text
-                vc.itemText =  customDetail(from: cell).text
+                vc.labelText = field.localized
+                vc.itemText =  self.selectedCompany?.stringValueFor(field: field)
                 vc.delegate = self
                 
             }
         }
     }
 
-    // MARK: TextView methods
+    // MARK: - TextFieldTableViewCellDelegate
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // the user pressed the "Done" button, so dismiss the keyboard
-        textField.resignFirstResponder()
-        return true
+    func field(field: ModelFieldType, changedValueTo value: String) {
+        self.selectedCompany?.setValue(value: value, forField: field)
+        self.tableView?.reloadData()
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.resignFirstResponder()
+    func fieldDidBeginEditing(field: ModelFieldType) {
 
-        switch textField.tag {
-        case 0:
-            self.selectedCompany?.name = textField.text
-            break
-        default:
-            break
-        }
     }
 
     

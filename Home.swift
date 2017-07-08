@@ -64,7 +64,6 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
     }
 
     @IBAction func searchButtonClicked() {
-        print("searchButtonClicked")
         let enteredLocation = self.txtLocation?.text ?? ""
         
         if !Common.connectedToNetwork() {
@@ -140,6 +139,7 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
                 vc.keyword = self.txtSearch!.text!
                 vc.location = self.txtLocation!.text!
                 vc.locale = curLocation["country"]!
+                vc.shouldLoad = true
             }
         } else if segue.identifier == "showCities" {
             // TK: show cities
@@ -149,9 +149,7 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
     // MARK: Location methods
     
     func detectLocation() {
-        print("detectLocation")
         if CLLocationManager.locationServicesEnabled() {
-            print("locationServicesEnabled")
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
         }
@@ -202,7 +200,6 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
     
     @available(iOS 2.0, *)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(Settings.searches[indexPath.row])
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId)
             ?? UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellId)

@@ -63,6 +63,11 @@
 		CE8EA61B19EE0BD8002040C2 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF5221F191BDD8500844450 /* Common.m */; };
 		CE8EA61C19EE0BDF002040C2 /* Ads.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF397419DFBDE000C546D7 /* Ads.m */; };
 		CE8EA61D19EE0C58002040C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479869B114A183100096236 /* AppDelegate.m */; };
+		CEA114311F0F658F00662777 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA114301F0F658F00662777 /* TextFieldCell.swift */; };
+		CEA114351F0FF3BA00662777 /* DateUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA114341F0FF3BA00662777 /* DateUtilities.swift */; };
+		CEA114371F0FFFA100662777 /* TextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA114361F0FFFA100662777 /* TextFieldTableViewCell.xib */; };
+		CEA114391F108B8300662777 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA114381F108B8300662777 /* DatePickerCell.swift */; };
+		CEA1143B1F10940C00662777 /* DatePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA1143A1F10940C00662777 /* DatePickerCell.xib */; };
 		CEA8F2A01F02DFF8001BAA12 /* Companies.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8F29F1F02DFF8001BAA12 /* Companies.swift */; };
 		CEA8F2A21F02E112001BAA12 /* CompanyDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8F2A11F02E112001BAA12 /* CompanyDetail.swift */; };
 		CEAC63A91EED0D810033F75C /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC63A81EED0D810033F75C /* Tips.swift */; };
@@ -169,6 +174,11 @@
 		CE8CED6F19CA0C13008217C8 /* RootView_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootView_Tests.m; sourceTree = "<group>"; };
 		CE8EA61319EDC0E7002040C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/jobagent.storyboard; sourceTree = "<group>"; };
 		CE8EA61719EDE525002040C2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = jobagent/Images.xcassets; sourceTree = "<group>"; };
+		CEA114301F0F658F00662777 /* TextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
+		CEA114341F0FF3BA00662777 /* DateUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtilities.swift; sourceTree = "<group>"; };
+		CEA114361F0FFFA100662777 /* TextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		CEA114381F108B8300662777 /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
+		CEA1143A1F10940C00662777 /* DatePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerCell.xib; sourceTree = "<group>"; };
 		CEA8F29F1F02DFF8001BAA12 /* Companies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Companies.swift; sourceTree = "<group>"; };
 		CEA8F2A11F02E112001BAA12 /* CompanyDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyDetail.swift; sourceTree = "<group>"; };
 		CEAC63A81EED0D810033F75C /* Tips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
@@ -263,6 +273,10 @@
 			isa = PBXGroup;
 			children = (
 				CE12F9F81F05969200F18F1D /* DataController.swift */,
+				CEA114381F108B8300662777 /* DatePickerCell.swift */,
+				CEA1143A1F10940C00662777 /* DatePickerCell.xib */,
+				CEA114341F0FF3BA00662777 /* DateUtilities.swift */,
+				CEA114361F0FFFA100662777 /* TextFieldTableViewCell.xib */,
 				CEB10F7F1F0C245C00065D7B /* Location.swift */,
 				CE74D8B71946CAD3006C9ACE /* EditItemVC.h */,
 				CE74D8B81946CAD3006C9ACE /* EditItemVC.m */,
@@ -270,7 +284,9 @@
 				0431984C116194E80005206D /* Cities.m */,
 				CEF5221E191BDD8500844450 /* Common.h */,
 				CEF5221F191BDD8500844450 /* Common.m */,
+				CEFE7E061F0E12FA0038D441 /* Settings.swift */,
 				CE12F9F01F0586C600F18F1D /* TableViews.swift */,
+				CEA114301F0F658F00662777 /* TextFieldCell.swift */,
 				04F9371F116BDE450056B473 /* WebVC.h */,
 				04F93720116BDE450056B473 /* WebVC.m */,
 				CE1E6DA31947FB0D00C9437A /* PickList.h */,
@@ -301,7 +317,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				CEFE7E061F0E12FA0038D441 /* Settings.swift */,
 				CE1B83D2193E917A00058D22 /* appconfig.plist */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				0479869B114A183100096236 /* AppDelegate.m */,
@@ -575,10 +590,12 @@
 				04F985A215315696000CE69A /* Default.png in Resources */,
 				5A894CEF15368B33002E3D57 /* indeed_logo.gif in Resources */,
 				CE8EA61819EDE525002040C2 /* Images.xcassets in Resources */,
+				CEA1143B1F10940C00662777 /* DatePickerCell.xib in Resources */,
 				CEB1A207190394410008F0A2 /* jobagent_icon_29.png in Resources */,
 				04F4FD84175B161200FED540 /* jobagent_icon_57.png in Resources */,
 				04F4FD86175B165100FED540 /* jobagent_icon_114.png in Resources */,
 				CEB27814193F81770071EC32 /* Settings.bundle in Resources */,
+				CEA114371F0FFFA100662777 /* TextFieldTableViewCell.xib in Resources */,
 				04F4FD8A175B168300FED540 /* Default@2x.png in Resources */,
 				04F4FD8E175B176F00FED540 /* Default-568h@2x.png in Resources */,
 				CE8EA61419EDC0E7002040C2 /* jobagent.storyboard in Resources */,
@@ -653,6 +670,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				0479869C114A183100096236 /* AppDelegate.m in Sources */,
 				CECF397519DFBDE000C546D7 /* Ads.m in Sources */,
+				CEA114351F0FF3BA00662777 /* DateUtilities.swift in Sources */,
 				CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */,
 				040E0295115966440020C333 /* Task.m in Sources */,
 				0428F4C4115C5D02000554B9 /* Event.m in Sources */,
@@ -667,6 +685,7 @@
 				CEDD6BBE19555C310062485F /* jobagent.xcdatamodeld in Sources */,
 				CEF52220191BDD8500844450 /* Common.m in Sources */,
 				CEFE7E071F0E12FA0038D441 /* Settings.swift in Sources */,
+				CEA114311F0F658F00662777 /* TextFieldCell.swift in Sources */,
 				CEA8F2A21F02E112001BAA12 /* CompanyDetail.swift in Sources */,
 				CE0CAA2B1EFCC989007A0F95 /* People.swift in Sources */,
 				CE0452261F04B9F3004783B0 /* JobDetail.swift in Sources */,
@@ -675,6 +694,7 @@
 				04F93721116BDE450056B473 /* WebVC.m in Sources */,
 				CEAC63A91EED0D810033F75C /* Tips.swift in Sources */,
 				CE12F9FB1F061E0A00F18F1D /* SearchResults.swift in Sources */,
+				CEA114391F108B8300662777 /* DatePickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
