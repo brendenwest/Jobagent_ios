@@ -246,7 +246,7 @@
         <!--Events-->
         <scene sceneID="G5B-dS-VN6">
             <objects>
-                <tableViewController title="Events" id="Teg-Ho-u9d" customClass="Events" sceneMemberID="viewController">
+                <tableViewController title="Events" id="Teg-Ho-u9d" customClass="Events" customModule="jobagent" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dUJ-Na-VeT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -363,7 +363,7 @@
         <!--Event-->
         <scene sceneID="3Gd-eR-B05">
             <objects>
-                <viewController title="Event" id="559-DE-8zM" customClass="EventDetail" sceneMemberID="viewController">
+                <viewController title="Event" id="559-DE-8zM" customClass="EventDetail" customModule="jobagent" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qxX-Sm-mpn"/>
                         <viewControllerLayoutGuide type="bottom" id="0CL-0q-Io7"/>
@@ -1028,7 +1028,7 @@
         <image name="icon_companies2.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YyK-1G-QcY"/>
         <segue reference="Kpe-XC-Clz"/>
+        <segue reference="d05-7H-SJC"/>
     </inferredMetricsTieBreakers>
 </document>

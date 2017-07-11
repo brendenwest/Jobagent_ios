@@ -11,47 +11,36 @@
         <attribute name="type" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="company" inverseEntity="Event" indexed="YES">
+            <userInfo/>
+        </relationship>
         <relationship name="jobs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Job" inverseName="company" inverseEntity="Job" indexed="YES">
             <userInfo/>
         </relationship>
         <relationship name="people" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="company" inverseEntity="Person" indexed="YES">
             <userInfo/>
         </relationship>
-        <relationship name="toEvent" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="toCompany" inverseEntity="Event" indexed="YES">
-            <userInfo/>
-        </relationship>
         <userInfo/>
     </entity>
-    <entity name="Event" representedClassName="Event">
-        <attribute name="company" optional="YES" attributeType="String">
-            <userInfo/>
-        </attribute>
+    <entity name="Event" representedClassName=".Event">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO">
             <userInfo/>
         </attribute>
-        <attribute name="jobid" optional="YES" attributeType="String">
-            <userInfo/>
-        </attribute>
-        <attribute name="jobtitle" optional="YES" attributeType="String">
-            <userInfo/>
-        </attribute>
         <attribute name="notes" optional="YES" attributeType="String">
-            <userInfo/>
-        </attribute>
-        <attribute name="person" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
         <attribute name="priority" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" elementID="action">
             <userInfo/>
         </attribute>
-        <relationship name="toCompany" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="toEvent" inverseEntity="Company" indexed="YES">
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="events" inverseEntity="Company" indexed="YES">
             <userInfo/>
         </relationship>
-        <relationship name="toJob" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Job" inverseName="toEvent" inverseEntity="Job" indexed="YES">
+        <relationship name="contact" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Person" inverseName="toEvent" inverseEntity="Person" indexed="YES">
             <userInfo/>
         </relationship>
-        <relationship name="toPerson" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Person" inverseName="toEvent" inverseEntity="Person" indexed="YES">
+        <relationship name="job" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Job" inverseName="toEvent" inverseEntity="Job" indexed="YES">
             <userInfo/>
         </relationship>
         <userInfo/>
@@ -81,7 +70,7 @@
             <userInfo/>
         </relationship>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="job" inverseEntity="Person" syncable="YES"/>
-        <relationship name="toEvent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="toJob" inverseEntity="Event" syncable="YES"/>
+        <relationship name="toEvent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="job" inverseEntity="Event" syncable="YES"/>
     </entity>
     <entity name="Person" representedClassName=".Person">
         <attribute name="email" optional="YES" attributeType="String">
@@ -108,7 +97,7 @@
             <userInfo/>
         </relationship>
         <relationship name="job" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Job" inverseName="contact" inverseEntity="Job" syncable="YES"/>
-        <relationship name="toEvent" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="toPerson" inverseEntity="Event" indexed="YES">
+        <relationship name="toEvent" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="contact" inverseEntity="Event" indexed="YES">
             <userInfo/>
         </relationship>
         <userInfo/>
@@ -136,7 +125,7 @@
     </entity>
     <elements>
         <element name="Company" positionX="216" positionY="-45" width="128" height="150"/>
-        <element name="Event" positionX="270" positionY="147" width="128" height="210"/>
+        <element name="Event" positionX="270" positionY="147" width="128" height="165"/>
         <element name="Job" positionX="36" positionY="162" width="128" height="210"/>
         <element name="Person" positionX="27" positionY="-54" width="128" height="210"/>
         <element name="Task" positionX="448" positionY="-54" width="128" height="135"/>

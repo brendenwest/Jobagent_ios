@@ -43,6 +43,12 @@ class Company: NSManagedObject {
     @objc(removeJobs:)
     @NSManaged public func removeFromJobs(_ values: NSSet)
 
+    @objc(addEventsObject:)
+    @NSManaged public func addToEvents(_ value: Event)
+    
+    @objc(removeEventsObject:)
+    @NSManaged public func removeFromEvents(_ value: Event)
+    
     func stringValueFor(field: ModelFieldType) -> String {
         switch field {
         case .name: return name ?? ""

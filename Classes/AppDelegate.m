@@ -5,7 +5,6 @@
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 
-#import "Events.h"
 #import "jobagent-Swift.h"
 
 /** Google Analytics configuration constants **/
@@ -185,10 +184,6 @@
     if (!context) {
         // Handle the error.
     }
-    
-    Events *eventsVC = [[Events alloc] initWithNibName:nil bundle:nil];
-    eventsVC.managedObjectContext = context;
-     
 	
 #ifdef IS_SIMULATOR
 #else

@@ -13,7 +13,7 @@ class DataController {
     
     // associate company with target
     static func setCompany(name: String?, for target: NSManagedObject) {
-        if let name = name {
+        if let name = name, !name.isEmpty {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Company")
             fetchRequest.predicate = NSPredicate(format: "name == %@", name)
             do {
@@ -31,6 +31,9 @@ class DataController {
                 else if let job = target as? Job {
                     company.addToJobs(job)
                 }
+                else if let event = target as? Event {
+                    company.addToEvents(event)
+                }
                 do {
                     try target.managedObjectContext?.save()
                 } catch let error {
@@ -45,7 +48,7 @@ class DataController {
 
     // associate person with target
     static func setPerson(name: String?, for target: NSManagedObject) {
-        if let name = name {
+        if let name = name, !name.isEmpty {
 
             let parts = Person.getNameParts(name)
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
@@ -71,6 +74,9 @@ class DataController {
                 }
                 else if let company = target as? Company {
                     company.addToPeople(person)
+                }
+                else if let event = target as? Event {
+                    event.contact = person
                 }
                 do {
                     try target.managedObjectContext?.save()

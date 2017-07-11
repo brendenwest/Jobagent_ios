@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		040E0295115966440020C333 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 040E0294115966440020C333 /* Task.m */; };
-		0428F4C4115C5D02000554B9 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 0428F4C2115C5D02000554B9 /* Event.m */; };
-		0428F4D9115C5E43000554B9 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 0428F4D8115C5E43000554B9 /* Events.m */; };
-		0428F4E1115C6085000554B9 /* EventDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0428F4DF115C6085000554B9 /* EventDetail.m */; };
 		0431984D116194E80005206D /* Cities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431984C116194E80005206D /* Cities.m */; };
 		044596641533D6190078698D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044596631533D6190078698D /* CFNetwork.framework */; };
 		044596661533D64D0078698D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 044596651533D64D0078698D /* libsqlite3.0.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -49,6 +45,7 @@
 		CE12F9F91F05969200F18F1D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12F9F81F05969200F18F1D /* DataController.swift */; };
 		CE12F9FB1F061E0A00F18F1D /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12F9FA1F061E0900F18F1D /* SearchResults.swift */; };
 		CE1B83D3193E917A00058D22 /* appconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1B83D2193E917A00058D22 /* appconfig.plist */; };
+		CE1D58DC1F14273A00E6A6B4 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D58DB1F14273A00E6A6B4 /* Events.swift */; };
 		CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1E6DA41947FB0D00C9437A /* PickList.m */; };
 		CE1EB5E8191C6E330000901C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		CE1EB5E9191C6E330000901C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -57,6 +54,7 @@
 		CE3CAE40194B9B2400CF93DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE3CAE3D194B99C100CF93DE /* Localizable.strings */; };
 		CE68CA0A190032480044CA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE68CA09190032480044CA66 /* AVFoundation.framework */; };
 		CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74D8B81946CAD3006C9ACE /* EditItemVC.m */; };
+		CE7FF5711F15588200AD8882 /* EventDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FF5701F15588200AD8882 /* EventDetail.swift */; };
 		CE8CED7019CA0C13008217C8 /* RootView_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8CED6F19CA0C13008217C8 /* RootView_Tests.m */; };
 		CE8EA61419EDC0E7002040C2 /* jobagent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8EA61219EDC0E7002040C2 /* jobagent.storyboard */; };
 		CE8EA61819EDE525002040C2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8EA61719EDE525002040C2 /* Images.xcassets */; };
@@ -98,14 +96,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		040E0293115966440020C333 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
-		040E0294115966440020C333 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
-		0428F4C1115C5D02000554B9 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		0428F4C2115C5D02000554B9 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
-		0428F4D7115C5E43000554B9 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
-		0428F4D8115C5E43000554B9 /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
-		0428F4DE115C6085000554B9 /* EventDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetail.h; sourceTree = "<group>"; };
-		0428F4DF115C6085000554B9 /* EventDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetail.m; sourceTree = "<group>"; };
 		0431984B116194E80005206D /* Cities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cities.h; sourceTree = "<group>"; };
 		0431984C116194E80005206D /* Cities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cities.m; sourceTree = "<group>"; };
 		044596631533D6190078698D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -155,6 +145,7 @@
 		CE12F9F81F05969200F18F1D /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		CE12F9FA1F061E0900F18F1D /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		CE1B83D2193E917A00058D22 /* appconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appconfig.plist; sourceTree = "<group>"; };
+		CE1D58DB1F14273A00E6A6B4 /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		CE1E6DA31947FB0D00C9437A /* PickList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickList.h; sourceTree = "<group>"; };
 		CE1E6DA41947FB0D00C9437A /* PickList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickList.m; sourceTree = "<group>"; };
 		CE1EB5E5191C6E330000901C /* jobagent Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "jobagent Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,6 +161,7 @@
 		CE68CA09190032480044CA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		CE74D8B71946CAD3006C9ACE /* EditItemVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditItemVC.h; sourceTree = "<group>"; };
 		CE74D8B81946CAD3006C9ACE /* EditItemVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditItemVC.m; sourceTree = "<group>"; };
+		CE7FF5701F15588200AD8882 /* EventDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetail.swift; sourceTree = "<group>"; };
 		CE8B638D190B1F3F001D872F /* jobagent_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobagent_Prefix.pch; sourceTree = "<group>"; };
 		CE8CED6F19CA0C13008217C8 /* RootView_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootView_Tests.m; sourceTree = "<group>"; };
 		CE8EA61319EDC0E7002040C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/jobagent.storyboard; sourceTree = "<group>"; };
@@ -247,28 +239,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		04836E651158873100F61102 /* Object classes */ = {
-			isa = PBXGroup;
-			children = (
-				0428F4C1115C5D02000554B9 /* Event.h */,
-				0428F4C2115C5D02000554B9 /* Event.m */,
-				040E0293115966440020C333 /* Task.h */,
-				040E0294115966440020C333 /* Task.m */,
-			);
-			name = "Object classes";
-			sourceTree = "<group>";
-		};
-		04AFE9CB11ED604F00DA706D /* Tasks */ = {
-			isa = PBXGroup;
-			children = (
-				0428F4D7115C5E43000554B9 /* Events.h */,
-				0428F4D8115C5E43000554B9 /* Events.m */,
-				0428F4DE115C6085000554B9 /* EventDetail.h */,
-				0428F4DF115C6085000554B9 /* EventDetail.m */,
-			);
-			name = Tasks;
-			sourceTree = "<group>";
-		};
 		04B36748126BFE0900249902 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,9 +298,7 @@
 				CEDD6BBB19555C310062485F /* jobagent.xcdatamodeld */,
 				CEAC63A71EED0D640033F75C /* ViewControllers */,
 				04B36748126BFE0900249902 /* Utilities */,
-				04AFE9CB11ED604F00DA706D /* Tasks */,
 				080E96DDFE201D6D7F000001 /* Classes */,
-				04836E651158873100F61102 /* Object classes */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				CE1EB5EA191C6E330000901C /* jobagent Tests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -451,6 +419,8 @@
 			children = (
 				CEA8F29F1F02DFF8001BAA12 /* Companies.swift */,
 				CEA8F2A11F02E112001BAA12 /* CompanyDetail.swift */,
+				CE1D58DB1F14273A00E6A6B4 /* Events.swift */,
+				CE7FF5701F15588200AD8882 /* EventDetail.swift */,
 				CEB10F811F0C68DB00065D7B /* Home.swift */,
 				CE0452271F04CA8E004783B0 /* Jobs.swift */,
 				CE0452251F04B9F3004783B0 /* JobDetail.swift */,
@@ -672,12 +642,9 @@
 				CECF397519DFBDE000C546D7 /* Ads.m in Sources */,
 				CEA114351F0FF3BA00662777 /* DateUtilities.swift in Sources */,
 				CE1E6DA51947FB0D00C9437A /* PickList.m in Sources */,
-				040E0295115966440020C333 /* Task.m in Sources */,
-				0428F4C4115C5D02000554B9 /* Event.m in Sources */,
 				CE12F9F11F0586C600F18F1D /* TableViews.swift in Sources */,
-				0428F4D9115C5E43000554B9 /* Events.m in Sources */,
-				0428F4E1115C6085000554B9 /* EventDetail.m in Sources */,
 				CE12F9F91F05969200F18F1D /* DataController.swift in Sources */,
+				CE1D58DC1F14273A00E6A6B4 /* Events.swift in Sources */,
 				CEA8F2A01F02DFF8001BAA12 /* Companies.swift in Sources */,
 				CEB10F801F0C245C00065D7B /* Location.swift in Sources */,
 				CE0452281F04CA8E004783B0 /* Jobs.swift in Sources */,
@@ -689,6 +656,7 @@
 				CEA8F2A21F02E112001BAA12 /* CompanyDetail.swift in Sources */,
 				CE0CAA2B1EFCC989007A0F95 /* People.swift in Sources */,
 				CE0452261F04B9F3004783B0 /* JobDetail.swift in Sources */,
+				CE7FF5711F15588200AD8882 /* EventDetail.swift in Sources */,
 				CE74D8BA1946CAD3006C9ACE /* EditItemVC.m in Sources */,
 				CEB10F821F0C68DB00065D7B /* Home.swift in Sources */,
 				04F93721116BDE450056B473 /* WebVC.m in Sources */,
