@@ -7,7 +7,6 @@
 //
 
 #import "Cities.h"
-#import "AppDelegate.h"
 #import "jobagent-Swift.h"
 
 @implementation Cities

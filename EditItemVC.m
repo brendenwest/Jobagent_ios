@@ -8,7 +8,6 @@
 
 #import "EditItemVC.h"
 #import "Common.h"
-#import "AppDelegate.h"
 
 @implementation EditItemVC
 

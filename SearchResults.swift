@@ -153,7 +153,7 @@ import Alamofire
             
             let detailVC = segue.destination as! JobDetail
             if (sender as? UITableView) == self.tableView {
-                let job = Job(context: appDelegate.managedObjectContext)
+                let job = Job(context: appDelegate.dataController.container.viewContext)
                 if let indexPath = tableView?.indexPathForSelectedRow  {
                     let tmpJob = self.jobsForSite[indexPath.row]
                     job.title = tmpJob["title"] as? String

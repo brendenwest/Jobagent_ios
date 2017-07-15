@@ -20,5 +20,11 @@
 	<string>http://localhost:8888</string>
 	<key>searchUrl</key>
 	<string>/getjobs?location=&lt;location&gt;&amp;kw=&lt;kw&gt;&amp;v=1&amp;country=&lt;country&gt;&amp;max=&lt;max&gt;&amp;age=&lt;age&gt;&amp;distance=&lt;distance&gt;</string>
+	<key>maxResults</key>
+	<integer>50</integer>
+	<key>ageResults</key>
+	<integer>15</integer>
+	<key>distanceResults</key>
+	<integer>20</integer>
 </dict>
 </plist>

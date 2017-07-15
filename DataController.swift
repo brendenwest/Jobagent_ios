@@ -9,7 +9,31 @@
 import Foundation
 import CoreData
 
-class DataController {
+class DataController: NSObject {
+
+    var container: NSPersistentContainer
+
+     init(completionClosure: @escaping () -> ()) {
+        self.container = NSPersistentContainer(name: "jobagent")
+        self.container.loadPersistentStores() { (description, error) in
+            if let error = error {
+                fatalError("Failed to load Core Data stack: \(error)")
+            }
+            completionClosure()
+        }
+    }
+
+    func saveContext() {
+        let context = container.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
     
     // associate company with target
     static func setCompany(name: String?, for target: NSManagedObject) {

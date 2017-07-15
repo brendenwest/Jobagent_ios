@@ -11,34 +11,33 @@ import CoreData
 
 @objc internal class Companies: UITableViewController, NSFetchedResultsControllerDelegate {
 
-    var managedObjectContext: NSManagedObjectContext!
     let segueId = "showCompanyDetail"
+    var managedObjectContext: NSManagedObjectContext
 
-    lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
+    lazy var fetchedResultsController: NSFetchedResultsController<Company> = {
         
         // Initialize Fetch Request
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Company")
+        let fetchRequest = NSFetchRequest<Company>()
+        fetchRequest.entity = Company.entity()
         
         // Add Sort Descriptors
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         // Initialize Fetched Results Controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
-        // Configure Fetched Results Controller
-        fetchedResultsController.delegate = self
+        frc.delegate = self
         
-        return fetchedResultsController
+        return frc
     }()
-
+    
     required init?(coder aDecoder: NSCoder) {
-        
+
+        managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).dataController.container.viewContext
+
         super.init(coder: aDecoder)
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        self.managedObjectContext = appDelegate.managedObjectContext
-        
+
     }
 
     override func viewDidLoad() {
@@ -77,7 +76,7 @@ import CoreData
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
             ?? UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
         
-        let record = self.fetchedResultsController.object(at: indexPath) as! Company
+        let record = self.fetchedResultsController.object(at: indexPath)
         
         cell.textLabel?.text = record.name
         
@@ -100,7 +99,7 @@ import CoreData
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
-            let company = self.fetchedResultsController.object(at: indexPath as IndexPath) as! Company
+            let company = self.fetchedResultsController.object(at: indexPath as IndexPath)
             
             self.managedObjectContext.delete(company)
             do {
@@ -123,7 +122,7 @@ import CoreData
             let detailVC = segue.destination as! CompanyDetail
             if (sender as? UITableView) == self.tableView {
                 let indexPath = tableView.indexPathForSelectedRow!
-                let company = fetchedResultsController.object(at: indexPath) as! Company
+                let company = fetchedResultsController.object(at: indexPath) 
                 detailVC.selectedCompany = company
             } else {
                 detailVC.selectedCompany = Company(context: self.managedObjectContext)

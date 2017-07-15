@@ -11,8 +11,8 @@ import CoreData
 
 @objc internal class Events: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    var managedObjectContext: NSManagedObjectContext!
     let segueId = "showEventDetail"
+    var managedObjectContext: NSManagedObjectContext
 
     lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
         
@@ -34,11 +34,9 @@ import CoreData
 
     required init?(coder aDecoder: NSCoder) {
         
+        managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).dataController.container.viewContext
+
         super.init(coder: aDecoder)
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        self.managedObjectContext = appDelegate.managedObjectContext
-        
     }
 
     override func viewDidLoad() {

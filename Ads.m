@@ -5,7 +5,7 @@
 //  Copyright (c) 2014 Brenden West. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "jobagent-Swift.h"
 #import "Ads.h"
 
 @import GoogleMobileAds;
