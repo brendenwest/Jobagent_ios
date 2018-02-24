@@ -178,7 +178,7 @@ import Alamofire
         self.tableView?.reloadData()
     }
     
-    func linkToSource() {
+    @objc func linkToSource() {
         UIApplication.shared.open(URL.init(string: siteList[self.btnJobSites.selectedSegmentIndex]["domain"]!)!, options: [:], completionHandler: nil)
     }
     

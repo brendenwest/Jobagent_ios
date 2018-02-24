@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-@objc internal class Companies: UITableViewController, NSFetchedResultsControllerDelegate {
+class Companies: UITableViewController, NSFetchedResultsControllerDelegate {
 
     let segueId = "showCompanyDetail"
     var managedObjectContext: NSManagedObjectContext

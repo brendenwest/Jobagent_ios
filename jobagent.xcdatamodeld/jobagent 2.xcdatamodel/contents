@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Company" representedClassName=".Company">
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" attributeType="String" indexed="YES" elementID="coName">
+        <attribute name="name" attributeType="String" minValueString="1" indexed="YES" elementID="coName">
             <userInfo/>
         </attribute>
         <attribute name="notes" optional="YES" attributeType="String" elementID="coType">

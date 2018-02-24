@@ -29,7 +29,7 @@
     itemLabel.text = labelText;
     itemTextView.text = itemText;
     
-    [appDelegate trackPV:self.title];
+//    [appDelegate trackPV:self.title];
     
 }
 

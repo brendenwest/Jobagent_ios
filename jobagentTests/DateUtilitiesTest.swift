@@ -8,8 +8,13 @@
 
 import XCTest
 
+@testable import jobagent
+
 class DateUtilitiesTest: XCTestCase {
-    
+
+    let dateStringLong = "2017-06-01T01:01:00.000Z"
+    let dateStringShort = "06/01/2017"
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -20,16 +25,15 @@ class DateUtilitiesTest: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testDateFromString() {
+        let date = DateUtilities.dateFrom(string: dateStringLong, format: .long)
+        XCTAssertEqual(DateUtilities.dateStringFrom(date: date!, format: .short), dateStringShort, "date conversion failed")
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+
+    func testLongToShortDateString() {
+        let str = DateUtilities.dateStringFrom(string: dateStringLong)
+        XCTAssertEqual(str, dateStringShort, "date conversion failed")        
     }
+
     
 }
