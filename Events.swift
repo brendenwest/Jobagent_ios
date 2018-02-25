@@ -64,7 +64,7 @@ import CoreData
         self.tableView.reloadData()
     }
     
-    func insertItem() {
+    @objc func insertItem() {
         self.performSegue(withIdentifier: segueId, sender: nil)
     }
 
