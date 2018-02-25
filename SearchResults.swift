@@ -178,7 +178,7 @@ import Alamofire
         self.tableView?.reloadData()
     }
     
-    func linkToSource() {
+    @objc func linkToSource() {
         UIApplication.shared.open(URL.init(string: siteList[self.btnJobSites.selectedSegmentIndex]["domain"]!)!, options: [:], completionHandler: nil)
     }
     
@@ -195,7 +195,7 @@ import Alamofire
         searchUrl = searchUrl.replacingOccurrences(of: "<distance>", with: settings.string(forKey: "distanceResults")!)
 
         Alamofire.request(searchUrl).responseJSON { response in
-            if let JSON = response.result.value as? [String: Any], let results = JSON["jobs"] as? [[String: Any]] {
+            if let results = response.result.value as? [[String: Any]] {
                 self.isLoading(false)
                 self.jobsAll = results
                 self.switchJobSite(sender: nil)

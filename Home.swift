@@ -58,7 +58,7 @@ class Home: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLoca
     }
     
     // UI methods
-    func searchJobs() {
+    @objc func searchJobs() {
         NotificationCenter.default.removeObserver(self)
         self.performSegue(withIdentifier: "showSearchResults", sender: nil)
     }

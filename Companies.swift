@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-@objc internal class Companies: UITableViewController, NSFetchedResultsControllerDelegate {
+class Companies: UITableViewController, NSFetchedResultsControllerDelegate {
 
     let segueId = "showCompanyDetail"
     var managedObjectContext: NSManagedObjectContext
@@ -65,7 +65,7 @@ import CoreData
         self.tableView.reloadData()
     }
 
-    func insertItem() {
+    @objc func insertItem() {
         self.performSegue(withIdentifier: segueId, sender: nil)
     }
 

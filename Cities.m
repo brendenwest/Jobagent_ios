@@ -27,7 +27,7 @@
 
     [self.tableView reloadData];
 
-    [appDelegate trackPV:self.title];
+//    [appDelegate trackPV:self.title];
 
 }
 
@@ -107,7 +107,7 @@
              NSLog(@"Received placemarks: %@", placemarksForZip);
              CLPlacemark *newPlacemark = [placemarksForZip objectAtIndex:0];
 
-             [Location setDefaultLocation:newPlacemark];
+//             [Location setDefaultLocation:newPlacemark];
              
              [self.navigationController popViewControllerAnimated:YES];
          }];

@@ -64,7 +64,7 @@ import CoreData
         self.tableView.reloadData()
     }
     
-    func insertItem() {
+    @objc func insertItem() {
         self.performSegue(withIdentifier: segueId, sender: nil)
     }
 
@@ -100,13 +100,13 @@ import CoreData
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
             let event = self.fetchedResultsController.object(at: indexPath as IndexPath) as! Event
             
-            self.managedObjectContext.delete(event)
-            do {
-                try self.managedObjectContext.save()
+//            self.managedObjectContext.delete(event)
+//            do {
+//                try self.managedObjectContext.saveContext()
                 self.tableView.reloadData()
-            } catch let error {
-                print(error)
-            }
+//            } catch let error {
+//                print(error)
+//            }
         }
         return [delete]
     }

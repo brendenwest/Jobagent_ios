@@ -1,7 +1,7 @@
 # Uncomment this line to define a global platform for your project
 
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'jobagent' do
   pod 'AFNetworking', '~> 3.0'
